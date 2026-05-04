@@ -3,22 +3,22 @@ import {colorField, fieldHelp, siteGroups, visibilitySubtitle} from './helpers';
 
 const siteSettings = {
   name: 'siteSettings',
-  title: 'Configuración general del sitio',
+  title: 'Datos generales del sitio',
   type: 'document',
   description:
-    'Aquí se editan los datos globales de la marca: logo, datos de contacto, redes sociales y cómo se ve el link cuando se comparte.',
+    'Edita una sola vez la identidad, logo, datos de contacto, correos, horarios y redes. Estos datos se reutilizan automáticamente en navbar, contacto y footer.',
   groups: siteGroups,
   fields: [
     {
       name: 'logo',
-      title: 'Logo principal',
+      title: 'Logo único del sitio',
       type: 'image',
       group: 'identity',
-      description: 'Logo que se usa como imagen principal de la marca en la web.',
+      description: 'Logo único de la marca. Se usa automáticamente en la barra superior y en el footer.',
       options: {
         hotspot: true,
         ...fieldHelp({
-          helpText: 'Sube una versión limpia del logo. Se verá en la barra superior y puede reutilizarse en otras secciones.',
+          helpText: 'Sube una versión limpia del logo. Este mismo logo se verá en la barra superior y en el footer.',
           example: 'PNG transparente o imagen cuadrada del monograma KC.',
           designNote: 'Evita imágenes con mucho margen vacío alrededor del logo.',
         }),
@@ -26,11 +26,11 @@ const siteSettings = {
     },
     {
       name: 'companyName',
-      title: 'Nombre de la empresa',
+      title: 'Nombre para web',
       type: 'string',
       group: 'identity',
-      description: 'Nombre comercial visible en la página.',
-      options: fieldHelp({example: 'Karin'}),
+      description: 'Nombre comercial visible en la página, navbar, footer y SEO.',
+      options: fieldHelp({example: 'KARIN CADENAS BODAS & EVENTOS'}),
     },
     {
       name: 'companySubtitle',
@@ -38,27 +38,36 @@ const siteSettings = {
       type: 'string',
       group: 'identity',
       description: 'Texto pequeño que acompaña al nombre de la marca.',
-      options: fieldHelp({example: 'Eventos & Experiencias'}),
+      options: fieldHelp({example: 'Bodas & Eventos'}),
     },
     {
       name: 'whatsapp',
-      title: 'Número de WhatsApp',
+      title: 'WhatsApp principal',
       type: 'string',
       group: 'contact',
-      description: 'Número usado para abrir conversaciones de WhatsApp desde los botones de la web.',
+      description: 'Número principal usado por el botón fijo de WhatsApp del navbar, cards de contacto y enlaces de la web.',
       options: fieldHelp({
         helpText: 'Escríbelo con código de país y sin espacios, guiones ni símbolos.',
-        example: '51999999999',
+        example: '51922459810',
         warning: 'Si el número tiene espacios o símbolos, el enlace de WhatsApp puede fallar.',
       }),
     },
     {
       name: 'email',
-      title: 'Correo de contacto',
+      title: 'Email principal',
       type: 'string',
       group: 'contact',
-      description: 'Correo que se muestra en contacto y footer.',
-      options: fieldHelp({example: 'hola@karineventos.com'}),
+      description: 'Correo institucional principal. Se reutiliza en las secciones que muestran datos generales de contacto.',
+      options: fieldHelp({example: 'karin@karincadenaseventos.com'}),
+      validation: (Rule: any) => Rule.email().warning('Revisa que el correo tenga formato válido.'),
+    },
+    {
+      name: 'quoteEmail',
+      title: 'Email para cotizaciones',
+      type: 'string',
+      group: 'contact',
+      description: 'Correo que recibirá las solicitudes del formulario y que se mostrará como contacto para cotizar.',
+      options: fieldHelp({example: 'presupuestos@karincadenaseventos.com'}),
       validation: (Rule: any) => Rule.email().warning('Revisa que el correo tenga formato válido.'),
     },
     {
@@ -67,7 +76,7 @@ const siteSettings = {
       type: 'string',
       group: 'contact',
       description: 'Teléfono mostrado como texto para visitantes.',
-      options: fieldHelp({example: '+51 999 999 999'}),
+      options: fieldHelp({example: '+51 922 459 810'}),
     },
     {
       name: 'location',
@@ -80,10 +89,27 @@ const siteSettings = {
     {
       name: 'schedule',
       title: 'Horario o texto de atención',
-      type: 'string',
+      type: 'text',
+      rows: 2,
       group: 'contact',
       description: 'Texto corto sobre atención, horarios o coordinación previa.',
-      options: fieldHelp({example: 'Atención previa coordinación'}),
+      options: fieldHelp({example: 'Lunes a viernes 9am a 7pm. Sábados previa coordinación.'}),
+    },
+    {
+      name: 'domain',
+      title: 'Dominio web',
+      type: 'url',
+      group: 'contact',
+      description: 'Dominio oficial del sitio.',
+      options: fieldHelp({example: 'https://www.karincadenaseventos.com'}),
+    },
+    {
+      name: 'purchaseNote',
+      title: 'Nota pendiente administrativa',
+      type: 'string',
+      group: 'contact',
+      description: 'Dato interno opcional para recordar pendientes administrativos del proyecto.',
+      options: fieldHelp({example: 'Pendiente dato de compra'}),
     },
     {
       name: 'socialLinks',
@@ -155,7 +181,7 @@ const siteSettings = {
       ],
     },
   ],
-  preview: {prepare: () => ({title: 'Configuración general del sitio'})},
+  preview: {prepare: () => ({title: 'Datos generales del sitio'})},
 };
 
 export default siteSettings;

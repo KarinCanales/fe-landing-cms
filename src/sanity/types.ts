@@ -38,9 +38,12 @@ export type SiteSettingsData = {
   companySubtitle?: string;
   whatsapp?: string;
   email?: string;
+  quoteEmail?: string;
   phone?: string;
   location?: string;
   schedule?: string;
+  domain?: string;
+  purchaseNote?: string;
   socialLinks?: SocialLink[];
   legalText?: string;
   madeWithText?: string;
@@ -62,12 +65,6 @@ export type NavLink = {
 };
 
 export type NavbarData = {
-  links?: NavLink[];
-  whatsappCta?: {
-    label?: string;
-    mobileLabelLong?: string;
-    url?: string;
-  };
   colorMode?: 'neutral' | 'adaptive';
   sectionThemes?: Array<{
     sectionId: string;
@@ -245,13 +242,10 @@ export type ContactData = BaseSectionData & {
   title?: string;
   highlightWord?: string;
   description?: string;
-  contactCards?: ContactCardItem[];
   form?: {
     title?: string;
     description?: string;
     submitLabel?: string;
-    eventTypes?: EventTypeOption[];
-    includeOtherOption?: boolean;
   };
 } | null;
 

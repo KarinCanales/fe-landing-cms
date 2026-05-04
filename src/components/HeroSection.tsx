@@ -12,7 +12,6 @@ import {
   fallbackFlipWords,
   fallbackHeroCards,
   fallbackFloatingNotes,
-  WHATSAPP_URL,
 } from '@/data/fallbacks';
 
 type HeroProps = {
@@ -23,7 +22,7 @@ type HeroProps = {
 const morphPath =
   'M328.5 73.3C371.6 111.8 398.7 172.1 383.6 220.6C368.5 269.1 311.2 305.9 256.5 337C201.8 368.1 149.7 393.7 105.5 376.8C61.3 359.9 25.1 300.5 29.1 246.1C33.1 191.7 77.3 142.3 120 103.4C162.7 64.5 203.9 36.1 242.5 35.1C281.1 34.1 285.4 34.8 328.5 73.3Z';
 
-export default function Hero({ sanityData, sanitySettings }: HeroProps) {
+export default function Hero({ sanityData }: HeroProps) {
   const d = sanityData;
 
   const heroRef = useRef<HTMLElement | null>(null);
@@ -44,9 +43,7 @@ export default function Hero({ sanityData, sanitySettings }: HeroProps) {
   const flipWords = d?.flipWords?.length ? d.flipWords : fallbackFlipWords;
 
   const ctaPrimaryLabel = d?.ctaPrimary?.label || 'Cotiza ahora';
-  const whatsapp = sanitySettings?.whatsapp || '';
-  const waUrl = d?.ctaPrimary?.href ||
-    (whatsapp ? `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola Karin, quisiera cotizar un evento.')}` : WHATSAPP_URL);
+  const primaryHref = d?.ctaPrimary?.href || '#contacto';
 
   const ctaSecondaryLabel = d?.ctaSecondary?.label || 'Ver portafolio';
   const ctaSecondaryHref = d?.ctaSecondary?.href || '#catalogo';
@@ -173,9 +170,9 @@ export default function Hero({ sanityData, sanitySettings }: HeroProps) {
           <div className={styles['hero-actions']}>
             <a
               className={`${styles.button} ${styles.primary} ${styles['magnetic-button']}`}
-              href={waUrl}
-              target={waUrl.startsWith('http') ? '_blank' : undefined}
-              rel="noreferrer"
+              href={primaryHref}
+              target={primaryHref.startsWith('http') ? '_blank' : undefined}
+              rel={primaryHref.startsWith('http') ? 'noreferrer' : undefined}
             >
               {ctaPrimaryLabel} <ArrowRight size={18} />
             </a>

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Seed inicial para Karin Eventos & Experiencias.
+ * Seed inicial para KARIN CADENAS BODAS & EVENTOS.
  *
  * Uso:
  *   npm run seed:sanity         -> crea documentos singleton solo si no existen.
@@ -133,32 +133,31 @@ async function upsertSingleton(doc) {
 }
 
 async function buildDocuments() {
-  const logo = await uploadImage('public/images/_logo/logo2.png');
-  const logoFooter = await uploadImage('public/images/_logo/logo2.png');
-  const heroBg = await uploadImage('public/images/_miscelanea/velas.jpg');
-  const benefitsBg = await uploadImage('public/images/2-beneficios/img-beneficios.png');
-  const servicesBg = await uploadImage('public/images/_miscelanea/velas.jpg');
-  const catalogBg = await uploadImage('public/images/_miscelanea/morada.jpg');
-  const testimonialsBg = await uploadImage('public/images/_miscelanea/velas.jpg');
-  const contactBg = await uploadImage('public/images/_miscelanea/velas.jpg');
+  const logo = await uploadImage('public/images/_logo/logo2.webp');
+  const heroBg = await uploadImage('public/images/_miscelanea/velas.webp');
+  const benefitsBg = await uploadImage('public/images/2-beneficios/img-beneficios.webp');
+  const servicesBg = await uploadImage('public/images/_miscelanea/velas.webp');
+  const catalogBg = await uploadImage('public/images/_miscelanea/morada.webp');
+  const testimonialsBg = await uploadImage('public/images/_miscelanea/velas.webp');
+  const contactBg = await uploadImage('public/images/_miscelanea/velas.webp');
 
   const servicesImages = {
-    catering: await uploadImage('public/images/3-servicios/catering-premium.png'),
-    bodas: await uploadImage('public/images/3-servicios/bodas-personalizadas.png'),
-    organizacion: await uploadImage('public/images/3-servicios/organizacion-eventos.png'),
-    decoracion: await uploadImage('public/images/3-servicios/decoracion-y-ambientacion.png'),
+    catering: await uploadImage('public/images/3-servicios/catering-premium.webp'),
+    bodas: await uploadImage('public/images/3-servicios/bodas-personalizadas.webp'),
+    organizacion: await uploadImage('public/images/3-servicios/organizacion-eventos.webp'),
+    decoracion: await uploadImage('public/images/3-servicios/decoracion-y-ambientacion.webp'),
   };
 
   const catalogImages = [
-    await uploadImage('public/images/5-catalogo/1.png'),
-    await uploadImage('public/images/5-catalogo/2.png'),
-    await uploadImage('public/images/5-catalogo/3.png'),
-    await uploadImage('public/images/5-catalogo/4.png'),
+    await uploadImage('public/images/5-catalogo/1.webp'),
+    await uploadImage('public/images/5-catalogo/2.webp'),
+    await uploadImage('public/images/5-catalogo/3.webp'),
+    await uploadImage('public/images/5-catalogo/4.webp'),
   ];
 
   const testimonialImages = {
-    gabriela: await uploadImage('public/images/4-testimonios/gabriela-y-nigel.png'),
-    jessica: await uploadImage('public/images/4-testimonios/jessica-y-ayrton.png'),
+    gabriela: await uploadImage('public/images/4-testimonios/gabriela-y-nigel.webp'),
+    jessica: await uploadImage('public/images/4-testimonios/jessica-y-ayrton.webp'),
   };
 
   const navLinks = [
@@ -173,27 +172,11 @@ async function buildDocuments() {
   const socialLinks = [
     {
       name: 'Instagram',
-      url: 'https://www.instagram.com/',
+      url: 'https://www.instagram.com/karincadenaseventos/',
       icon: 'instagram',
       borderColor: '#d2ab80',
       visible: true,
       order: 0,
-    },
-    {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/',
-      icon: 'facebook',
-      borderColor: '#b3b792',
-      visible: true,
-      order: 1,
-    },
-    {
-      name: 'WhatsApp',
-      url: 'https://wa.me/51999999999',
-      icon: 'message-circle',
-      borderColor: '#809671',
-      visible: true,
-      order: 2,
     },
   ];
 
@@ -202,32 +185,29 @@ async function buildDocuments() {
       _id: 'siteSettings',
       _type: 'siteSettings',
       logo,
-      companyName: 'Karin',
-      companySubtitle: 'Eventos & experiencias',
-      whatsapp: '51999999999',
-      email: 'hola@karineventos.com',
-      phone: '+51 999 999 999',
+      companyName: 'KARIN CADENAS BODAS & EVENTOS',
+      companySubtitle: 'Bodas & Eventos',
+      whatsapp: '51922459810',
+      email: 'karin@karincadenaseventos.com',
+      quoteEmail: 'presupuestos@karincadenaseventos.com',
+      phone: '+51 922 459 810',
       location: 'Lima, Perú',
-      schedule: 'Atención previa coordinación',
+      schedule: 'Lunes a viernes 9am a 7pm. Sábados previa coordinación.',
+      domain: 'https://www.karincadenaseventos.com',
+      purchaseNote: 'Pendiente dato de compra',
       socialLinks,
-      legalText: '© Karin Eventos. Todos los derechos reservados.',
-      madeWithText: 'Hecho con',
+      legalText: '© KARIN CADENAS BODAS & EVENTOS. Todos los derechos reservados.',
+      madeWithText: 'Hecho con amor y cariño 🤎 para celebraciones memorables.',
       seo: {
-        title: 'Karin Eventos & Experiencias',
-        description: 'Diseño, planificación y ambientación de eventos con una mirada cálida, elegante y profundamente cuidada.',
+        title: 'KARIN CADENAS BODAS & EVENTOS',
+        description: 'Catering y decoración, wedding planner y destination wedding para celebraciones cuidadas de principio a fin.',
         ogImage: heroBg,
       },
     },
     {
       _id: 'navbarSettings',
       _type: 'navbarSettings',
-      links: navLinks,
-      whatsappCta: {
-        label: 'WhatsApp',
-        mobileLabelLong: 'Cotizar por WhatsApp',
-        url: 'https://wa.me/51999999999',
-      },
-      colorMode: 'neutral',
+      colorMode: 'adaptive',
       sectionThemes: [
         {sectionId: 'inicio', theme: 'dark'},
         {sectionId: 'beneficios', theme: 'light'},
@@ -245,14 +225,14 @@ async function buildDocuments() {
       backgroundImage: heroBg,
       backgroundAlt: 'Evento elegante decorado por Karin Cadenas Eventos',
       overlay: 'dark-cinematic',
-      eyebrow: 'Wedding planner en Lima',
-      titleLine1: 'Eventos',
-      titleLine2: 'con estilo',
-      titleLine3: 'y calidez',
-      highlightWord: 'estilo',
-      flipWords: ['bodas', 'quinceañeros', 'eventos corporativos', 'celebraciones íntimas'],
-      subtitle: 'Creamos celebraciones personalizadas con detalles sofisticados y coordinación impecable.',
-      ctaPrimary: {label: 'Cotiza ahora', href: 'https://wa.me/51999999999'},
+      eyebrow: 'Bodas & eventos',
+      titleLine1: 'Bodas y eventos',
+      titleLine2: '',
+      titleLine3: '',
+      highlightWord: 'con estilo y calidez',
+      flipWords: ['catering y decoración', 'wedding planner', 'destination wedding'],
+      subtitle: 'Creamos celebraciones personalizadas con catering, decoración y planificación impecable para que cada detalle fluya con elegancia.',
+      ctaPrimary: {label: 'Cotiza ahora', href: '#contacto'},
       ctaSecondary: {label: 'Ver portafolio', href: '#catalogo'},
       featureCards: [
         {
@@ -346,36 +326,36 @@ async function buildDocuments() {
       backgroundImage: servicesBg,
       backgroundAlt: 'Ambiente elegante con velas para eventos',
       overlay: 'dark-cinematic',
-      eyebrow: 'Servicios Karin',
+      eyebrow: 'Servicios Karin Cadenas',
       title: 'Nuestros',
       highlightWord: 'Servicios',
       leadCard: {
-        text: 'Una experiencia integral para eventos con carácter, estética cuidada y ejecución sin fricciones.',
+        text: 'Catering, decoración, planificación y bodas de destino con una misma dirección estética y logística.',
         icon: 'calendar-check',
         visible: true,
       },
       footerCard: {
-        text: 'Catering, bodas, organización y ambientación trabajando como una sola experiencia.',
+        text: 'Catering y decoración, wedding planner y destination wedding trabajando como una sola experiencia.',
         icon: 'flower2',
         visible: true,
       },
       services: [
         {
-          title: 'Catering Premium',
-          eyebrow: 'Alta gastronomía',
-          description: 'Menús diseñados para elevar la experiencia de tus invitados, con presentación cuidada y coordinación impecable.',
-          tags: ['Menú personalizado', 'Presentación editorial'],
+          title: 'Catering y Decoración',
+          eyebrow: 'Experiencia integral',
+          description: 'Propuesta gastronómica y ambientación coordinadas para que mesa, decoración y servicio se sientan parte de una misma celebración.',
+          tags: ['Catering', 'Decoración', 'Montaje'],
           image: servicesImages.catering,
-          imageAlt: 'Mesa de catering con frutas y bocaditos para evento elegante',
+          imageAlt: 'Mesa de catering con presentación elegante para evento',
           icon: 'utensils',
           visible: true,
           order: 0,
         },
         {
-          title: 'Bodas Personalizadas',
-          eyebrow: 'Celebraciones únicas',
-          description: 'Diseñamos bodas con una narrativa visual propia, cuidando cada decisión estética desde el concepto hasta el último detalle.',
-          tags: ['Concepto visual', 'Detalle emocional'],
+          title: 'Wedding Planner',
+          eyebrow: 'Planificación de bodas',
+          description: 'Acompañamiento en la organización, coordinación de proveedores, cronograma y dirección del evento para que la pareja disfrute sin estrés.',
+          tags: ['Planificación', 'Coordinación', 'Bodas'],
           image: servicesImages.bodas,
           imageAlt: 'Novia sosteniendo un ramo de flores en una boda personalizada',
           icon: 'heart',
@@ -383,26 +363,15 @@ async function buildDocuments() {
           order: 1,
         },
         {
-          title: 'Organización de Eventos',
-          eyebrow: 'Planificación integral',
-          description: 'Creamos cronogramas, gestionamos proveedores y acompañamos todo el proceso para que tú solo vivas el momento.',
-          tags: ['Cronograma maestro', 'Gestión de proveedores'],
+          title: 'Destination Wedding',
+          eyebrow: 'Bodas de destino',
+          description: 'Diseño y coordinación de bodas fuera de la ciudad, integrando logística, estética y experiencia para invitados en un solo plan.',
+          tags: ['Destino', 'Logística', 'Experiencia'],
           image: servicesImages.organizacion,
-          imageAlt: 'Sillas blancas ordenadas para ceremonia al aire libre',
-          icon: 'calendar-check',
+          imageAlt: 'Ceremonia al aire libre preparada para boda de destino',
+          icon: 'map-pin',
           visible: true,
           order: 2,
-        },
-        {
-          title: 'Decoración y Ambientación',
-          eyebrow: 'Atmósferas memorables',
-          description: 'Transformamos espacios con flores, mobiliario, color, iluminación y composición para lograr una puesta en escena premium.',
-          tags: ['Diseño floral', 'Styling del espacio'],
-          image: servicesImages.decoracion,
-          imageAlt: 'Decoración floral y ambientación elegante en ceremonia exterior',
-          icon: 'flower2',
-          visible: true,
-          order: 3,
         },
       ],
     },
@@ -552,36 +521,11 @@ async function buildDocuments() {
       eyebrow: 'Conversemos sobre tu evento',
       title: 'Cuéntanos qué estás imaginando.',
       highlightWord: ' Karin se encarga de cuidar los detalles.',
-      description: 'Déjanos una breve idea de la celebración. Al continuar, se abrirá tu app de correo con el mensaje listo para enviar.',
-      contactCards: [
-        {
-          type: 'whatsapp',
-          label: 'WhatsApp',
-          value: 'Respuesta rápida',
-          icon: 'message-circle',
-          link: 'https://wa.me/51999999999',
-          visible: true,
-        },
-        {
-          type: 'email',
-          label: 'Correo',
-          value: 'hola@karineventos.com',
-          icon: 'mail',
-          link: 'mailto:hola@karineventos.com',
-          visible: true,
-        },
-      ],
+      description: 'Déjanos una breve idea de la celebración. Al continuar, se abrirá tu app de correo con la solicitud lista para enviar al área de cotizaciones.',
       form: {
-        title: 'Formulario de contacto',
+        title: 'Formulario de cotización',
         description: 'Completa la información y prepararemos el correo automáticamente.',
-        submitLabel: 'Preparar correo',
-        eventTypes: [
-          {label: 'Catering Premium', visible: true, order: 0},
-          {label: 'Bodas Personalizadas', visible: true, order: 1},
-          {label: 'Organización de Eventos', visible: true, order: 2},
-          {label: 'Decoración y Ambientación', visible: true, order: 3},
-        ],
-        includeOtherOption: true,
+        submitLabel: 'Preparar cotización',
       },
     },
     {
@@ -593,31 +537,10 @@ async function buildDocuments() {
       ctaEyebrow: 'Hagamos que tu celebración se sienta inolvidable',
       ctaTitle: 'Cada detalle puede contar una historia.',
       ctaHighlightWord: ' Empecemos por la tuya.',
-      ctaButtonLabel: 'Escribir por WhatsApp',
-      ctaButtonLink: 'https://wa.me/51999999999',
-      logo: logoFooter,
-      brandText: 'Diseño, planificación y ambientación de eventos con una mirada cálida, elegante y profundamente cuidada.',
-      navigationColumns: [
-        {
-          title: 'Explorar',
-          links: navLinks.map(({label, href}) => ({label, href})),
-          visible: true,
-          order: 0,
-        },
-      ],
-      serviceLinks: [
-        {text: 'Bodas personalizadas', link: '#servicios', visible: true},
-        {text: 'Catering premium', link: '#servicios', visible: true},
-        {text: 'Decoración floral', link: '#servicios', visible: true},
-        {text: 'Organización integral', link: '#servicios', visible: true},
-      ],
-      contactInfo: {
-        phone: '+51 999 999 999',
-        email: 'hola@karineventos.com',
-        location: 'Lima, Perú',
-        schedule: 'Atención previa coordinación',
-      },
-      socialLinks,
+      ctaButtonLabel: 'Cotiza ahora',
+      brandText: 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.',
+      madeWithLine: 'Hecho con amor y cariño 🤎 para celebraciones memorables.',
+      backToTopLabel: 'Volver arriba',
     },
   ];
 }

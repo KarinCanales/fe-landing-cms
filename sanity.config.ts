@@ -21,11 +21,8 @@ export default defineConfig({
           .title('Contenido editable')
           .items([
             S.listItem()
-              .title('Configuración general del sitio')
+              .title('Datos generales del sitio')
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
-            S.listItem()
-              .title('Barra superior / Menú')
-              .child(S.document().schemaType('navbarSettings').documentId('navbarSettings')),
             S.divider(),
             S.listItem()
               .title('Inicio / Primera pantalla')

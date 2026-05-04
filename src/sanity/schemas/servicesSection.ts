@@ -61,7 +61,7 @@ const servicesSection = {
         type: 'object',
         title: 'Servicio',
         fields: [
-          {name: 'title', title: 'Nombre del servicio', type: 'string', description: 'Nombre visible del servicio.', options: fieldHelp({example: 'Catering Premium'}), validation: (Rule: any) => Rule.required().warning('El servicio necesita un nombre.')},
+          {name: 'title', title: 'Nombre del servicio', type: 'string', description: 'Nombre visible del servicio.', options: fieldHelp({example: 'Catering y Decoración'}), validation: (Rule: any) => Rule.required().warning('El servicio necesita un nombre.')},
           {name: 'eyebrow', title: 'Texto pequeño superior', type: 'string', description: 'Etiqueta pequeña que va arriba del nombre del servicio.', options: fieldHelp({example: 'Alta gastronomía'})},
           {name: 'description', title: 'Descripción del servicio', type: 'text', description: 'Explicación breve del servicio.', options: fieldHelp({helpText: '2 o 3 líneas como máximo para mantener el diseño limpio.'})},
           {name: 'tags', title: 'Etiquetas del servicio', type: 'array', description: 'Pequeñas etiquetas tipo beneficios o características.', options: fieldHelp({example: 'Menú personalizado, Presentación editorial'}), of: [{type: 'string'}]},

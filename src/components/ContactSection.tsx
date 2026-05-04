@@ -13,14 +13,15 @@ import {
   User,
 } from "lucide-react";
 import styles from "./ContactSection.module.css";
-import type { ContactData, SiteSettingsData } from "@/sanity/types";
+import type { ContactData, ServicesData, SiteSettingsData } from "@/sanity/types";
 import { resolveIcon } from "@/sanity/icons";
 import { resolveImageWithUrl } from "@/sanity/image";
-import { fallbackEventTypes, WHATSAPP_URL, CONTACT_EMAIL } from "@/data/fallbacks";
+import { fallbackServices, WHATSAPP_URL, CONTACT_EMAIL, QUOTE_EMAIL } from "@/data/fallbacks";
 
 type Props = {
   sanityData?: ContactData;
   sanitySettings?: SiteSettingsData;
+  sanityServices?: ServicesData;
 };
 
 type FormStatus = "idle" | "success" | "error";
@@ -71,84 +72,8 @@ function normalizeWhatsappUrl(value?: string | null) {
   return `https://wa.me/${phone}`;
 }
 
-function normalizeContactType(value?: string | null) {
-  return value?.trim().toLowerCase() || "";
-}
 
-function getDefaultIcon(type: string) {
-  if (type.includes("whatsapp")) return "message-circle";
-  if (type.includes("email") || type.includes("correo") || type.includes("mail")) return "mail";
-  if (type.includes("phone") || type.includes("tel") || type.includes("telefono") || type.includes("teléfono")) return "phone";
-  if (type.includes("ubic") || type.includes("map") || type.includes("direc")) return "map-pin";
-  if (type.includes("horario") || type.includes("schedule") || type.includes("clock")) return "clock3";
-  return "sparkles";
-}
-
-function getDefaultLabel(type: string) {
-  if (type.includes("whatsapp")) return "WhatsApp";
-  if (type.includes("email") || type.includes("correo") || type.includes("mail")) return "Correo";
-  if (type.includes("phone") || type.includes("tel") || type.includes("telefono") || type.includes("teléfono")) return "Teléfono";
-  if (type.includes("ubic") || type.includes("map") || type.includes("direc")) return "Ubicación";
-  if (type.includes("horario") || type.includes("schedule") || type.includes("clock")) return "Horario";
-  return "Contacto";
-}
-
-function buildCardHref({
-  type,
-  link,
-  value,
-  settings,
-}: {
-  type: string;
-  link?: string | null;
-  value?: string | null;
-  settings?: SiteSettingsData;
-}) {
-  const rawLink = link?.trim();
-
-  if (rawLink) {
-    if (rawLink.startsWith("mailto:") || rawLink.startsWith("tel:") || rawLink.startsWith("#")) {
-      return rawLink;
-    }
-
-    if (rawLink.startsWith("http://") || rawLink.startsWith("https://")) {
-      return rawLink;
-    }
-
-    if (type.includes("whatsapp")) {
-      return normalizeWhatsappUrl(rawLink) || WHATSAPP_URL;
-    }
-
-    return rawLink;
-  }
-
-  if (type.includes("whatsapp")) {
-    return normalizeWhatsappUrl(value) || normalizeWhatsappUrl(settings?.whatsapp) || WHATSAPP_URL;
-  }
-
-  if (type.includes("email") || type.includes("correo") || type.includes("mail")) {
-    const email = value?.trim() || settings?.email || CONTACT_EMAIL;
-    return `mailto:${email}`;
-  }
-
-  if (type.includes("phone") || type.includes("tel") || type.includes("telefono") || type.includes("teléfono")) {
-    const phone = value?.trim() || settings?.phone || settings?.whatsapp || "";
-    return phone ? `tel:${cleanPhone(phone)}` : "#contacto";
-  }
-
-  if (type.includes("ubic") || type.includes("map") || type.includes("direc")) {
-    const location = value?.trim() || settings?.location || "";
-    return location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}` : "#contacto";
-  }
-
-  return "#contacto";
-}
-
-function isExternalHref(href: string) {
-  return href.startsWith("http://") || href.startsWith("https://");
-}
-
-export default function ContactSection({ sanityData, sanitySettings }: Props) {
+export default function ContactSection({ sanityData, sanitySettings, sanityServices }: Props) {
   const d = sanityData;
 
   const eyebrow = d?.eyebrow || "Conversemos sobre tu evento";
@@ -159,6 +84,7 @@ export default function ContactSection({ sanityData, sanitySettings }: Props) {
     "Déjanos una breve idea de la celebración. Al continuar, se abrirá tu app de correo con el mensaje listo para enviar.";
 
   const contactEmail = sanitySettings?.email || CONTACT_EMAIL;
+  const quoteEmail = sanitySettings?.quoteEmail || QUOTE_EMAIL || contactEmail;
   const backgroundImage = resolveImageWithUrl(d?.backgroundImage, d?.backgroundImageUrl, "/images/_miscelanea/velas.webp", "background");
 
   const sectionStyle = {
@@ -172,75 +98,58 @@ export default function ContactSection({ sanityData, sanitySettings }: Props) {
   const submitLabel = d?.form?.submitLabel || "Preparar correo";
 
   const eventTypes = useMemo(() => {
-    if (d?.form?.eventTypes?.length) {
-      const visible = d.form.eventTypes
-        .filter((eventType) => eventType.visible !== false && eventType.label)
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-        .map((eventType) => eventType.label || "");
+    const serviceTitles = sanityServices?.services?.length
+      ? sanityServices.services
+          .filter((service) => service.visible !== false && service.title)
+          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+          .map((service) => service.title?.trim() || "")
+          .filter(Boolean)
+      : fallbackServices.map((service) => service.title);
 
-      if (d.form.includeOtherOption !== false && !visible.includes("Otro")) {
-        visible.push("Otro");
-      }
-
-      return visible;
-    }
-
-    return fallbackEventTypes;
-  }, [d?.form]);
+    return Array.from(new Set([...serviceTitles, "Otro"]));
+  }, [sanityServices?.services]);
 
   const contactCards = useMemo<DisplayContactCard[]>(() => {
-    const rawCards = d?.contactCards || [];
-
-    if (rawCards.length) {
-      return rawCards
-        .filter((card) => card.visible !== false)
-        .map((card) => {
-          const type = normalizeContactType(card.type);
-          const label = card.label?.trim() || getDefaultLabel(type);
-          const value =
-            card.value?.trim() ||
-            (type.includes("whatsapp")
-              ? "Respuesta rápida"
-              : type.includes("email") || type.includes("correo") || type.includes("mail")
-                ? contactEmail
-                : type.includes("phone") || type.includes("tel") || type.includes("telefono") || type.includes("teléfono")
-                  ? sanitySettings?.phone || sanitySettings?.whatsapp || "Contacto directo"
-                  : type.includes("ubic") || type.includes("map") || type.includes("direc")
-                    ? sanitySettings?.location || "Ver ubicación"
-                    : type.includes("horario") || type.includes("schedule") || type.includes("clock")
-                      ? sanitySettings?.schedule || "Consultar disponibilidad"
-                      : "Más información");
-          const href = buildCardHref({ type, link: card.link, value: card.value, settings: sanitySettings });
-
-          return {
-            label,
-            value,
-            href,
-            icon: card.icon || getDefaultIcon(type),
-            external: isExternalHref(href),
-          };
-        });
-    }
-
     const whatsappHref = normalizeWhatsappUrl(sanitySettings?.whatsapp) || WHATSAPP_URL;
-
-    return [
+    const cards: DisplayContactCard[] = [
       {
         label: "WhatsApp",
-        value: "Respuesta rápida",
+        value: sanitySettings?.phone || "+51 922 459 810",
         href: whatsappHref,
         icon: "message-circle",
         external: true,
       },
       {
-        label: "Correo",
+        label: "Email",
         value: contactEmail,
         href: `mailto:${contactEmail}`,
         icon: "mail",
         external: false,
       },
     ];
-  }, [contactEmail, d?.contactCards, sanitySettings]);
+
+    if (quoteEmail && quoteEmail !== contactEmail) {
+      cards.push({
+        label: "Cotizaciones",
+        value: quoteEmail,
+        href: `mailto:${quoteEmail}`,
+        icon: "mail",
+        external: false,
+      });
+    }
+
+    if (sanitySettings?.schedule) {
+      cards.push({
+        label: "Horario",
+        value: sanitySettings.schedule,
+        href: "#contacto",
+        icon: "clock3",
+        external: false,
+      });
+    }
+
+    return cards;
+  }, [contactEmail, quoteEmail, sanitySettings?.phone, sanitySettings?.schedule, sanitySettings?.whatsapp]);
 
   const [form, setForm] = useState<ContactFormState>(initialFormState);
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -296,11 +205,11 @@ export default function ContactSection({ sanityData, sanitySettings }: Props) {
       return;
     }
 
-    const subject = `Consulta web Karin - ${form.eventType}`;
+    const subject = `Cotización web Karin - ${form.eventType}`;
     const body = [
       "Hola Karin,",
       "",
-      "Quisiera consultar por un evento.",
+      "Quisiera solicitar una cotización para un evento.",
       "",
       `Nombre: ${form.name.trim()}`,
       `Teléfono: ${form.phone.trim() || "No indicado"}`,
@@ -311,9 +220,9 @@ export default function ContactSection({ sanityData, sanitySettings }: Props) {
       form.message.trim(),
     ].join("\n");
 
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${quoteEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setStatus("success");
-    setFeedback("Se abrió tu app de correo con el mensaje preparado.");
+    setFeedback("Se abrió tu app de correo con la solicitud de cotización preparada.");
   };
 
   if (d?.visible === false) return null;

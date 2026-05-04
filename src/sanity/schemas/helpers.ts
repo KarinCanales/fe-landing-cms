@@ -25,9 +25,7 @@ export const footerGroups = [
 ];
 
 export const navbarGroups = [
-  {name: 'links', title: 'Botones del menú', default: true},
-  {name: 'cta', title: 'Botón de WhatsApp'},
-  {name: 'style', title: 'Color de la barra'},
+  {name: 'style', title: 'Ajustes visuales', default: true},
 ];
 
 export function fieldHelp({

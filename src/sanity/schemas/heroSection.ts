@@ -35,7 +35,7 @@ const heroSection = {
       options: fieldHelp({helpText: 'Normalmente debe llevar a WhatsApp o a la sección de contacto.'}),
       fields: [
         {name: 'label', title: 'Texto del botón', type: 'string', description: 'Texto que aparece dentro del botón.', options: fieldHelp({example: 'Cotiza ahora'})},
-        {name: 'href', title: 'Destino del botón', type: 'string', description: 'Link o sección a donde lleva el botón.', options: fieldHelp({example: '#contacto o https://wa.me/51999999999'})},
+        {name: 'href', title: 'Destino del botón', type: 'string', description: 'Link o sección a donde lleva el botón.', options: fieldHelp({example: '#contacto'})},
       ],
     },
     {

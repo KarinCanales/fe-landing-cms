@@ -3,8 +3,10 @@
  * Mirrors the exact shape the components expect.
  */
 
-export const WHATSAPP_URL = 'https://wa.me/51999999999';
-export const CONTACT_EMAIL = 'hola@karineventos.com';
+export const WHATSAPP_NUMBER = '51922459810';
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+export const CONTACT_EMAIL = 'karin@karincadenaseventos.com';
+export const QUOTE_EMAIL = 'presupuestos@karincadenaseventos.com';
 
 // ——————— Navbar ———————
 
@@ -20,10 +22,9 @@ export const fallbackNavLinks = [
 // ——————— Hero ———————
 
 export const fallbackFlipWords = [
-  'bodas',
-  'quinceañeros',
-  'eventos corporativos',
-  'celebraciones íntimas',
+  'catering y decoración',
+  'wedding planner',
+  'destination wedding',
 ];
 
 export const fallbackHeroCards = [
@@ -107,44 +108,34 @@ export const fallbackStats = [
 
 export const fallbackServices = [
   {
-    title: 'Catering Premium',
-    eyebrow: 'Alta gastronomía',
-    description: 'Menús diseñados para elevar la experiencia de tus invitados, con presentación cuidada y coordinación impecable.',
+    title: 'Catering y Decoración',
+    eyebrow: 'Experiencia integral',
+    description: 'Propuesta gastronómica y ambientación coordinadas para que mesa, decoración y servicio se sientan parte de una misma celebración.',
     image: '/images/3-servicios/catering-premium.webp',
     alt: 'Mesa de catering con frutas y bocaditos para evento elegante',
-    tags: ['Menú personalizado', 'Presentación editorial'],
+    tags: ['Catering', 'Decoración', 'Montaje'],
     visible: true,
     order: 0,
   },
   {
-    title: 'Bodas Personalizadas',
-    eyebrow: 'Celebraciones únicas',
-    description: 'Diseñamos bodas con una narrativa visual propia, cuidando cada decisión estética desde el concepto hasta el último detalle.',
+    title: 'Wedding Planner',
+    eyebrow: 'Planificación de bodas',
+    description: 'Acompañamiento en la organización, coordinación de proveedores, cronograma y dirección del evento para que la pareja disfrute sin estrés.',
     image: '/images/3-servicios/bodas-personalizadas.webp',
     alt: 'Novia sosteniendo un ramo de flores en una boda personalizada',
-    tags: ['Concepto visual', 'Detalle emocional'],
+    tags: ['Planificación', 'Coordinación', 'Bodas'],
     visible: true,
     order: 1,
   },
   {
-    title: 'Organización de Eventos',
-    eyebrow: 'Planificación integral',
-    description: 'Creamos cronogramas, gestionamos proveedores y acompañamos todo el proceso para que tú solo vivas el momento.',
+    title: 'Destination Wedding',
+    eyebrow: 'Bodas de destino',
+    description: 'Diseño y coordinación de bodas fuera de la ciudad, integrando logística, estética y experiencia para invitados en un solo plan.',
     image: '/images/3-servicios/organizacion-eventos.webp',
     alt: 'Sillas blancas ordenadas para ceremonia al aire libre',
-    tags: ['Cronograma maestro', 'Gestión de proveedores'],
+    tags: ['Destino', 'Logística', 'Experiencia'],
     visible: true,
     order: 2,
-  },
-  {
-    title: 'Decoración y Ambientación',
-    eyebrow: 'Atmósferas memorables',
-    description: 'Transformamos espacios con flores, mobiliario, color, iluminación y composición para lograr una puesta en escena premium.',
-    image: '/images/3-servicios/decoracion-y-ambientacion.webp',
-    alt: 'Decoración floral y ambientación elegante en ceremonia exterior',
-    tags: ['Diseño floral', 'Styling del espacio'],
-    visible: true,
-    order: 3,
   },
 ];
 
@@ -263,10 +254,9 @@ export const fallbackTestimonials = [
 // ——————— Contact ———————
 
 export const fallbackEventTypes = [
-  'Catering Premium',
-  'Bodas Personalizadas',
-  'Organización de Eventos',
-  'Decoración y Ambientación',
+  'Catering y Decoración',
+  'Wedding Planner',
+  'Destination Wedding',
   'Otro',
 ];
 
@@ -282,8 +272,7 @@ export const fallbackNavigationLinks = [
 ];
 
 export const fallbackServiceLinks = [
-  'Bodas personalizadas',
-  'Catering premium',
-  'Decoración floral',
-  'Organización integral',
+  'Catering y Decoración',
+  'Wedding Planner',
+  'Destination Wedding',
 ];

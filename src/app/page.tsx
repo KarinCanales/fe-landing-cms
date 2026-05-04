@@ -32,10 +32,12 @@ export default async function Home() {
       <ContactFormSection
         sanityData={data.contact}
         sanitySettings={data.settings}
+        sanityServices={data.services}
       />
       <FooterSection
         sanityData={data.footer}
         sanitySettings={data.settings}
+        sanityServices={data.services}
       />
     </main>
   );

@@ -13,9 +13,12 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   companySubtitle,
   whatsapp,
   email,
+  quoteEmail,
   phone,
   location,
   schedule,
+  domain,
+  purchaseNote,
   "socialLinks": socialLinks[]{ name, url, icon, borderColor, visible, order } | order(order asc),
   legalText,
   madeWithText,
@@ -23,8 +26,6 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
 }`;
 
 export const NAVBAR_QUERY = `*[_type == "navbarSettings"][0]{
-  "links": links[]{ label, href, enabled, order } | order(order asc),
-  whatsappCta { label, mobileLabelLong, url },
   colorMode,
   "sectionThemes": sectionThemes[]{ sectionId, theme }
 }`;
@@ -162,13 +163,10 @@ export const CONTACT_QUERY = `*[_type == "contactSection"][0]{
   title,
   highlightWord,
   description,
-  "contactCards": contactCards[]{ type, label, value, icon, link, visible },
   form {
     title,
     description,
-    submitLabel,
-    "eventTypes": eventTypes[]{ label, visible, order } | order(order asc),
-    includeOtherOption
+    submitLabel
   }
 }`;
 
@@ -181,17 +179,7 @@ export const FOOTER_QUERY = `*[_type == "footerSection"][0]{
   ctaTitle,
   ctaHighlightWord,
   ctaButtonLabel,
-  ctaButtonLink,
-  logo,
-  "logoUrl": logo.asset->url,
   brandText,
-  "navigationColumns": navigationColumns[]{ title, links[]{ label, href }, visible, order } | order(order asc),
-  "serviceLinks": serviceLinks[]{ text, link, visible },
-  contactInfo { phone, email, location, schedule },
-  "socialLinks": socialLinks[]{ name, url, icon, borderColor, visible, order } | order(order asc),
-  legalText,
   madeWithLine,
-  madeWithText,
-  madeWithSuffix,
   backToTopLabel
 }`;

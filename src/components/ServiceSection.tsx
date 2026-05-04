@@ -32,13 +32,13 @@ export default function ServicesSection({ sanityData }: Props) {
 
   const leadText =
     d?.leadCard?.text ||
-    "Una experiencia integral para eventos con carácter, estética cuidada y ejecución sin fricciones.";
+    "Catering, decoración, planificación y bodas de destino con una misma dirección estética y logística.";
   const LeadIcon = resolveIcon(d?.leadCard?.icon, CalendarCheck);
   const showLead = d?.leadCard?.visible !== false;
 
   const footerText =
     d?.footerCard?.text ||
-    "Catering, bodas, organización y ambientación trabajando como una sola experiencia.";
+    "Catering y decoración, wedding planner y destination wedding trabajando como una sola experiencia.";
   const FooterIcon = resolveIcon(d?.footerCard?.icon, Flower2);
   const showFooter = d?.footerCard?.visible !== false;
 

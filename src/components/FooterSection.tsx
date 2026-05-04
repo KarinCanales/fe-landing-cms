@@ -10,17 +10,19 @@ import {
 } from 'lucide-react';
 import styles from './FooterSection.module.css';
 import { resolveImageWithUrl } from '@/sanity/image';
-import type { FooterData, SiteSettingsData, SocialLink } from '@/sanity/types';
+import type { FooterData, ServicesData, SiteSettingsData, SocialLink } from '@/sanity/types';
 import {
   fallbackNavigationLinks,
   fallbackServiceLinks,
   WHATSAPP_URL,
   CONTACT_EMAIL,
+  QUOTE_EMAIL,
 } from '@/data/fallbacks';
 
 type Props = {
   sanityData?: FooterData;
   sanitySettings?: SiteSettingsData;
+  sanityServices?: ServicesData;
 };
 
 type FooterDataWithBackgroundAliases = NonNullable<FooterData> & {
@@ -43,6 +45,24 @@ function getFooterBackgroundUrl(data?: FooterData) {
     footerData.backgroundImageUrl;
 
   return resolveImageWithUrl(source as never, footerData.backgroundImageUrl, '', 'background');
+}
+
+function normalizeWhatsappUrl(value?: string | null) {
+  const rawValue = value?.trim();
+
+  if (!rawValue) return "";
+
+  if (rawValue.startsWith("http://") || rawValue.startsWith("https://")) {
+    return rawValue;
+  }
+
+  const cleanPhone = rawValue.replace(/\D/g, "");
+
+  if (!cleanPhone || cleanPhone.length < 8) {
+    return "";
+  }
+
+  return `https://wa.me/${cleanPhone}`;
 }
 
 function Instagram({ size = 18 }: { size?: number }) {
@@ -70,58 +90,58 @@ function SocialIcon({ name, size = 19 }: { name?: string; size?: number }) {
   return <MessageCircle size={size} />;
 }
 
-export default function FooterSection({ sanityData, sanitySettings }: Props) {
+export default function FooterSection({ sanityData, sanitySettings, sanityServices }: Props) {
   const d = sanityData;
   const s = sanitySettings;
   const currentYear = new Date().getFullYear();
 
-  // CTA
+  // CTA: el destino se mantiene fijo hacia Contacto para centralizar la cotización.
   const ctaEyebrow = d?.ctaEyebrow || 'Hagamos que tu celebración se sienta inolvidable';
   const ctaTitleText = d?.ctaTitle || 'Cada detalle puede contar una historia.';
   const ctaHighlight = d?.ctaHighlightWord || ' Empecemos por la tuya.';
-  const ctaButtonLabel = d?.ctaButtonLabel || 'Escribir por WhatsApp';
-  const ctaButtonLink = d?.ctaButtonLink ||
-    (s?.whatsapp ? `https://wa.me/${s.whatsapp}` : WHATSAPP_URL);
+  const ctaButtonLabel = d?.ctaButtonLabel || 'Cotiza ahora';
+  const ctaButtonLink = '#contacto';
 
-  // Navigation
-  const navLinks = d?.navigationColumns?.length
-    ? d.navigationColumns
-        .filter((c) => c.visible !== false)
+  // Navegación fija del footer.
+  const navLinks = [{ title: 'Explorar', links: fallbackNavigationLinks, visible: true, order: 0 }];
+
+  // Servicios: se toman de la misma lista editable de Servicios.
+  const serviceLinks = sanityServices?.services?.length
+    ? sanityServices.services
+        .filter((service) => service.visible !== false && service.title)
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    : [{ title: 'Explorar', links: fallbackNavigationLinks, visible: true, order: 0 }];
+        .map((service) => ({ text: service.title || '', link: '#servicios', visible: true }))
+    : fallbackServiceLinks.map((text) => ({ text, link: '#servicios', visible: true }));
 
-  const serviceLinks = d?.serviceLinks?.length
-    ? d.serviceLinks.filter((l) => l.visible !== false)
-    : fallbackServiceLinks.map((t) => ({ text: t, link: '#servicios', visible: true }));
+  // Contacto: todo viene desde Datos generales del sitio.
+  const contactPhone = s?.phone || '+51 922 459 810';
+  const contactEmail = s?.email || CONTACT_EMAIL;
+  const quoteEmail = s?.quoteEmail || QUOTE_EMAIL;
+  const contactLocation = s?.location || 'Lima, Perú';
+  const contactSchedule = s?.schedule || 'Lunes a viernes 9am a 7pm. Sábados previa coordinación.';
+  const phoneUrl = normalizeWhatsappUrl(s?.whatsapp) || WHATSAPP_URL;
 
-  // Contact
-  const contactPhone = d?.contactInfo?.phone || s?.phone || '+51 999 999 999';
-  const contactEmail = d?.contactInfo?.email || s?.email || CONTACT_EMAIL;
-  const contactLocation = d?.contactInfo?.location || s?.location || 'Lima, Perú';
-  const contactSchedule = d?.contactInfo?.schedule || s?.schedule || 'Atención previa coordinación';
-  const phoneUrl = s?.whatsapp ? `https://wa.me/${s.whatsapp}` : WHATSAPP_URL;
-
-  // Socials
-  const socialLinks: SocialLink[] = d?.socialLinks?.length
-    ? d.socialLinks.filter((l) => l.visible !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    : s?.socialLinks?.length
+  // Socials: se toman solo de Datos generales.
+  const socialLinks: SocialLink[] = s?.socialLinks?.length
     ? s.socialLinks.filter((l) => l.visible !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     : [
-        { name: 'instagram', url: 'https://www.instagram.com/', icon: 'instagram', visible: true, order: 0 },
-        { name: 'facebook', url: 'https://www.facebook.com/', icon: 'facebook', visible: true, order: 1 },
-        { name: 'whatsapp', url: WHATSAPP_URL, icon: 'message-circle', visible: true, order: 2 },
+        {
+          name: 'Instagram',
+          url: 'https://www.instagram.com/karincadenaseventos/',
+          icon: 'instagram',
+          borderColor: '#d2ab80',
+          visible: true,
+          order: 0,
+        },
       ];
 
-  const brandText = d?.brandText || 'Diseño, planificación y ambientación de eventos con una mirada cálida, elegante y profundamente cuidada.';
+  const brandText = d?.brandText || 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.';
   const footerBgImage = getFooterBackgroundUrl(d);
-  const companyName = s?.companyName || 'Karin Eventos';
-  const footerLogo = resolveImageWithUrl(d?.logo || s?.logo, d?.logoUrl || s?.logoUrl, '', 'logo');
+  const companyName = s?.companyName || 'KARIN CADENAS BODAS & EVENTOS';
+  const footerLogo = resolveImageWithUrl(s?.logo, s?.logoUrl, '', 'logo');
   const logoInitial = companyName.trim().charAt(0).toUpperCase() || 'K';
-  const legalText = d?.legalText || `© ${currentYear} ${companyName}. Todos los derechos reservados.`;
-  const madeWithLine =
-    d?.madeWithLine ||
-    [d?.madeWithText, d?.madeWithSuffix].filter(Boolean).join(' ') ||
-    'Hecho con amor y cariño 🤎 para celebraciones memorables.';
+  const legalText = s?.legalText || `© ${currentYear} ${companyName}. Todos los derechos reservados.`;
+  const madeWithLine = d?.madeWithLine || s?.madeWithText || 'Hecho con amor y cariño 🤎 para celebraciones memorables.';
   const backToTopLabel = d?.backToTopLabel || 'Volver arriba';
 
   return (
@@ -169,7 +189,7 @@ export default function FooterSection({ sanityData, sanitySettings }: Props) {
               <em>{ctaHighlight}</em>
             </h2>
           </div>
-          <a className={styles.primaryCta} href={ctaButtonLink} target="_blank" rel="noreferrer" aria-label={ctaButtonLabel}>
+          <a className={styles.primaryCta} href={ctaButtonLink} aria-label={ctaButtonLabel}>
             <MessageCircle size={19} />
             {ctaButtonLabel}
             <ArrowUpRight size={17} />
@@ -247,6 +267,11 @@ export default function FooterSection({ sanityData, sanitySettings }: Props) {
             <a href={`mailto:${contactEmail}`}>
               <Mail size={17} /><span>{contactEmail}</span>
             </a>
+            {quoteEmail && quoteEmail !== contactEmail ? (
+              <a href={`mailto:${quoteEmail}`}>
+                <Mail size={17} /><span>Cotizaciones: {quoteEmail}</span>
+              </a>
+            ) : null}
             <span><MapPin size={17} /><span>{contactLocation}</span></span>
             <span><Clock3 size={17} /><span>{contactSchedule}</span></span>
           </address>

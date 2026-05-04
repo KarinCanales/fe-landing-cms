@@ -82,12 +82,13 @@ export default function NavbarSection({
   const [hasScrolled, setHasScrolled] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<NavTheme>("dark");
 
+  // Menú fijo: no se edita desde Sanity para evitar romper la navegación.
   const navLinks = useMemo(() => {
-    return (sanityNavbar?.links?.length ? sanityNavbar.links : fallbackNavLinks)
+    return fallbackNavLinks
       .filter((link) => link.enabled !== false)
       .slice()
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  }, [sanityNavbar?.links]);
+  }, []);
 
   const colorMode = normalizeColorMode(sanityNavbar?.colorMode);
 
@@ -96,17 +97,12 @@ export default function NavbarSection({
     [sanityNavbar],
   );
 
-  const whatsappUrl =
-    normalizeWhatsappUrl(sanityNavbar?.whatsappCta?.url) ||
-    normalizeWhatsappUrl(sanitySettings?.whatsapp) ||
-    WHATSAPP_URL;
+  // CTA fijo: siempre usa el WhatsApp principal configurado en Datos generales.
+  const whatsappUrl = normalizeWhatsappUrl(sanitySettings?.whatsapp) || WHATSAPP_URL;
 
-  const whatsappLabel = sanityNavbar?.whatsappCta?.label || "WhatsApp";
+  const whatsappLabel = "WhatsApp";
 
-  const whatsappLabelLong =
-    sanityNavbar?.whatsappCta?.mobileLabelLong ||
-    sanityNavbar?.whatsappCta?.label ||
-    "Escribir por WhatsApp";
+  const whatsappLabelLong = "Escribir por WhatsApp";
 
   const logoSrc = resolveImageWithUrl(
     sanitySettings?.logo,
