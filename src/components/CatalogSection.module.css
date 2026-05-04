@@ -1646,3 +1646,138 @@
   line-height: 1.2;
   letter-spacing: 0.14em;
 }
+
+/* ==========================================================================
+   FIX 5 — Catálogo: alineación perfecta de la card extrema derecha
+   ========================================================================== */
+
+/* El galleryShell tiene overflow:hidden + border-radius:40px. Las cards en
+   las esquinas (especialmente top-right) quedan ligeramente recortadas por
+   el clip del shell. La solución es asegurar que el padding interior es
+   suficiente y que las columnas usan fracciones iguales sin variaciones. */
+
+.galleryShell {
+  padding: clamp(16px, 1.6vw, 22px) !important;
+}
+
+/* Las tres columnas siempre arrancan con el mismo weight base */
+.gallery {
+  --col-1: 1fr !important;
+  --col-2: 1fr !important;
+  --col-3: 1fr !important;
+}
+
+/* Cada card ocupa exactamente su celda — sin desbordamientos */
+.card {
+  min-width: 0 !important;
+  width: 100% !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
+}
+
+/* La card de la última columna (posición 3, 6, 9…) tiene exactamente el
+   mismo borde interior que las otras. Si el clip del shell recortaba su
+   borde derecho, este margin asegura un buffer mínimo. */
+.card:nth-child(3n) {
+  margin-right: 0 !important;
+}
+
+/* Las filas inferiores también alinean sus cards */
+.gallery {
+  align-items: stretch !important;
+  justify-items: stretch !important;
+}
+
+/* Evitar que el hover afecte al layout más de lo declarado */
+@media (hover: hover) and (pointer: fine) and (min-width: 861px) {
+  .gallery:has(.card:nth-child(3n + 1):hover) {
+    --col-1: 1.68fr !important;
+    --col-2: 0.74fr !important;
+    --col-3: 0.74fr !important;
+  }
+
+  .gallery:has(.card:nth-child(3n + 2):hover) {
+    --col-1: 0.74fr !important;
+    --col-2: 1.68fr !important;
+    --col-3: 0.74fr !important;
+  }
+
+  .gallery:has(.card:nth-child(3n):hover) {
+    --col-1: 0.74fr !important;
+    --col-2: 0.74fr !important;
+    --col-3: 1.68fr !important;
+  }
+}
+
+/* ==========================================================================
+   REBRAND v2 — Catálogo: fondos teal oscuros
+   rgba(37,31,24,x) → rgba(18,38,38,x)
+   rgba(47,40,29,x) → rgba(23,49,48,x)
+   rgba(20,16,12,x) → rgba(9,20,20,x)
+   rgba(114,92,58,x) en dark → rgba(45,95,94,x)
+   ========================================================================== */
+
+/* Variables locales */
+.catalogSection {
+  --deep: #173130 !important;  /* era #2f281d */
+}
+
+/* Fondo principal */
+.catalogSection {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(229, 210, 184, 0.16), transparent 30%),
+    radial-gradient(circle at 88% 28%, rgba(179, 183, 146, 0.14), transparent 33%),
+    linear-gradient(
+      112deg,
+      rgba(18, 38, 38, 0.96) 0%,
+      rgba(23, 49, 48, 0.90) 38%,
+      rgba(45, 95, 94, 0.72) 78%,
+      rgba(128, 150, 113, 0.48) 135%
+    ),
+    var(--catalog-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Capa ::before */
+.catalogSection::before {
+  background:
+    radial-gradient(ellipse at 14% 18%, rgba(229, 210, 184, 0.12), transparent 36%),
+    linear-gradient(
+      90deg,
+      rgba(9, 20, 20, 0.86) 0%,
+      rgba(9, 20, 20, 0.68) 42%,
+      rgba(23, 49, 48, 0.48) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(9, 20, 20, 0.18) 0%,
+      rgba(9, 20, 20, 0.70) 100%
+    ) !important;
+}
+
+/* GalleryShell (contenedor de cards) */
+.galleryShell {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(229, 210, 184, 0.10), transparent 28%),
+    linear-gradient(145deg, rgba(229, 224, 216, 0.09), rgba(229, 210, 184, 0.04)),
+    rgba(9, 20, 20, 0.18) !important;
+}
+
+/* Cards individuales */
+.card {
+  background: rgba(23, 49, 48, 0.28) !important;
+}
+
+/* Badge pills */
+.badge {
+  background:
+    linear-gradient(135deg, rgba(45, 95, 94, 0.48), rgba(23, 49, 48, 0.78)) !important;
+}
+
+/* Modal backdrop/panel dark */
+.modalStage {
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 46%),
+    #091413 !important;
+}

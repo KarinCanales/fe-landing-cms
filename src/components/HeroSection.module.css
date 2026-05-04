@@ -1263,3 +1263,29 @@
     line-height: 1.46;
   }
 }
+
+/* ==========================================================================
+   REBRAND v2 — Hero: overlay anclado en teal del logo
+   Los acentos cálidos (chai, vanilla) se mantienen como contraste cálido
+   sobre el fondo teal. Mapeo oscuros:
+     rgba(20,16,12) → rgba(9,20,20)
+     rgba(37,31,24) → rgba(18,38,38)
+     rgba(58,48,36) → rgba(28,59,58)
+   ========================================================================== */
+.hero-overlay {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(229, 210, 184, 0.18), transparent 30%),
+    radial-gradient(circle at 82% 72%, rgba(229, 224, 216, 0.14), transparent 24%),
+    radial-gradient(circle at 72% 16%, rgba(128, 150, 113, 0.12), transparent 26%),
+    linear-gradient(
+      90deg,
+      rgba(9, 20, 20, 0.84) 0%,
+      rgba(18, 38, 38, 0.58) 46%,
+      rgba(28, 59, 58, 0.26) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(9, 20, 20, 0.12) 0%,
+      rgba(9, 20, 20, 0.50) 100%
+    ) !important;
+}

@@ -1432,3 +1432,135 @@
   line-height: 1.2;
   letter-spacing: 0.14em;
 }
+
+/* ==========================================================================
+   FIX 6 — Contacto: cohesión de paleta + layout tablet mejorado
+   ========================================================================== */
+
+/* ── 6a. Cohesión de paleta: tonos más profundos para conectar con dark ─── */
+.contactSection {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 250, 242, 0.46), transparent 32%),
+    radial-gradient(circle at 88% 20%, rgba(210, 171, 128, 0.14), transparent 34%),
+    linear-gradient(
+      105deg,
+      rgba(229, 224, 216, 0.88) 0%,
+      rgba(229, 210, 184, 0.72) 48%,
+      rgba(179, 183, 146, 0.38) 132%
+    ),
+    var(--contact-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* ── 6b. Tablet (768–980px): cards izquierda, formulario derecha ───────── */
+@media (min-width: 681px) and (max-width: 980px) {
+  /* El container principal pasa de 1 columna a 2 columnas balanceadas */
+  .container {
+    grid-template-columns: minmax(280px, 0.9fr) minmax(340px, 1.1fr) !important;
+    gap: clamp(28px, 4vw, 48px) !important;
+    align-items: start !important;
+  }
+
+  /* El bloque de texto/copy queda en la columna izquierda */
+  .copyBlock {
+    max-width: none !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  /* Las contact cards también van en columna izquierda, debajo del copy */
+  /* (forman parte del copyBlock en el DOM, así que van heredadas) */
+
+  /* El formCard ocupa la columna derecha, toda la altura */
+  .formCard {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: start !important;
+    /* Evitar que el form sea gigantesco: máx height razonable */
+    max-height: none !important;
+  }
+
+  /* Las contact cards en 2 columnas (quedaban en 2 columnas con 1 columna de grid, bien) */
+  .contactCards {
+    grid-template-columns: 1fr !important;  /* en tablet van en columna única debajo del título */
+    margin-top: 20px !important;
+  }
+
+  /* No hace falta el minHeight tan grande en tablet */
+  .contactSection {
+    min-height: auto !important;
+    padding: 100px 0 72px !important;
+  }
+}
+
+/* ── 6c. Mobile pequeño: formulario compacto ───────────────────────────── */
+@media (max-width: 680px) {
+  .container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contactCards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .formCard {
+    padding: clamp(20px, 5vw, 28px) !important;
+  }
+}
+
+/* ==========================================================================
+   REBRAND v2 — Contacto (sección clara):
+   Tinta marrón → tinta teal. El CTA de envío usa el teal del logo.
+   ========================================================================== */
+
+/* Texto principal */
+.contactSection { color: #173130 !important; }
+
+/* Eyebrow */
+.eyebrow {
+  border-color: rgba(45, 95, 94, 0.16) !important;
+  color: rgba(23, 49, 48, 0.78) !important;
+  background:
+    linear-gradient(135deg, rgba(255, 250, 242, 0.54), rgba(45, 95, 94, 0.12)) !important;
+}
+.eyebrow svg { color: #2d5f5e !important; }
+
+/* Heading */
+.copyBlock h2    { color: #173130 !important; }
+.copyBlock h2 em {
+  background-image: linear-gradient(100deg, #2d5f5e, #d2ab80 60%, #809671 130%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+.copyBlock p { color: rgba(23, 49, 48, 0.78) !important; }
+
+/* Contact info cards */
+.contactCards a {
+  border-color: rgba(45, 95, 94, 0.14) !important;
+}
+.contactCards a:hover {
+  border-color: rgba(45, 95, 94, 0.30) !important;
+  background: rgba(45, 95, 94, 0.07) !important;
+}
+.contactCards a > span {
+  background: linear-gradient(135deg, rgba(45, 95, 94, 0.18), rgba(128, 150, 113, 0.14)) !important;
+  border-color: rgba(45, 95, 94, 0.14) !important;
+  color: #2d5f5e !important;
+}
+.contactCards strong { color: #173130 !important; }
+.contactCards small  { color: rgba(23, 49, 48, 0.56) !important; }
+
+/* Botón de envío del formulario */
+.submitButton {
+  background: #2d5f5e !important;
+  color: #f0f6f5 !important;
+  border-color: transparent !important;
+}
+.submitButton:hover {
+  background: #245250 !important;
+}
+
+/* Form labels e inputs */
+.formCard { color: #173130 !important; }

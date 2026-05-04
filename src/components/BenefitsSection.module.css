@@ -1554,358 +1554,178 @@
 .orbThree { z-index: 3 !important; }
 .container { position: relative; z-index: 6 !important; }
 
-/* ========================================================================== 
-   FINAL V2 — Benefits editorial bento redesign
-   Objetivo: evitar cruce del título con las cards, refinar glass claro,
-   conservar patrón de cuadros en hover y dar más aire a mini cards.
+/* ==========================================================================
+   FIX 2 — Beneficios: paleta de cards, layout título, hover mini cards,
+            posición de statAccent
    ========================================================================== */
 
-.benefits {
-  --benefit-ink: #2f281d;
-  --benefit-muted: rgba(47, 40, 29, 0.68);
-  --benefit-caramel: #725c3a;
-  --benefit-green: #809671;
-  --benefit-sage: #b3b792;
-  --benefit-cream: #fffaf2;
-  --benefit-linen: #eee4d4;
-  --benefit-card: rgba(255, 250, 242, 0.66);
-  background:
-    radial-gradient(circle at 13% 10%, rgba(255, 250, 242, 0.72), transparent 31%),
-    radial-gradient(circle at 88% 78%, rgba(128, 150, 113, 0.18), transparent 34%),
-    linear-gradient(128deg, #e9e2d5 0%, #dfccb0 48%, #cdb894 100%);
+/* ── 2a. Layout: título siempre visible por encima de las cards ─────────── */
+.layout {
+  align-items: start !important;
+  padding-top: 0;
 }
 
-@media (min-width: 1081px) {
-  .benefits {
-    height: auto;
-    min-height: 100svh;
-    padding: clamp(96px, 9vh, 124px) 0 clamp(88px, 9vh, 124px);
-  }
-
-  .container {
-    width: min(1280px, calc(100% - 64px));
-    gap: clamp(30px, 4vh, 54px);
-  }
-
-  .layout {
-    grid-template-columns: minmax(410px, 0.88fr) minmax(560px, 1.12fr);
-    align-items: center;
-    gap: clamp(64px, 6.4vw, 112px);
-  }
-
-  .copy {
-    z-index: 3;
-    max-width: 520px;
-  }
-
-  .copy h2 {
-    max-width: 7.45ch;
-    font-size: clamp(4.15rem, 5.9vw, 6.15rem);
-    line-height: 0.93;
-    letter-spacing: -0.055em;
-  }
-
-  .copy p {
-    max-width: 35ch;
-    font-size: clamp(1.04rem, 1.12vw, 1.22rem);
-  }
-}
-
-@media (min-width: 1081px) and (max-height: 1000px) {
-  .benefits {
-    min-height: 100svh;
-    padding: clamp(86px, 8.5vh, 108px) 0 clamp(72px, 7.8vh, 96px);
-  }
-
-  .container {
-    gap: clamp(24px, 3.4vh, 40px);
-  }
-
-  .copy h2 {
-    max-width: 7.35ch;
-    font-size: clamp(3.65rem, 5.25vw, 5.35rem);
-    line-height: 0.93;
-  }
-
-  .cardsGrid {
-    gap: 14px;
-  }
-}
-
-.cardsGrid {
-  position: relative;
-  isolation: isolate;
-  align-items: stretch;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  auto-rows: minmax(132px, auto);
-  gap: 16px;
-  padding: 2px;
-}
-
-.cardsGrid::before {
-  content: "";
-  position: absolute;
-  inset: -18px;
-  z-index: -2;
-  pointer-events: none;
-  border-radius: 44px;
-  background:
-    linear-gradient(90deg, rgba(255, 250, 242, 0.08) 1px, transparent 1px),
-    linear-gradient(rgba(255, 250, 242, 0.07) 1px, transparent 1px),
-    radial-gradient(circle at 12% 18%, rgba(179, 183, 146, 0.24), transparent 30%),
-    radial-gradient(circle at 86% 82%, rgba(210, 171, 128, 0.18), transparent 34%);
-  background-size: 36px 36px, 36px 36px, auto, auto;
-  opacity: 0.58;
-  mask-image: linear-gradient(135deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  animation: benefitsMatrixDrift 28s linear infinite;
-}
-
-.cardsGrid::after {
-  content: "";
-  position: absolute;
-  inset: 8% -10%;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(
-    110deg,
-    transparent 0%,
-    transparent 34%,
-    rgba(255, 250, 242, 0.18) 44%,
-    rgba(179, 183, 146, 0.12) 50%,
-    transparent 62%,
-    transparent 100%
-  );
-  opacity: 0;
-  transform: translateX(-64%) skewX(-8deg);
-  animation: benefitsMatrixSweep 11s ease-in-out infinite;
-}
-
-@keyframes benefitsMatrixDrift {
-  from { background-position: 0 0, 0 0, 0 0, 0 0; }
-  to { background-position: 36px 36px, 36px 36px, 0 0, 0 0; }
-}
-
-@keyframes benefitsMatrixSweep {
-  0%, 38% { opacity: 0; transform: translateX(-64%) skewX(-8deg); }
-  52% { opacity: 0.48; }
-  78% { opacity: 0.18; }
-  100% { opacity: 0; transform: translateX(64%) skewX(-8deg); }
-}
-
-.card,
-.cardLarge,
-.cardWide {
-  min-height: 0;
-}
-
-.card {
-  grid-column: span 3;
-  min-height: 184px;
-  padding: clamp(22px, 2vw, 30px);
-  border: 1px solid rgba(114, 92, 58, 0.18);
-  border-radius: 28px;
-  background:
-    linear-gradient(145deg, rgba(255, 250, 242, 0.76), rgba(238, 228, 212, 0.56)),
-    radial-gradient(circle at 18% 0%, rgba(179, 183, 146, 0.13), transparent 42%);
-  box-shadow:
-    0 24px 70px rgba(47, 40, 29, 0.11),
-    0 2px 0 rgba(255, 250, 242, 0.36) inset,
-    0 -1px 0 rgba(114, 92, 58, 0.08) inset;
-  backdrop-filter: blur(18px) saturate(1.02);
-}
-
-.card:first-child,
-.card:last-child,
-.cardLarge,
-.cardWide {
-  grid-column: span 6;
-}
-
-.card:first-child,
-.cardLarge {
-  min-height: 196px;
-}
-
-.card:last-child,
-.cardWide {
-  min-height: 168px;
-}
-
-.card:nth-child(2) { border-top-right-radius: 22px; }
-
-.card:nth-child(3) {
-  border-top-left-radius: 22px;
-  transform: translateY(10px);
-}
-
-.card:nth-child(3):hover { transform: translateY(6px); }
-
-.card::before {
-  background:
-    radial-gradient(280px circle at 10% -10%, rgba(255, 250, 242, 0.72), transparent 48%),
-    radial-gradient(280px circle at 102% 102%, rgba(128, 150, 113, 0.14), transparent 52%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 56%);
-  opacity: 0.9;
-}
-
-.card::after {
-  background-image:
-    linear-gradient(rgba(128, 150, 113, 0.105) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(114, 92, 58, 0.08) 1px, transparent 1px),
-    radial-gradient(circle at 1px 1px, rgba(210, 171, 128, 0.16) 1px, transparent 1.6px);
-  background-size: 28px 28px, 28px 28px, 28px 28px;
-  mask-image: linear-gradient(135deg, #000 0%, rgba(0, 0, 0, 0.76) 48%, transparent 92%);
-  opacity: 0;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(128, 150, 113, 0.36);
-  background:
-    linear-gradient(145deg, rgba(255, 250, 242, 0.86), rgba(239, 229, 211, 0.64)),
-    radial-gradient(circle at 18% 0%, rgba(179, 183, 146, 0.18), transparent 44%);
-  box-shadow:
-    0 30px 86px rgba(47, 40, 29, 0.14),
-    0 14px 36px rgba(128, 150, 113, 0.11),
-    0 2px 0 rgba(255, 250, 242, 0.46) inset;
-}
-
-.cardTop span {
-  color: rgba(114, 92, 58, 0.78);
-  letter-spacing: 0.18em;
-}
-
-.iconBox {
-  background:
-    linear-gradient(145deg, rgba(255, 250, 242, 0.9), rgba(179, 183, 146, 0.18));
-  border-color: rgba(128, 150, 113, 0.28);
-  color: var(--benefit-green);
-}
-
-.card h3 {
-  color: var(--benefit-ink);
-  letter-spacing: -0.035em;
-}
-
-.card p {
-  color: var(--benefit-muted);
-  font-weight: 520;
-}
-
-.stats {
-  position: relative;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: clamp(24px, 3.2vh, 42px);
-  padding-top: clamp(18px, 2.3vh, 30px);
-}
-
-.stat {
-  height: 72px;
-  min-height: 72px;
-  border-color: rgba(114, 92, 58, 0.16);
-  background:
-    linear-gradient(145deg, rgba(255, 250, 242, 0.7), rgba(238, 228, 212, 0.46)),
-    rgba(255, 250, 242, 0.24);
-  animation: none;
-  will-change: auto;
-  cursor: default;
-}
-
-.stat::before {
-  animation: none;
-  transform: scaleX(0.38);
-  transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 520ms ease;
-}
-
-.stat::after {
-  animation: none;
-  opacity: 0;
-  transition:
-    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 360ms ease;
-}
-
-.stat:hover {
-  transform: translateY(-4px);
-  border-color: rgba(128, 150, 113, 0.32);
-  background:
-    linear-gradient(145deg, rgba(255, 250, 242, 0.82), rgba(238, 228, 212, 0.56)),
-    rgba(255, 250, 242, 0.28);
-}
-
-.stat:hover::before {
-  transform: scaleX(1);
-  opacity: 0.96;
-}
-
-.stat:hover::after {
-  opacity: 0.82;
-  transform: rotate(24deg) translateX(540%);
-}
-
-.stat:hover span { color: var(--benefit-green); }
-.stat span { transition: color 360ms ease; }
-
-.statAccent {
-  position: absolute;
-  right: clamp(8px, 1.5vw, 18px);
-  bottom: calc(100% + 18px);
-  display: inline-flex;
-  border-color: rgba(128, 150, 113, 0.28);
-  background:
-    linear-gradient(135deg, rgba(255, 250, 242, 0.74), rgba(238, 228, 212, 0.48)),
-    rgba(255, 250, 242, 0.36);
-  box-shadow:
-    0 18px 46px rgba(47, 40, 29, 0.11),
-    inset 0 1px 0 rgba(255, 250, 242, 0.7);
-  transform: translateY(-4px);
-}
-
-.statAccent:hover {
-  border-color: rgba(128, 150, 113, 0.42);
-  transform: translateY(-7px);
+/* Aseguramos que el texto empiece desde arriba y no quede "enterrado" */
+.copy {
+  position: sticky;
+  top: 108px;                /* se ancla bajo el navbar mientras scrolleas */
 }
 
 @media (max-width: 1080px) {
-  .container { width: min(100% - 36px, 920px); }
-  .layout { grid-template-columns: 1fr; gap: 40px; }
-  .cardsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
-  .card,
-  .card:first-child,
-  .card:last-child,
-  .cardLarge,
-  .cardWide { grid-column: span 2; }
-  .card:nth-child(3) { transform: none; }
-  .statAccent {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    grid-column: 1 / -1;
-    justify-self: start;
-    margin-top: 6px;
-    transform: none;
+  .copy {
+    position: static;        /* en tablet / móvil ya no hace sticky */
   }
 }
 
-@media (max-width: 760px) {
-  .cardsGrid { grid-template-columns: 1fr; gap: 14px; }
-  .cardsGrid::before,
-  .cardsGrid::after { display: none; }
-  .card,
-  .card:first-child,
-  .card:last-child,
-  .cardLarge,
-  .cardWide { grid-column: auto; min-height: 190px; }
-  .card:hover,
-  .card:nth-child(3):hover { transform: none; }
-  .stats { grid-template-columns: 1fr; padding-top: 8px; }
-  .stat:hover { transform: translateY(-2px); }
+/* ── 2b. Paleta de cards: warm amber en vez de "blanco IA" ─────────────── */
+.card {
+  background:
+    radial-gradient(circle at 14% 8%, rgba(255, 250, 242, 0.72), transparent 38%),
+    linear-gradient(
+      148deg,
+      rgba(229, 210, 184, 0.58) 0%,
+      rgba(245, 232, 210, 0.50) 54%,
+      rgba(179, 183, 146, 0.18) 120%
+    ) !important;
+  border: 1px solid rgba(114, 92, 58, 0.16) !important;
+  box-shadow:
+    0 18px 44px rgba(114, 92, 58, 0.10),
+    0 4px 12px rgba(47, 40, 29, 0.06),
+    inset 0 1px 0 rgba(255, 250, 242, 0.62) !important;
+  color: #2f281d !important;
 }
 
-@media (max-width: 430px) {
-  .container { width: min(100% - 24px, 1120px); }
-  .copy h2 { max-width: 8.2ch; }
+/* Card grande */
+.cardLarge {
+  background:
+    radial-gradient(circle at 12% 6%, rgba(255, 250, 242, 0.82), transparent 42%),
+    linear-gradient(
+      152deg,
+      rgba(229, 210, 184, 0.64) 0%,
+      rgba(210, 171, 128, 0.32) 60%,
+      rgba(179, 183, 146, 0.22) 120%
+    ) !important;
 }
+
+/* Hover de las cards principales */
+.card:hover {
+  border-color: rgba(128, 150, 113, 0.28) !important;
+  box-shadow:
+    0 28px 64px rgba(114, 92, 58, 0.15),
+    0 8px 20px rgba(47, 40, 29, 0.08),
+    inset 0 1px 0 rgba(255, 250, 242, 0.72) !important;
+  transform: translateY(-3px) scale(1.008) !important;
+}
+
+/* Texto dentro de las cards */
+.cardBody h3 {
+  color: #2f281d !important;
+}
+
+.cardBody p {
+  color: rgba(47, 40, 29, 0.76) !important;
+}
+
+/* Icono de las cards */
+.iconBox {
+  background:
+    linear-gradient(135deg, rgba(114, 92, 58, 0.14), rgba(128, 150, 113, 0.1)) !important;
+  border: 1px solid rgba(114, 92, 58, 0.18) !important;
+  color: #725c3a !important;
+}
+
+/* ── 2c. Hover en las mini cards de stats ──────────────────────────────── */
+.stat {
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease !important;
+}
+
+.stat:hover {
+  transform: translateY(-3px) scale(1.015) !important;
+  border-color: rgba(128, 150, 113, 0.32) !important;
+  box-shadow:
+    0 20px 48px rgba(114, 92, 58, 0.16),
+    0 6px 16px rgba(47, 40, 29, 0.08),
+    inset 0 1px 0 rgba(255, 250, 242, 0.62) !important;
+}
+
+/* ── 2d. statAccent: no se pega al viewport en pantallas grandes ────────── */
+.statAccent {
+  position: relative !important;  /* saca del absolute para que siga el flujo */
+  top: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  align-self: stretch !important;
+  margin-top: 0 !important;
+}
+
+/* En el grid de stats, la última mini card ocupa el espacio natural */
+.stats {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)) !important;
+  gap: 14px !important;
+  margin-top: clamp(32px, 5vw, 56px) !important;
+  align-items: start !important;
+}
+
+@media (max-width: 1080px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   REBRAND v2 — Beneficios (sección clara):
+   El texto oscuro (#2f281d marrón) pasa a tinta teal (#173130).
+   Los acentos cálidos (carob, chai, matcha) se mantienen.
+   ========================================================================== */
+
+/* Tinta oscura → tinta teal */
+.benefits { color: #173130 !important; }
+
+.copy h2         { color: #173130 !important; }
+.copy h2 em {
+  background-image: linear-gradient(100deg, #2d5f5e, #d2ab80 60%, #809671 130%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+.copy p          { color: rgba(23, 49, 48, 0.82) !important; }
+
+/* Kicker (eyebrow pill) */
+.kicker {
+  border-color: rgba(45, 95, 94, 0.28) !important;
+  color: #2d5f5e !important;
+  background: linear-gradient(135deg, rgba(255, 250, 242, 0.52), rgba(45, 95, 94, 0.12)) !important;
+}
+.kicker svg { color: #2d5f5e !important; }
+
+/* Cards texto */
+.cardBody h3 { color: #173130 !important; }
+.cardBody p  { color: rgba(23, 49, 48, 0.74) !important; }
+
+/* Icono de card */
+.iconBox {
+  background: linear-gradient(135deg, rgba(45, 95, 94, 0.12), rgba(128, 150, 113, 0.10)) !important;
+  border-color: rgba(45, 95, 94, 0.18) !important;
+  color: #2d5f5e !important;
+}
+
+/* Mini-cards stats texto */
+.stat span  { color: #173130 !important; }
+.stat small { color: rgba(23, 49, 48, 0.64) !important; }
+.statAccent { color: #2d5f5e !important; }

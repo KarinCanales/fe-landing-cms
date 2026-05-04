@@ -1453,3 +1453,137 @@
 .footerWithImage .orbitalMark,
 .footerWithImage .floatingMotifs { z-index: 2 !important; }
 .footerWithImage .container { position: relative; z-index: 6 !important; }
+
+/* ==========================================================================
+   FIX 7 — Footer: móvil — links en 2 columnas para no apilar en 1 sola columna
+   ========================================================================== */
+
+@media (max-width: 680px) {
+  /* Las columnas de navegación del footer ocupan el ancho completo */
+  .footerMain {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* Los links de cada columna pasan a 2 columnas compactas */
+  .footerColumn ul {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px 20px !important;
+  }
+
+  /* Si la columna tiene solo 1 link o es el bloque de contacto, vuelve a 1 col */
+  .footerColumn ul:has(li:only-child) {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* La contactCard no usa la misma ul, se queda como está */
+  .contactCard {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* footerColumn heading conserva su estilo */
+  .footerColumn h3 {
+    margin-bottom: 14px !important;
+  }
+}
+
+/* En móvil muy estrecho (≤380px) */
+@media (max-width: 380px) {
+  .footerColumn ul {
+    grid-template-columns: 1fr !important; /* < 380px vuelve a 1 columna */
+  }
+}
+
+/* ==========================================================================
+   REBRAND v2 — Footer: dark olive-green → deep teal
+   
+   Mapeo de tokens locales:
+     --footer-deep:  #1d2116 → #112424   (dark teal)
+     --footer-night: #11150f → #0b1716   (deep teal)
+     --footer-olive: #252b1d → #162f2f   (teal medium)
+   
+   Mapeo de backgrounds:
+     #202616 → #132928
+     #171b12 → #0e1d1d
+     #0f120c → #091413
+   ========================================================================== */
+
+/* Redefine los tokens locales del Footer */
+.footer {
+  --footer-deep:  #112424 !important;  /* era #1d2116 */
+  --footer-night: #0b1716 !important;  /* era #11150f */
+  --footer-olive: #162f2f !important;  /* era #252b1d */
+}
+
+/* Fondo principal — gradiente oscuro teal */
+.footer {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(179, 183, 146, 0.14), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(210, 171, 128, 0.10), transparent 28%),
+    radial-gradient(circle at 48% 112%, rgba(45, 95, 94, 0.18), transparent 34%),
+    linear-gradient(
+      180deg,
+      #132928 0%,
+      #0e1d1d 48%,
+      #091413 100%
+    ) !important;
+}
+
+/* Capa ::before (sobre la imagen de fondo) */
+.footer::before {
+  background:
+    radial-gradient(ellipse at 50% -8%, rgba(229, 210, 184, 0.11), transparent 44%),
+    radial-gradient(ellipse at 2% 72%, rgba(45, 95, 94, 0.14), transparent 34%),
+    radial-gradient(ellipse at 96% 68%, rgba(128, 150, 113, 0.12), transparent 36%),
+    linear-gradient(90deg, rgba(9, 20, 20, 0.36), transparent 32%, rgba(45, 95, 94, 0.07)) !important;
+}
+
+/* Aurora / glow en la parte baja */
+.aurora {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(45, 95, 94, 0.18), transparent 68%) !important;
+}
+
+/* CTA panel (la gran tarjeta de llamada a la acción) */
+.ctaPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(23, 49, 48, 0.82),
+      rgba(18, 38, 38, 0.88)
+    ) !important;
+  border-color: rgba(229, 210, 184, 0.16) !important;
+}
+
+/* Botón primario del footer CTA */
+.primaryCta {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.16), transparent 30%),
+    linear-gradient(135deg, #e0bd95 0%, #d2ab80 50%, #c49a6e 100%) !important;
+  color: #112424 !important;
+}
+
+/* Social links */
+.socialLinks a {
+  border-color: rgba(229, 210, 184, 0.18) !important;
+  background: rgba(45, 95, 94, 0.12) !important;
+}
+
+.socialLinks a:hover {
+  border-color: rgba(229, 210, 184, 0.36) !important;
+  background: rgba(45, 95, 94, 0.24) !important;
+}
+
+/* Línea divisoria del footer bottom */
+.footerBottom {
+  border-top-color: rgba(229, 210, 184, 0.10) !important;
+}
+
+/* Contact card en footer */
+.contactCard {
+  background:
+    radial-gradient(circle at 22% 0%, rgba(45, 95, 94, 0.12), transparent 30%),
+    rgba(255, 250, 242, 0.04) !important;
+  border-color: rgba(229, 210, 184, 0.12) !important;
+}

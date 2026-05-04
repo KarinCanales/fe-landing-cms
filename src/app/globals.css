@@ -1,64 +1,83 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-matcha: #809671;
-  --color-brand-almond: #e5e0d8;
+  --color-brand-matcha:    #809671;
+  --color-brand-almond:    #e5e0d8;
   --color-brand-pistachio: #b3b792;
-  --color-brand-chai: #d2ab80;
-  --color-brand-carob: #725c3a;
-  --color-brand-vanilla: #e5d2b8;
+  --color-brand-chai:      #d2ab80;
+  --color-brand-carob:     #725c3a;
+  --color-brand-vanilla:   #e5d2b8;
+  --color-brand-teal:      #2d5f5e;   /* nuevo — color logo */
 
-  --color-brand-gold: #d2ab80;
-  --color-brand-sage: #809671;
-  --color-brand-brown: #3a3024;
-  --color-brand-cream: #e5e0d8;
+  --color-brand-gold:   #d2ab80;
+  --color-brand-sage:   #809671;
+  --color-brand-brown:  #1c3b3a;   /* era #3a3024 → ahora teal */
+  --color-brand-cream:  #e5e0d8;
 
-  --background: #3a3024;
+  --background: #1c3b3a;   /* era #3a3024 */
   --foreground: #e5e0d8;
 
   --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-sans:  "Inter", sans-serif;
 }
 
 :root {
-  --background: #3a3024;
-  --foreground: #e5e0d8;
+  /* ============================================================
+     PALETA KARIN EVENTOS — v2
+     Anclada en el teal del logo (#2d5f5e).
+     Los cálidos (chai, carob, vanilla, almond) actúan como
+     acentos de contraste cálido sobre fondos teal oscuros.
+     ============================================================ */
 
-  /* Studio Fleur palette */
-  --matcha: #809671;
-  --almond: #e5e0d8;
-  --pistachio: #b3b792;
-  --chai: #d2ab80;
-  --carob: #725c3a;
-  --vanilla: #e5d2b8;
+  /* ── Logo anchor ───────────────────────────────────────── */
+  --brand-teal:       #2d5f5e;   /* logo principal */
+  --brand-teal-mid:   #1c3b3a;   /* teal medio, secciones oscuras */
+  --brand-teal-deep:  #122626;   /* teal profundo */
+  --brand-teal-night: #091413;   /* casi negro teal */
 
-  /* Semantic colors */
-  --ink: #2f281d;
-  --surface-dark: #3a3024;
-  --surface-deep: #251f18;
-  --surface-soft: #e5e0d8;
-  --surface-warm: #e5d2b8;
+  /* ── Paleta cliente (sin cambios) ──────────────────────── */
+  --matcha:    #809671;   /* verde sage suave */
+  --pistachio: #b3b792;   /* verde olive claro */
+  --carob:     #725c3a;   /* marrón/bronce cálido */
+  --almond:    #e5e0d8;   /* beige grisáceo claro */
+  --chai:      #d2ab80;   /* arena/ámbar cálido */
+  --vanilla:   #e5d2b8;   /* beige cálido */
 
-  --accent: var(--chai);
-  --accent-soft: var(--vanilla);
-  --accent-green: var(--matcha);
-  --muted-green: var(--pistachio);
+  /* ── Superficies ───────────────────────────────────────── */
+  --surface-dark: #1c3b3a;   /* era #3a3024 — ahora teal oscuro */
+  --surface-deep: #122626;   /* era #251f18 — teal más profundo  */
+  --surface-soft: #e5e0d8;   /* almond — sin cambio */
+  --surface-warm: #e5d2b8;   /* vanilla — sin cambio */
 
-  --cream: var(--almond);
-  --white: #fffaf2;
+  /* ── Texto ─────────────────────────────────────────────── */
+  --ink:   #173130;   /* era #2f281d — tinta oscura con matiz teal */
+  --white: #fffaf2;   /* blanco cálido — sin cambio */
   --muted: rgba(229, 224, 216, 0.82);
 
-  /* Compatibility aliases */
-  --copper: var(--chai);
-  --sage: var(--matcha);
-  --brown: var(--surface-dark);
+  /* ── Acentos ───────────────────────────────────────────── */
+  --accent:       var(--chai);         /* ámbar cálido (sin cambio) */
+  --accent-teal:  var(--brand-teal);   /* nuevo acento teal fuerte */
+  --accent-soft:  var(--vanilla);
+  --accent-green: var(--matcha);
+  --muted-green:  var(--pistachio);
+
+  /* ── Aliases de compatibilidad ─────────────────────────── */
+  --cream:   var(--almond);
+  --copper:  var(--chai);
+  --sage:    var(--matcha);
+  --brown:   var(--surface-dark);
   --brown-2: var(--surface-deep);
 
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+  /* ── Global de fondo y foreground ─────────────────────── */
+  --background: var(--surface-dark);
+  --foreground: var(--almond);
 
-  --tracking-tight: -0.055em;
-  --tracking-eyebrow: 0.24em;
+  /* ── Tipografía ─────────────────────────────────────────── */
+  --font-serif: "Playfair Display", serif;
+  --font-sans:  "Inter", sans-serif;
+
+  --tracking-tight:   -0.055em;
+  --tracking-eyebrow:  0.24em;
 }
 
 * {
@@ -613,5 +632,23 @@ iframe {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   FIX 1 — Offset de scroll: las secciones respiran bajo el navbar fijo.
+   El navbar flota a ~18-12px del top y mide ~72px, así que con 96px
+   de margen hay espacio suficiente en todas las resoluciones.
+   ============================================================ */
+section[id],
+footer[id] {
+  scroll-margin-top: 96px;
+}
+
+/* En móvil el navbar es algo más compacto */
+@media (max-width: 680px) {
+  section[id],
+  footer[id] {
+    scroll-margin-top: 80px;
   }
 }
