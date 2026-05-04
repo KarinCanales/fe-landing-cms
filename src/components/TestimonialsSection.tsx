@@ -64,7 +64,10 @@ function TestimonialPhoto({ src, names }: { src?: string; names: string }) {
 
   if (!shouldShowImage) {
     return (
-      <div className={styles.defaultAvatar} aria-label={`Foto pendiente de ${names}`}>
+      <div
+        className={styles.defaultAvatar}
+        aria-label={`Foto pendiente de ${names}`}
+      >
         <Camera size={18} />
         <span>{initialsFromName(names)}</span>
       </div>
@@ -95,7 +98,9 @@ export default function TestimonialsSection({ sanityData }: Props) {
       "/images/_miscelanea/velas.webp",
       "background",
     );
-  const hasEditableBackground = Boolean(backgroundImageUrl || d?.backgroundImage);
+  const hasEditableBackground = Boolean(
+    backgroundImageUrl || d?.backgroundImage,
+  );
 
   const eyebrow = d?.eyebrow || "Historias reales";
   const titleText = d?.title || "Celebraciones que";
@@ -111,7 +116,10 @@ export default function TestimonialsSection({ sanityData }: Props) {
           names: t.names || "",
           event: t.event || "",
           quote: t.quote || "",
-          image: t.photo || t.photoUrl ? resolveImageWithUrl(t.photo, t.photoUrl, "", "avatar") : undefined,
+          image:
+            t.photo || t.photoUrl
+              ? resolveImageWithUrl(t.photo, t.photoUrl, "", "avatar")
+              : undefined,
           rating: t.rating ?? 5,
         }));
     }
@@ -135,7 +143,8 @@ export default function TestimonialsSection({ sanityData }: Props) {
   const [displayedStoryIndex, setDisplayedStoryIndex] = useState(0);
   const [isStoryChanging, setIsStoryChanging] = useState(false);
 
-  const activeTestimonial = testimonials[displayedStoryIndex] || testimonials[0];
+  const activeTestimonial =
+    testimonials[displayedStoryIndex] || testimonials[0];
   const showArrows = testimonials.length > 1;
 
   const centerCard = useCallback(
@@ -143,7 +152,8 @@ export default function TestimonialsSection({ sanityData }: Props) {
       const scroller = scrollerRef.current;
       const card = cardRefs.current[index];
       if (!scroller || !card) return;
-      const targetLeft = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+      const targetLeft =
+        card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
       scroller.scrollTo({ left: targetLeft, behavior });
     },
     [],
@@ -166,8 +176,13 @@ export default function TestimonialsSection({ sanityData }: Props) {
     let closestDistance = Infinity;
     cardRefs.current.forEach((card, i) => {
       if (!card) return;
-      const d = Math.abs(card.offsetLeft + card.offsetWidth / 2 - viewportCenter);
-      if (d < closestDistance) { closestDistance = d; closestIndex = i; }
+      const d = Math.abs(
+        card.offsetLeft + card.offsetWidth / 2 - viewportCenter,
+      );
+      if (d < closestDistance) {
+        closestDistance = d;
+        closestIndex = i;
+      }
     });
     setActiveIndex(closestIndex);
   }, []);
@@ -180,8 +195,13 @@ export default function TestimonialsSection({ sanityData }: Props) {
     let closestDistance = Infinity;
     cardRefs.current.forEach((card, i) => {
       if (!card) return;
-      const d = Math.abs(card.offsetLeft + card.offsetWidth / 2 - viewportCenter);
-      if (d < closestDistance) { closestDistance = d; closestIndex = i; }
+      const d = Math.abs(
+        card.offsetLeft + card.offsetWidth / 2 - viewportCenter,
+      );
+      if (d < closestDistance) {
+        closestDistance = d;
+        closestIndex = i;
+      }
     });
     goTo(closestIndex, "smooth");
   }, [goTo]);
@@ -194,7 +214,10 @@ export default function TestimonialsSection({ sanityData }: Props) {
       setDisplayedStoryIndex(activeIndex);
       requestAnimationFrame(() => setIsStoryChanging(false));
     }, 170);
-    return () => { cancelAnimationFrame(frame); clearTimeout(timer); };
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
   }, [activeIndex, displayedStoryIndex]);
 
   // Initial center
@@ -232,24 +255,35 @@ export default function TestimonialsSection({ sanityData }: Props) {
   const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-    dragRef.current = { isDragging: true, startX: e.clientX, startScrollLeft: scroller.scrollLeft };
-    setIsPaused(true); setIsDragging(true);
+    dragRef.current = {
+      isDragging: true,
+      startX: e.clientX,
+      startScrollLeft: scroller.scrollLeft,
+    };
+    setIsPaused(true);
+    setIsDragging(true);
     scroller.setPointerCapture(e.pointerId);
   };
   const handleDragMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const scroller = scrollerRef.current;
     if (!scroller || !dragRef.current.isDragging) return;
-    scroller.scrollLeft = dragRef.current.startScrollLeft - (e.clientX - dragRef.current.startX);
+    scroller.scrollLeft =
+      dragRef.current.startScrollLeft - (e.clientX - dragRef.current.startX);
   };
   const handleDragEnd = (e: React.PointerEvent<HTMLDivElement>) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     const deltaX = e.clientX - dragRef.current.startX;
-    dragRef.current.isDragging = false; setIsDragging(false);
-    try { scroller.releasePointerCapture(e.pointerId); } catch {}
+    dragRef.current.isDragging = false;
+    setIsDragging(false);
+    try {
+      scroller.releasePointerCapture(e.pointerId);
+    } catch {}
     if (Math.abs(deltaX) > DRAG_THRESHOLD) {
       goTo(activeIndex + (deltaX < 0 ? 1 : -1));
-    } else { snapToActive(); }
+    } else {
+      snapToActive();
+    }
     setTimeout(() => setIsPaused(false), 380);
   };
 
@@ -259,10 +293,12 @@ export default function TestimonialsSection({ sanityData }: Props) {
     <section
       id="testimonios"
       className={styles.testimonialsSection}
-      style={{
-        "--testimonials-bg-image": `url("${bgImage}")`,
-        "--testimonials-bg-opacity": hasEditableBackground ? 0.72 : 0.34,
-      } as React.CSSProperties}
+      style={
+        {
+          "--testimonials-bg-image": `url("${bgImage}")`,
+          "--testimonials-bg-opacity": hasEditableBackground ? 0.72 : 0.34,
+        } as React.CSSProperties
+      }
     >
       <div
         className={styles.sanityBackgroundImage}
@@ -275,7 +311,9 @@ export default function TestimonialsSection({ sanityData }: Props) {
       <div className={styles.meshThree} aria-hidden="true" />
       <div className={styles.orbitalLine} aria-hidden="true" />
       <div className={styles.sparkles} aria-hidden="true">
-        {Array.from({ length: 14 }).map((_, i) => <span key={i} />)}
+        {Array.from({ length: 14 }).map((_, i) => (
+          <span key={i} />
+        ))}
       </div>
 
       <div className={styles.container}>
@@ -304,7 +342,9 @@ export default function TestimonialsSection({ sanityData }: Props) {
         <div
           className={`${styles.carouselWrap} ${isDragging ? styles.isDragging : ""}`}
           onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => { if (!dragRef.current.isDragging) setIsPaused(false); }}
+          onMouseLeave={() => {
+            if (!dragRef.current.isDragging) setIsPaused(false);
+          }}
         >
           {showArrows && (
             <button
@@ -332,7 +372,9 @@ export default function TestimonialsSection({ sanityData }: Props) {
               return (
                 <article
                   key={t.names}
-                  ref={(node) => { cardRefs.current[index] = node; }}
+                  ref={(node) => {
+                    cardRefs.current[index] = node;
+                  }}
                   tabIndex={0}
                   onFocus={() => goTo(index)}
                   className={`${styles.card} ${isActive ? styles.activeCard : ""}`}
@@ -346,7 +388,12 @@ export default function TestimonialsSection({ sanityData }: Props) {
                     <div className={styles.avatarShell}>
                       <TestimonialPhoto src={t.image} names={t.names} />
                     </div>
-                    <div className={styles.stars} aria-label={`Calificación de ${t.rating} estrellas`}>
+                    <div
+                      className={styles.stars}
+                      role="img"
+                      aria-label={`Calificación de ${t.rating} estrellas`}
+                    >
+                      {" "}
                       {Array.from({ length: t.rating }).map((_, si) => (
                         <Star key={si} size={14} fill="currentColor" />
                       ))}
@@ -357,7 +404,9 @@ export default function TestimonialsSection({ sanityData }: Props) {
                     <Quote size={28} />
                   </div>
 
-                  <p className={styles.quote}>{`“${normalizeQuoteText(t.quote)}”`}</p>
+                  <p
+                    className={styles.quote}
+                  >{`“${normalizeQuoteText(t.quote)}”`}</p>
 
                   <footer className={styles.cardFooter}>
                     <div className={styles.nameBlock}>
