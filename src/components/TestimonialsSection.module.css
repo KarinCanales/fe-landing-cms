@@ -1,0 +1,1314 @@
+.testimonialsSection {
+  --testimonials-bg-image: url("/images/_miscelanea/velas.jpg");
+
+  --card-size: clamp(310px, 30vw, 392px);
+
+  --cream: #fffaf2;
+  --almond: #e5e0d8;
+  --vanilla: #e5d2b8;
+  --chai: #d2ab80;
+  --carob: #725c3a;
+  --ink: #2f281d;
+  --matcha: #809671;
+  --pistachio: #b3b792;
+
+  position: relative;
+  height: 100svh;
+  min-height: 720px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(30px, 4vh, 46px) 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 14% 12%, rgba(229, 224, 216, 0.58), transparent 34%),
+    radial-gradient(circle at 88% 18%, rgba(179, 183, 146, 0.24), transparent 34%),
+    radial-gradient(circle at 78% 84%, rgba(210, 171, 128, 0.2), transparent 36%),
+    linear-gradient(
+      115deg,
+      rgba(229, 224, 216, 0.86) 0%,
+      rgba(229, 210, 184, 0.74) 48%,
+      rgba(179, 183, 146, 0.46) 130%
+    ),
+    var(--testimonials-bg-image);
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
+}
+
+/* Overlay claro/cinematográfico para que cualquier imagen de fondo se vea bien */
+.testimonialsSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -6;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 250, 242, 0.32), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgba(128, 150, 113, 0.16), transparent 36%),
+    linear-gradient(
+      90deg,
+      rgba(229, 224, 216, 0.58) 0%,
+      rgba(229, 210, 184, 0.46) 44%,
+      rgba(210, 171, 128, 0.32) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.1) 0%,
+      rgba(229, 224, 216, 0.28) 100%
+    );
+}
+
+/* Líneas diagonales suaves, sin grid/cuadrados */
+.testimonialsSection::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.36;
+  background:
+    linear-gradient(
+      116deg,
+      transparent 0%,
+      transparent 43%,
+      rgba(114, 92, 58, 0.12) 43.2%,
+      transparent 43.6%,
+      transparent 100%
+    ),
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      transparent 58%,
+      rgba(128, 150, 113, 0.1) 58.2%,
+      transparent 58.6%,
+      transparent 100%
+    ),
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      transparent 72%,
+      rgba(210, 171, 128, 0.09) 72.2%,
+      transparent 72.6%,
+      transparent 100%
+    );
+  background-size:
+    1120px 1120px,
+    860px 860px,
+    720px 720px;
+  animation: testimonialDiagonalDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes testimonialDiagonalDrift {
+  from {
+    transform: translate3d(-16px, 10px, 0);
+    opacity: 0.24;
+  }
+
+  to {
+    transform: translate3d(22px, -14px, 0);
+    opacity: 0.44;
+  }
+}
+
+/* Si todavía existen en el TSX, quedan desactivados visualmente */
+.cursorLight,
+.gridLayer,
+.gridSweep {
+  display: none;
+}
+
+.noiseLayer,
+.meshOne,
+.meshTwo,
+.meshThree,
+.orbitalLine,
+.sparkles {
+  position: absolute;
+  pointer-events: none;
+}
+
+.noiseLayer {
+  inset: 0;
+  z-index: -4;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(114, 92, 58, 0.34) 0.75px, transparent 1.3px),
+    radial-gradient(circle at 70% 40%, rgba(128, 150, 113, 0.3) 0.7px, transparent 1.4px),
+    radial-gradient(circle at 42% 78%, rgba(210, 171, 128, 0.3) 0.7px, transparent 1.2px);
+  background-size:
+    30px 30px,
+    42px 42px,
+    48px 48px;
+}
+
+.meshOne,
+.meshTwo,
+.meshThree {
+  z-index: -3;
+  border-radius: 999px;
+  filter: blur(58px);
+  animation: meshFloat 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+.meshOne {
+  top: -110px;
+  left: -120px;
+  width: 340px;
+  height: 340px;
+  background: rgba(229, 210, 184, 0.34);
+}
+
+.meshTwo {
+  right: -150px;
+  top: 24%;
+  width: 420px;
+  height: 420px;
+  background: rgba(128, 150, 113, 0.26);
+  animation-delay: -5s;
+}
+
+.meshThree {
+  left: 36%;
+  bottom: -170px;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 250, 242, 0.2);
+  animation-delay: -10s;
+}
+
+/* Círculo de fondo más visible */
+.orbitalLine {
+  top: 7%;
+  right: 5%;
+  z-index: -1;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(114, 92, 58, 0.2);
+  border-radius: 999px;
+  opacity: 0.72;
+  animation: orbitalFloat 15s ease-in-out infinite;
+}
+
+.orbitalLine::before,
+.orbitalLine::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+}
+
+.orbitalLine::before {
+  inset: 24px;
+  border: 1px solid rgba(128, 150, 113, 0.2);
+}
+
+.orbitalLine::after {
+  top: 38px;
+  right: 34px;
+  width: 11px;
+  height: 11px;
+  background: rgba(210, 171, 128, 0.88);
+  box-shadow:
+    0 0 18px rgba(210, 171, 128, 0.42),
+    0 0 34px rgba(128, 150, 113, 0.18);
+}
+
+.sparkles {
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sparkles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(114, 92, 58, 0.48);
+  box-shadow: 0 0 14px rgba(210, 171, 128, 0.3);
+  opacity: 0;
+  animation: sparkleDrift 8.5s ease-in-out infinite;
+}
+
+.sparkles span:nth-child(1) { left: 8%; top: 18%; animation-delay: -1s; }
+.sparkles span:nth-child(2) { left: 18%; top: 78%; animation-delay: -5s; }
+.sparkles span:nth-child(3) { left: 28%; top: 30%; animation-delay: -3s; }
+.sparkles span:nth-child(4) { left: 38%; top: 64%; animation-delay: -7s; }
+.sparkles span:nth-child(5) { left: 48%; top: 18%; animation-delay: -2s; }
+.sparkles span:nth-child(6) { left: 58%; top: 82%; animation-delay: -4s; }
+.sparkles span:nth-child(7) { left: 68%; top: 26%; animation-delay: -6s; }
+.sparkles span:nth-child(8) { left: 78%; top: 60%; animation-delay: -8s; }
+.sparkles span:nth-child(9) { left: 88%; top: 20%; animation-delay: -2.6s; }
+.sparkles span:nth-child(10) { left: 92%; top: 76%; animation-delay: -4.8s; }
+.sparkles span:nth-child(11) { left: 12%; top: 48%; animation-delay: -6.8s; }
+.sparkles span:nth-child(12) { left: 44%; top: 42%; animation-delay: -3.7s; }
+.sparkles span:nth-child(13) { left: 72%; top: 44%; animation-delay: -5.5s; }
+.sparkles span:nth-child(14) { left: 84%; top: 88%; animation-delay: -7.2s; }
+
+.container {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(22px, 3.3vh, 36px);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 340px);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: end;
+}
+
+.headingBlock {
+  max-width: 860px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 10px 15px;
+  border: 1px solid rgba(114, 92, 58, 0.14);
+  border-radius: 999px;
+  color: var(--carob);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 250, 242, 0.52),
+      rgba(229, 210, 184, 0.22)
+    );
+  box-shadow:
+    0 14px 34px rgba(114, 92, 58, 0.08),
+    inset 0 1px 0 rgba(255, 250, 242, 0.56);
+  backdrop-filter: blur(12px);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.eyebrow svg {
+  color: var(--matcha);
+}
+
+.title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(3.4rem, 6.6vw, 6.4rem);
+  font-weight: 680;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.title span {
+  display: block;
+}
+
+.title em {
+  display: block;
+  color: var(--carob);
+  font-style: normal;
+  text-shadow: 0 14px 38px rgba(114, 92, 58, 0.12);
+}
+
+.storyPanel {
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid rgba(114, 92, 58, 0.13);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 250, 242, 0.52), transparent 38%),
+    linear-gradient(
+      145deg,
+      rgba(229, 224, 216, 0.58),
+      rgba(229, 210, 184, 0.34)
+    );
+  box-shadow:
+    0 20px 54px rgba(114, 92, 58, 0.1),
+    inset 0 1px 0 rgba(255, 250, 242, 0.5);
+  backdrop-filter: blur(16px) saturate(1.04);
+  animation: panelFloat 7s ease-in-out infinite;
+}
+
+.storyPanel::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+  pointer-events: none;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 150, 113, 0.58),
+    rgba(210, 171, 128, 0.46),
+    transparent
+  );
+}
+
+.storyLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: rgba(114, 92, 58, 0.58);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.storyPanel strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.storyPanel p {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  color: rgba(47, 40, 29, 0.62);
+  font-weight: 800;
+}
+
+.storyPanel strong,
+.storyPanel p,
+.storyLabel {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.storyPanelChanging strong,
+.storyPanelChanging p,
+.storyPanelChanging .storyLabel {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(4px);
+}
+
+.carouselWrap {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+}
+
+.carouselWrap::before {
+  content: "";
+  position: absolute;
+  inset: -34px -7vw -28px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(255, 250, 242, 0.26), transparent 62%),
+    radial-gradient(ellipse at 52% 100%, rgba(114, 92, 58, 0.08), transparent 70%);
+  filter: blur(18px);
+  opacity: 0.82;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 78%, transparent);
+}
+
+.scroller {
+  display: flex;
+  gap: clamp(16px, 2vw, 24px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 0 18px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+}
+
+.scroller::before,
+.scroller::after {
+  content: "";
+  flex: 0 0 max(0px, calc((100% - var(--card-size)) / 2));
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.isDragging .scroller {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.card {
+  position: relative;
+  flex: 0 0 var(--card-size);
+  min-height: clamp(350px, 43svh, 430px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(22px, 2.2vw, 28px);
+  border: 1px solid rgba(114, 92, 58, 0.12);
+  border-radius: 32px;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.42), transparent 34%),
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.92),
+      rgba(229, 210, 184, 0.82)
+    );
+  box-shadow:
+    0 24px 70px rgba(114, 92, 58, 0.12),
+    inset 0 1px 0 rgba(255, 250, 242, 0.42);
+  scroll-snap-align: center;
+  transform: scale(0.94);
+  opacity: 0.72;
+  transition:
+    transform 360ms ease,
+    opacity 360ms ease,
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    background 360ms ease;
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(128, 150, 113, 0.7);
+  outline-offset: 6px;
+}
+
+.card:hover,
+.card:focus-within {
+  opacity: 0.92;
+  transform: translateY(-4px) scale(0.96);
+}
+
+.cardGlow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  pointer-events: none;
+  background: rgba(210, 171, 128, 0.14);
+  filter: blur(40px);
+}
+
+/* Div viejo del TSX: apagado para que no aparezca el cuadrado rotando */
+.borderBeam,
+.activeCard .borderBeam {
+  display: none;
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.activeCard {
+  --beam-angle: 0deg;
+
+  opacity: 1;
+  transform: scale(1);
+  border: 1.5px solid transparent;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.46), transparent 34%) padding-box,
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.94),
+      rgba(229, 210, 184, 0.84)
+    ) padding-box,
+    conic-gradient(
+      from var(--beam-angle),
+      rgba(114, 92, 58, 0.12),
+      rgba(128, 150, 113, 0.22),
+      rgba(128, 150, 113, 0.78),
+      rgba(210, 171, 128, 0.86),
+      rgba(255, 250, 242, 0.94),
+      rgba(114, 92, 58, 0.12),
+      rgba(114, 92, 58, 0.12)
+    ) border-box;
+  box-shadow:
+    0 32px 84px rgba(114, 92, 58, 0.18),
+    0 0 0 1px rgba(210, 171, 128, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  animation: testimonialBorderAngle 5.8s linear infinite;
+}
+
+.activeCard:hover,
+.activeCard:focus-within {
+  transform: scale(1);
+}
+
+@keyframes testimonialBorderAngle {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+.cardTop,
+.quoteIcon,
+.quote,
+.cardFooter {
+  position: relative;
+  z-index: 1;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.avatarShell {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 250, 242, 0.78);
+  border-radius: 26px;
+  background: rgba(255, 250, 242, 0.58);
+  box-shadow: 0 18px 38px rgba(114, 92, 58, 0.12);
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+.defaultAvatar {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(47, 40, 29, 0.72);
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 250, 242, 0.72), transparent 40%),
+    linear-gradient(135deg, rgba(210, 171, 128, 0.24), rgba(128, 150, 113, 0.16));
+}
+
+.defaultAvatar svg {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: rgba(47, 40, 29, 0.24);
+}
+
+.defaultAvatar span {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 2.08rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.stars {
+  display: inline-flex;
+  gap: 3px;
+  padding: 9px 11px;
+  border: 1px solid rgba(114, 92, 58, 0.1);
+  border-radius: 999px;
+  color: #b98254;
+  background: rgba(255, 250, 242, 0.62);
+  box-shadow: 0 10px 28px rgba(114, 92, 58, 0.08);
+}
+
+.quoteIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  color: var(--carob);
+  background: rgba(210, 171, 128, 0.14);
+}
+
+.quote {
+  margin: 0;
+  color: rgba(47, 40, 29, 0.84);
+  font-size: clamp(0.98rem, 1vw, 1.04rem);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.nameBlock {
+  position: relative;
+}
+
+.nameLine {
+  display: block;
+  width: min(178px, 72%);
+  height: 1px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  transform: scaleX(0);
+  transform-origin: right center;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(128, 150, 113, 0.82),
+    rgba(210, 171, 128, 0.72)
+  );
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .nameLine,
+.card:focus-within .nameLine,
+.activeCard .nameLine {
+  transform: scaleX(1);
+}
+
+.nameBlock h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(1.75rem, 2.2vw, 2.16rem);
+  font-weight: 760;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+
+.nameBlock p {
+  margin: 9px 0 0;
+  color: rgba(47, 40, 29, 0.58);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(114, 92, 58, 0.14);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 250, 242, 0.5);
+  box-shadow: 0 16px 38px rgba(114, 92, 58, 0.12);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease;
+}
+
+.navButton:hover {
+  transform: translateY(-50%) scale(1.04);
+  border-color: rgba(128, 150, 113, 0.3);
+  background: rgba(229, 210, 184, 0.56);
+}
+
+.prevButton {
+  left: 0;
+}
+
+.nextButton {
+  right: 0;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+
+.dots button {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(114, 92, 58, 0.26);
+  cursor: pointer;
+  transition:
+    width 240ms ease,
+    background 240ms ease;
+}
+
+.dots .activeDot {
+  width: 34px;
+  background: linear-gradient(90deg, var(--matcha), var(--chai));
+}
+
+@keyframes meshFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.06);
+  }
+}
+
+@keyframes orbitalFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(12px, -12px, 0) rotate(6deg);
+  }
+}
+
+@keyframes sparkleDrift {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.7);
+  }
+
+  35%,
+  65% {
+    opacity: 0.72;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes panelFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 980px) {
+  .testimonialsSection {
+    height: auto;
+    min-height: auto;
+    padding: 74px 0;
+  }
+
+  .container {
+    width: min(100% - 34px, 1180px);
+    gap: 34px;
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .storyPanel {
+    max-width: 430px;
+  }
+
+  .card {
+    flex-basis: min(78vw, 390px);
+    min-height: 460px;
+  }
+
+  .orbitalLine {
+    opacity: 0.38;
+  }
+}
+
+@media (max-width: 640px) {
+  .testimonialsSection {
+    --card-size: calc(100vw - 56px);
+    padding: 64px 0;
+  }
+
+  .container {
+    width: min(100% - 28px, 1180px);
+    gap: 28px;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+  }
+
+  .title {
+    font-size: clamp(3rem, 16vw, 4.7rem);
+  }
+
+  .storyPanel {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .scroller {
+    gap: 14px;
+    padding: 6px 0 10px;
+  }
+
+  .card {
+    min-height: auto;
+    padding: 22px;
+    border-radius: 30px;
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .card:hover,
+  .card:focus-within,
+  .activeCard,
+  .activeCard:hover,
+  .activeCard:focus-within {
+    transform: scale(1);
+  }
+
+  .avatarShell {
+    width: 92px;
+    height: 92px;
+    border-radius: 24px;
+  }
+
+  .stars {
+    padding: 8px 9px;
+  }
+
+  .quoteIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+  }
+
+  .navButton {
+    display: none;
+  }
+
+  .orbitalLine {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonialsSection::after,
+  .meshOne,
+  .meshTwo,
+  .meshThree,
+  .orbitalLine,
+  .sparkles span,
+  .storyPanel,
+  .activeCard {
+    animation: none !important;
+  }
+
+  .card,
+  .nameLine,
+  .navButton,
+  .dots button,
+  .storyPanel strong,
+  .storyPanel p,
+  .storyLabel {
+    transition: none !important;
+  }
+
+  .scroller {
+    scroll-behavior: auto;
+  }
+}
+/* ========================================================================== 
+   Patch: anclaje exacto desde Navbar
+   La navegación personalizada ya llega al inicio real de la sección.
+   ========================================================================== */
+.testimonialsSection {
+  scroll-margin-top: 0 !important;
+}
+
+/* ============================================================
+   FINAL FIX — ancla, eje X y mini card consistente con Hero
+   ============================================================ */
+.testimonialsSection {
+  scroll-margin-top: 0;
+  align-items: start;
+  padding-top: calc(92px + clamp(28px, 4vh, 54px));
+  padding-bottom: clamp(28px, 4vh, 46px);
+}
+
+.testimonialsSection .container,
+.container {
+  width: min(1180px, calc(100% - 36px));
+  gap: clamp(18px, 2.6vh, 30px);
+}
+
+.header {
+  align-items: start;
+}
+
+.eyebrow {
+  padding: 10px 14px;
+  font-family: var(--font-sans, "Inter", sans-serif);
+  font-size: 0.74rem;
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 980px) {
+  .testimonialsSection {
+    height: auto;
+    min-height: 100svh;
+    padding-top: calc(82px + 26px);
+  }
+
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+}
+
+/* ========================================================================== 
+   FIX REAL DE EDICIÓN SANITY — Testimonios
+   El fondo editable ahora vive en una capa dedicada por encima del fondo base.
+   Así no depende del orden de background gradients ni de z-index negativos.
+   ========================================================================== */
+.testimonialsSection {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(229, 224, 216, 0.86) 0%,
+      rgba(229, 210, 184, 0.74) 48%,
+      rgba(179, 183, 146, 0.46) 130%
+    ) !important;
+}
+
+.sanityBackgroundImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.46 !important;
+  filter: saturate(0.88) brightness(1.04) contrast(1.02);
+  transform: scale(1.025);
+}
+
+.testimonialsSection::before {
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 250, 242, 0.36), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgba(128, 150, 113, 0.18), transparent 36%),
+    linear-gradient(
+      90deg,
+      rgba(229, 224, 216, 0.6) 0%,
+      rgba(229, 210, 184, 0.46) 44%,
+      rgba(210, 171, 128, 0.28) 100%
+    ) !important;
+}
+
+.testimonialsSection::after { z-index: 2 !important; }
+.noiseLayer,
+.meshOne,
+.meshTwo,
+.meshThree,
+.orbitalLine,
+.sparkles { z-index: 3 !important; }
+.container { position: relative; z-index: 8 !important; }
+
+/* ========================================================================== 
+   FIX FINAL — Fondo editable real de Testimonios
+   --------------------------------------------------------------------------
+   El problema anterior era que el fondo editable existía, pero quedaba demasiado
+   lavado/tapado por capas claras y por reglas antiguas con !important.
+   Esta regla deja una capa dedicada, visible, y usa la URL que llega desde Sanity.
+   ========================================================================== */
+.testimonialsSection {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(229, 224, 216, 0.9) 0%,
+      rgba(229, 210, 184, 0.78) 50%,
+      rgba(179, 183, 146, 0.52) 130%
+    ) !important;
+}
+
+.sanityBackgroundImage {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  display: block !important;
+  background-image: var(--testimonials-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  opacity: var(--testimonials-bg-opacity, 0.72) !important;
+  filter: saturate(0.94) brightness(1.02) contrast(1.02) !important;
+  transform: scale(1.015) !important;
+}
+
+.testimonialsSection::before {
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 20% 16%, rgba(255, 250, 242, 0.2), transparent 32%),
+    radial-gradient(circle at 82% 72%, rgba(128, 150, 113, 0.12), transparent 38%),
+    linear-gradient(
+      90deg,
+      rgba(229, 224, 216, 0.34) 0%,
+      rgba(229, 210, 184, 0.24) 45%,
+      rgba(210, 171, 128, 0.18) 100%
+    ) !important;
+}
+
+.testimonialsSection::after {
+  z-index: 2 !important;
+  opacity: 0.22 !important;
+}
+
+.noiseLayer {
+  z-index: 3 !important;
+  opacity: 0.1 !important;
+}
+
+.meshOne,
+.meshTwo,
+.meshThree,
+.orbitalLine,
+.sparkles {
+  z-index: 4 !important;
+}
+
+.container {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* ========================================================================== 
+   PATCH — Filtro editorial premium para fondos editables de Testimonios
+   --------------------------------------------------------------------------
+   Mantiene visible la imagen subida desde Sanity, pero vuelve a aplicar el
+   velo cálido / suave que hacía que cualquier foto se integrara con la marca.
+   ========================================================================== */
+.testimonialsSection {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 250, 242, 0.38), transparent 34%),
+    radial-gradient(circle at 86% 24%, rgba(210, 171, 128, 0.22), transparent 36%),
+    linear-gradient(
+      115deg,
+      rgba(229, 224, 216, 0.9) 0%,
+      rgba(229, 210, 184, 0.8) 48%,
+      rgba(179, 183, 146, 0.54) 130%
+    ) !important;
+}
+
+.sanityBackgroundImage {
+  opacity: 0.48 !important;
+  filter: saturate(0.72) brightness(1.06) contrast(0.88) blur(1.2px) !important;
+  transform: scale(1.035) !important;
+}
+
+.testimonialsSection::before {
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 250, 242, 0.5), transparent 32%),
+    radial-gradient(circle at 74% 76%, rgba(128, 150, 113, 0.18), transparent 38%),
+    linear-gradient(
+      90deg,
+      rgba(255, 250, 242, 0.58) 0%,
+      rgba(229, 224, 216, 0.46) 34%,
+      rgba(229, 210, 184, 0.4) 64%,
+      rgba(210, 171, 128, 0.3) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.32) 0%,
+      rgba(229, 224, 216, 0.18) 44%,
+      rgba(114, 92, 58, 0.08) 100%
+    ) !important;
+}
+
+.testimonialsSection::after {
+  z-index: 2 !important;
+  opacity: 0.28 !important;
+}
+
+.noiseLayer {
+  z-index: 3 !important;
+  opacity: 0.14 !important;
+  mix-blend-mode: multiply;
+}
+
+.meshOne {
+  background: rgba(255, 250, 242, 0.24) !important;
+  opacity: 0.86 !important;
+}
+
+.meshTwo {
+  background: rgba(128, 150, 113, 0.18) !important;
+  opacity: 0.78 !important;
+}
+
+.meshThree {
+  background: rgba(229, 210, 184, 0.2) !important;
+  opacity: 0.78 !important;
+}
+
+.title,
+.storyPanel,
+.card,
+.navButton,
+.dots {
+  position: relative;
+  z-index: 11;
+}
+
+.card {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.58), transparent 34%),
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.94),
+      rgba(229, 210, 184, 0.88)
+    ) !important;
+  backdrop-filter: blur(16px) saturate(1.04);
+}
+
+.activeCard {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.62), transparent 34%) padding-box,
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.96),
+      rgba(229, 210, 184, 0.9)
+    ) padding-box,
+    conic-gradient(
+      from var(--beam-angle),
+      rgba(114, 92, 58, 0.12),
+      rgba(128, 150, 113, 0.22),
+      rgba(128, 150, 113, 0.78),
+      rgba(210, 171, 128, 0.86),
+      rgba(255, 250, 242, 0.94),
+      rgba(114, 92, 58, 0.12),
+      rgba(114, 92, 58, 0.12)
+    ) border-box !important;
+}
+
+/* ========================================================================== 
+   FINAL — Testimonios como IMG 1: fondo editable visible pero muy integrado
+   --------------------------------------------------------------------------
+   La imagen de Sanity queda como textura ambiental, no como foto dominante.
+   Esto devuelve el look crema/editorial anterior y evita que se vea tan
+   transparente/cruda como en la captura 2.
+   ========================================================================== */
+.testimonialsSection {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 250, 242, 0.58), transparent 34%),
+    radial-gradient(circle at 86% 24%, rgba(210, 171, 128, 0.18), transparent 36%),
+    radial-gradient(circle at 76% 82%, rgba(128, 150, 113, 0.14), transparent 38%),
+    linear-gradient(
+      115deg,
+      rgba(255, 250, 242, 0.94) 0%,
+      rgba(229, 224, 216, 0.9) 38%,
+      rgba(229, 210, 184, 0.82) 72%,
+      rgba(179, 183, 146, 0.52) 130%
+    ) !important;
+}
+
+.sanityBackgroundImage {
+  opacity: 0.22 !important;
+  filter: saturate(0.52) brightness(1.13) contrast(0.74) blur(1.8px) !important;
+  transform: scale(1.045) !important;
+  mix-blend-mode: multiply !important;
+}
+
+.testimonialsSection::before {
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 250, 242, 0.68), transparent 32%),
+    radial-gradient(circle at 74% 76%, rgba(128, 150, 113, 0.12), transparent 38%),
+    linear-gradient(
+      90deg,
+      rgba(255, 250, 242, 0.76) 0%,
+      rgba(229, 224, 216, 0.68) 34%,
+      rgba(229, 210, 184, 0.56) 64%,
+      rgba(210, 171, 128, 0.36) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.5) 0%,
+      rgba(229, 224, 216, 0.32) 44%,
+      rgba(114, 92, 58, 0.06) 100%
+    ) !important;
+}
+
+.testimonialsSection::after {
+  opacity: 0.18 !important;
+}
+
+.noiseLayer {
+  opacity: 0.1 !important;
+  mix-blend-mode: multiply;
+}
+
+.meshOne {
+  background: rgba(255, 250, 242, 0.28) !important;
+  opacity: 0.9 !important;
+}
+
+.meshTwo {
+  background: rgba(128, 150, 113, 0.13) !important;
+  opacity: 0.74 !important;
+}
+
+.meshThree {
+  background: rgba(229, 210, 184, 0.18) !important;
+  opacity: 0.74 !important;
+}
+
+.card {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.66), transparent 34%),
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.96),
+      rgba(229, 210, 184, 0.9)
+    ) !important;
+}
+
+.activeCard {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.7), transparent 34%) padding-box,
+    linear-gradient(
+      180deg,
+      rgba(229, 224, 216, 0.98),
+      rgba(229, 210, 184, 0.92)
+    ) padding-box,
+    conic-gradient(
+      from var(--beam-angle),
+      rgba(114, 92, 58, 0.12),
+      rgba(128, 150, 113, 0.22),
+      rgba(128, 150, 113, 0.78),
+      rgba(210, 171, 128, 0.86),
+      rgba(255, 250, 242, 0.94),
+      rgba(114, 92, 58, 0.12),
+      rgba(114, 92, 58, 0.12)
+    ) border-box !important;
+}
