@@ -521,20 +521,12 @@ export default function CatalogSection({ sanityData }: Props) {
               <div className={styles.modalTopbar}>
                 {isImmersive ? (
                   <>
-                    <button type="button" className={styles.iconButton} onClick={closeModal} aria-label="Cerrar galería">
-                      <X size={20} />
-                    </button>
                     <div className={styles.immersiveTitle}>
                       <span>{selectedEntry.category}</span>
                       <h3>{selectedEntry.title}</h3>
                     </div>
-                    <button
-                      type="button"
-                      className={styles.iconButton}
-                      onClick={closeImmersiveViewer}
-                      aria-label="Cerrar vista amplia"
-                    >
-                      <Minimize2 size={18} />
+                    <button type="button" className={styles.iconButton} onClick={closeModal} aria-label="Cerrar galería">
+                      <X size={20} />
                     </button>
                   </>
                 ) : (

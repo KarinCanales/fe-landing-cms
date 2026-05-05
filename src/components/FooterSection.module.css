@@ -1631,3 +1631,101 @@
   .footerMain { grid-template-columns: 1fr !important; }
   .footerColumn ul { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
+
+
+/* ========================================================================== 
+   FINAL FIX 10 — Footer: columnas consistentes + contacto sin overflow
+   ========================================================================== */
+.footerMain {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(18px, 2.4vw, 28px) !important;
+  align-items: stretch !important;
+  padding: clamp(34px, 4vw, 54px) 0 !important;
+}
+
+.brandBlock,
+.footerColumn,
+.contactCard {
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 100% !important;
+  padding: 22px !important;
+  border: 1px solid rgba(229, 210, 184, 0.13) !important;
+  border-radius: 26px !important;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(229, 210, 184, 0.09), transparent 30%),
+    rgba(9, 20, 20, 0.46) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 250, 242, 0.08) !important;
+  backdrop-filter: blur(16px) saturate(1.04) !important;
+}
+
+.brandBlock p,
+.footerColumn a,
+.contactCard a,
+.contactCard > span,
+.footerBottom p,
+.backToTop {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+.contactCard {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 13px !important;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(229, 210, 184, 0.12), transparent 32%),
+    rgba(9, 20, 20, 0.56) !important;
+}
+
+.contactCard a,
+.contactCard > span {
+  display: grid !important;
+  grid-template-columns: 18px minmax(0, 1fr) !important;
+  align-items: flex-start !important;
+  gap: 11px !important;
+  width: 100% !important;
+}
+
+.contactCard a span,
+.contactCard > span span {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+}
+
+.footerBottom {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto !important;
+  gap: 18px !important;
+}
+
+.footerBottom p:first-child,
+.madeWith {
+  max-width: none !important;
+}
+
+@media (max-width: 1040px) {
+  .footerMain {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .footerMain {
+    grid-template-columns: 1fr !important;
+  }
+
+  .brandBlock,
+  .footerColumn,
+  .contactCard {
+    padding: 20px !important;
+  }
+
+  .footerBottom {
+    grid-template-columns: 1fr !important;
+    justify-items: start !important;
+  }
+}
