@@ -1729,3 +1729,41 @@
 .stat span  { color: #173130 !important; }
 .stat small { color: rgba(23, 49, 48, 0.64) !important; }
 .statAccent { color: #2d5f5e !important; }
+
+/* ========================================================================== 
+   FIX 9 — Responsivo real Beneficios: sin cortes bajo navbar ni línea negra
+   ========================================================================== */
+.benefits {
+  height: auto !important;
+  min-height: 100svh !important;
+  overflow: hidden !important;
+  padding-top: calc(104px + clamp(24px, 3.5vh, 54px)) !important;
+  padding-bottom: clamp(64px, 7vh, 104px) !important;
+  scroll-margin-top: 0 !important;
+}
+
+.layout { align-items: start !important; }
+.copy { position: relative !important; top: auto !important; overflow: visible !important; }
+.copy h2 {
+  max-width: 10.4ch !important;
+  overflow: visible !important;
+  line-height: 1.02 !important;
+  padding-bottom: 0.08em !important;
+}
+.copy h2 em { overflow: visible !important; padding-bottom: 0.08em !important; }
+.copyLine { width: min(260px, 78%) !important; margin-top: 22px !important; }
+.copyLine span { height: 1px !important; background: rgba(45, 95, 94, 0.22) !important; }
+.copyLine span::after { background: linear-gradient(90deg, rgba(45, 95, 94, 0.72), rgba(179, 183, 146, 0.62), rgba(210, 171, 128, 0.58)) !important; }
+
+@media (min-width: 1081px) and (max-height: 820px) {
+  .benefits { min-height: auto !important; padding-top: calc(96px + 24px) !important; }
+  .copy h2 { font-size: clamp(3.2rem, 5.8vw, 5.25rem) !important; line-height: 1.03 !important; }
+  .cardsGrid { auto-rows: minmax(156px, auto) !important; }
+  .card { min-height: 166px !important; padding: clamp(18px, 1.6vw, 22px) !important; }
+  .stats { margin-top: 28px !important; }
+}
+
+@media (max-width: 760px) {
+  .benefits { padding-top: calc(86px + 30px) !important; min-height: auto !important; }
+  .copy h2 { max-width: 11ch !important; line-height: 1.04 !important; }
+}

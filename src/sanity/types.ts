@@ -269,6 +269,9 @@ export type FooterData = BaseSectionData & {
   logo?: SanityImage;
   logoUrl?: string;
   brandText?: string;
+  navColumnTitle?: string;
+  servicesColumnTitle?: string;
+  contactTitle?: string;
   navigationColumns?: FooterNavColumn[];
   serviceLinks?: Array<{ text?: string; link?: string; visible?: boolean }>;
   contactInfo?: { phone?: string; email?: string; location?: string; schedule?: string };

@@ -65,6 +65,11 @@ function normalizeWhatsappUrl(value?: string | null) {
   return `https://wa.me/${cleanPhone}`;
 }
 
+function cleanText(value?: string | null) {
+  const text = value?.trim();
+  return text ? text : undefined;
+}
+
 function Instagram({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -102,8 +107,12 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   const ctaButtonLabel = d?.ctaButtonLabel || 'Cotiza ahora';
   const ctaButtonLink = '#contacto';
 
+  const navColumnTitle = cleanText(d?.navColumnTitle) || 'Explorar';
+  const servicesColumnTitle = cleanText(d?.servicesColumnTitle) || 'Servicios';
+  const contactTitle = cleanText(d?.contactTitle) || 'Contacto';
+
   // Navegación fija del footer.
-  const navLinks = [{ title: 'Explorar', links: fallbackNavigationLinks, visible: true, order: 0 }];
+  const navLinks = [{ title: navColumnTitle, links: fallbackNavigationLinks, visible: true, order: 0 }];
 
   // Servicios: se toman de la misma lista editable de Servicios.
   const serviceLinks = sanityServices?.services?.length
@@ -135,14 +144,16 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
         },
       ];
 
-  const brandText = d?.brandText || 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.';
+  const brandText = cleanText(d?.brandText) || 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.';
   const footerBgImage = getFooterBackgroundUrl(d);
   const companyName = s?.companyName || 'KARIN CADENAS BODAS & EVENTOS';
   const footerLogo = resolveImageWithUrl(s?.logo, s?.logoUrl, '', 'logo');
   const logoInitial = companyName.trim().charAt(0).toUpperCase() || 'K';
-  const legalText = s?.legalText || `© ${currentYear} ${companyName}. Todos los derechos reservados.`;
-  const madeWithLine = d?.madeWithLine || s?.madeWithText || 'Hecho con amor y cariño 🤎 para celebraciones memorables.';
-  const backToTopLabel = d?.backToTopLabel || 'Volver arriba';
+  // Legal del footer debe venir del documento Footer, no de Datos generales,
+  // para evitar que aparezca texto viejo/lorem del siteSettings.
+  const legalText = cleanText(d?.legalText) || `© ${currentYear} ${companyName}. Todos los derechos reservados.`;
+  const madeWithLine = cleanText(d?.madeWithLine) || cleanText(s?.madeWithText) || 'Hecho con amor y cariño 💚 para celebraciones memorables.';
+  const backToTopLabel = cleanText(d?.backToTopLabel) || 'Volver arriba';
 
   return (
     <footer
@@ -248,7 +259,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
 
           {/* Services column */}
           <div className={styles.footerColumn}>
-            <h3>Servicios</h3>
+            <h3>{servicesColumnTitle}</h3>
             <ul>
               {serviceLinks.map((svc) => (
                 <li key={svc.text}>
@@ -260,7 +271,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
 
           {/* Contact info */}
           <address className={styles.contactCard}>
-            <h3>Contacto</h3>
+            <h3>{contactTitle}</h3>
             <a href={phoneUrl} target="_blank" rel="noreferrer">
               <Phone size={17} /><span>{contactPhone}</span>
             </a>

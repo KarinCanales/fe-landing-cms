@@ -180,6 +180,10 @@ export const FOOTER_QUERY = `*[_type == "footerSection"][0]{
   ctaHighlightWord,
   ctaButtonLabel,
   brandText,
+  navColumnTitle,
+  servicesColumnTitle,
+  contactTitle,
+  legalText,
   madeWithLine,
   backToTopLabel
 }`;
