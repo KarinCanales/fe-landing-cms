@@ -1515,3 +1515,152 @@
 .dots .activeDot {
   background: linear-gradient(90deg, #2d5f5e, #d2ab80) !important;
 }
+
+
+/* ========================================================================== 
+   FIX 8 — Testimonios: navbar order support, avatar limpio y cards más suaves
+   --------------------------------------------------------------------------
+   - El avatar ya no muestra un bloque oscuro detrás de la foto.
+   - Las estrellas ganan contraste dentro de las cards.
+   - Las cards bajan la dureza del marrón oscuro para que el storyPanel vuelva
+     a sentirse protagonista y coherente con la sección clara.
+   ========================================================================== */
+
+.storyPanel {
+  border: 1px solid rgba(45, 95, 94, 0.24) !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 250, 242, 0.94), transparent 42%),
+    linear-gradient(135deg, rgba(255, 250, 242, 0.86), rgba(229, 224, 216, 0.74)) !important;
+  box-shadow:
+    0 22px 52px rgba(114, 92, 58, 0.13),
+    0 0 0 1px rgba(255, 250, 242, 0.42) inset !important;
+  backdrop-filter: blur(18px) saturate(1.06) !important;
+}
+
+.storyPanel::before {
+  height: 3px !important;
+  background: linear-gradient(90deg, rgba(45, 95, 94, 0.72), rgba(210, 171, 128, 0.58), transparent) !important;
+}
+
+.storyLabel {
+  color: rgba(23, 49, 48, 0.7) !important;
+}
+
+.storyPanel strong {
+  color: #173130 !important;
+}
+
+.storyPanel p {
+  color: rgba(23, 49, 48, 0.76) !important;
+}
+
+.card {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(160, 137, 105, 0.24), transparent 42%),
+    linear-gradient(
+      152deg,
+      rgba(99, 86, 67, 0.94) 0%,
+      rgba(84, 74, 58, 0.93) 54%,
+      rgba(72, 64, 51, 0.94) 100%
+    ) !important;
+  border: 1px solid rgba(229, 210, 184, 0.24) !important;
+  box-shadow:
+    0 24px 58px rgba(40, 31, 22, 0.24),
+    inset 0 1px 0 rgba(255, 250, 242, 0.13) !important;
+  color: rgba(255, 250, 242, 0.92) !important;
+}
+
+.activeCard {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(190, 160, 118, 0.26), transparent 42%) padding-box,
+    linear-gradient(
+      152deg,
+      rgba(112, 96, 73, 0.97) 0%,
+      rgba(94, 80, 61, 0.96) 54%,
+      rgba(80, 69, 53, 0.97) 100%
+    ) padding-box,
+    conic-gradient(
+      from var(--beam-angle),
+      rgba(210, 171, 128, 0.18),
+      rgba(229, 210, 184, 0.92),
+      rgba(128, 150, 113, 0.76),
+      rgba(210, 171, 128, 0.92),
+      rgba(255, 250, 242, 0.9),
+      rgba(210, 171, 128, 0.18)
+    ) border-box !important;
+  background-clip: padding-box, padding-box, border-box !important;
+  border: 1.5px solid transparent !important;
+  box-shadow:
+    0 30px 70px rgba(40, 31, 22, 0.3),
+    0 0 0 1px rgba(229, 210, 184, 0.18),
+    inset 0 1px 0 rgba(255, 250, 242, 0.16) !important;
+}
+
+.cardGlow {
+  background: rgba(210, 171, 128, 0.18) !important;
+  filter: blur(42px) !important;
+}
+
+.avatarShell {
+  width: 88px !important;
+  height: 88px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 2px solid rgba(229, 210, 184, 0.44) !important;
+  box-shadow:
+    0 12px 28px rgba(20, 16, 12, 0.22),
+    0 0 0 5px rgba(255, 250, 242, 0.07) !important;
+}
+
+.avatar {
+  border-radius: inherit !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.defaultAvatar {
+  border-radius: inherit !important;
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 250, 242, 0.18), transparent 40%),
+    linear-gradient(135deg, rgba(112, 96, 73, 0.95), rgba(72, 64, 51, 0.96)) !important;
+}
+
+.stars {
+  color: #c98743 !important;
+  background:
+    linear-gradient(135deg, rgba(255, 250, 242, 0.92), rgba(229, 224, 216, 0.82)) !important;
+  border: 1px solid rgba(210, 171, 128, 0.48) !important;
+  box-shadow:
+    0 10px 24px rgba(20, 16, 12, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.stars svg {
+  filter: drop-shadow(0 1px 0 rgba(255, 250, 242, 0.42));
+}
+
+.quoteIcon {
+  color: rgba(229, 210, 184, 0.78) !important;
+  background: rgba(255, 250, 242, 0.09) !important;
+}
+
+.quote {
+  color: rgba(255, 250, 242, 0.9) !important;
+}
+
+.nameBlock h3 {
+  color: rgba(255, 250, 242, 0.96) !important;
+}
+
+.nameBlock p {
+  color: rgba(229, 210, 184, 0.72) !important;
+}
+
+@media (max-width: 640px) {
+  .avatarShell {
+    width: 82px !important;
+    height: 82px !important;
+  }
+}

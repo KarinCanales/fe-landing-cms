@@ -14,8 +14,8 @@ export const fallbackNavLinks = [
   { label: 'Inicio', href: '#inicio', enabled: true, order: 0 },
   { label: 'Beneficios', href: '#beneficios', enabled: true, order: 1 },
   { label: 'Servicios', href: '#servicios', enabled: true, order: 2 },
-  { label: 'Catálogo', href: '#catalogo', enabled: true, order: 3 },
-  { label: 'Testimonios', href: '#testimonios', enabled: true, order: 4 },
+  { label: 'Testimonios', href: '#testimonios', enabled: true, order: 3 },
+  { label: 'Catálogo', href: '#catalogo', enabled: true, order: 4 },
   { label: 'Contacto', href: '#contacto', enabled: true, order: 5 },
 ];
 
