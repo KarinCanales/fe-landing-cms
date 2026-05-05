@@ -46,7 +46,6 @@ export default function ServicesSection({ sanityData }: Props) {
     if (d?.services?.length) {
       return d.services
         .filter((s) => s.visible !== false)
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         .map((s) => ({
           title: s.title || "",
           eyebrow: s.eyebrow || "",

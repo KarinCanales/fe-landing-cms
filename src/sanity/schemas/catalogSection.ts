@@ -1,4 +1,3 @@
-import { overlayPresets } from './shared';
 
 const catalogSection = {
   name: 'catalogSection',
@@ -39,19 +38,8 @@ const catalogSection = {
       title: 'Descripción de la imagen de fondo',
       type: 'string',
       group: 'background',
-      description: 'Texto breve que describe la imagen para accesibilidad.',
+      description: 'Texto para lectores de pantalla. No se muestra visualmente en la web, pero ayuda a personas que usan tecnologías de asistencia y mejora la accesibilidad.',
       options: { example: 'Mesa de evento decorada con flores y velas.' },
-    },
-    {
-      name: 'overlay',
-      title: 'Filtro visual del fondo',
-      type: 'string',
-      group: 'background',
-      options: {
-        list: overlayPresets.map((p) => p),
-        helpText: 'Preset visual que ayuda a que cualquier foto subida se vea integrada con la web.',
-      },
-      description: 'Controla el tono general del fondo de la sección.',
     },
     {
       name: 'eyebrow',
@@ -190,7 +178,7 @@ const catalogSection = {
               title: 'Descripción de la foto',
               type: 'string',
               hidden: ({ parent }: any) => parent?.mediaType === 'youtube',
-              description: 'Describe la foto en pocas palabras para accesibilidad.',
+              description: 'Texto para lectores de pantalla. Los visitantes no lo leen normalmente; describe la foto para accesibilidad.',
               options: { example: 'Mesa decorada con flores, velas y vajilla elegante.' },
             },
             {
@@ -235,7 +223,7 @@ const catalogSection = {
               title: 'Descripción de la portada',
               type: 'string',
               hidden: ({ parent }: any) => parent?.mediaType !== 'youtube',
-              description: 'Describe la imagen de portada del video.',
+              description: 'Texto para lectores de pantalla. Los visitantes no lo leen normalmente; describe la portada del video para accesibilidad.',
             },
             {
               name: 'visible',
@@ -250,13 +238,6 @@ const catalogSection = {
               type: 'boolean',
               initialValue: false,
               description: 'Sirve para identificar contenido importante. El diseño puede usarlo para darle más presencia.',
-            },
-            {
-              name: 'order',
-              title: 'Orden de aparición',
-              type: 'number',
-              description: 'Número para ordenar los elementos. Menor número aparece primero.',
-              options: { example: '0, 1, 2, 3...' },
             },
           ],
           preview: {

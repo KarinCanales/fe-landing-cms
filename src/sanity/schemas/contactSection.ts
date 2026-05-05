@@ -1,4 +1,3 @@
-import {overlayPresets} from './shared';
 import {fieldHelp} from './helpers';
 
 const contactSection = {
@@ -16,8 +15,7 @@ const contactSection = {
   fields: [
     {name: 'visible', title: 'Mostrar sección Contacto', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Si está apagada, el contacto no aparecerá como sección.'})},
     {name: 'backgroundImage', title: 'Imagen de fondo', type: 'image', group: 'background', description: 'Imagen de fondo para la sección de contacto.', options: {hotspot: true, ...fieldHelp({helpText: 'Usa una imagen clara/cálida que permita leer bien el formulario.'})}},
-    {name: 'backgroundAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', group: 'background', description: 'Texto que describe la imagen de fondo.', options: fieldHelp({example: 'Detalle elegante de evento para sección de contacto.'})},
-    {name: 'overlay', title: 'Filtro visual del fondo', type: 'string', group: 'background', description: 'Capa visual que armoniza la imagen de fondo.', options: {list: overlayPresets.map((p) => p), ...fieldHelp({example: 'Claro editorial almendra.'})}},
+    {name: 'backgroundAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', group: 'background', description: 'Texto para lectores de pantalla. No se muestra visualmente en la web, pero ayuda a personas que usan tecnologías de asistencia y mejora la accesibilidad.', options: fieldHelp({example: 'Detalle elegante de evento para sección de contacto.'})},
     {name: 'eyebrow', title: 'Etiqueta pequeña superior', type: 'string', group: 'content', description: 'Texto pequeño encima del título.', options: fieldHelp({example: 'Conversemos sobre tu evento'})},
     {name: 'title', title: 'Título principal', type: 'string', group: 'content', description: 'Título grande de la sección de contacto.', options: fieldHelp({example: 'Cuéntanos qué estás imaginando.'})},
     {name: 'highlightWord', title: 'Texto destacado del título', type: 'string', group: 'content', description: 'Palabra o frase resaltada dentro del título.', options: fieldHelp({example: 'Karin se encarga de cuidar los detalles.'})},

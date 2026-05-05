@@ -47,6 +47,20 @@ function getFooterBackgroundUrl(data?: FooterData) {
   return resolveImageWithUrl(source as never, footerData.backgroundImageUrl, '', 'background');
 }
 
+function formatPhoneDisplay(value?: string | null) {
+  const rawValue = value?.trim();
+  if (!rawValue) return '';
+  if (rawValue.startsWith('http://') || rawValue.startsWith('https://')) {
+    try {
+      const url = new URL(rawValue);
+      return url.pathname.replace('/', '') || url.searchParams.get('phone') || rawValue;
+    } catch {
+      return rawValue;
+    }
+  }
+  return rawValue;
+}
+
 function normalizeWhatsappUrl(value?: string | null) {
   const rawValue = value?.trim();
 
@@ -117,13 +131,12 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   // Servicios: se toman de la misma lista editable de Servicios.
   const serviceLinks = sanityServices?.services?.length
     ? sanityServices.services
-        .filter((service) => service.visible !== false && service.title)
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-        .map((service) => ({ text: service.title || '', link: '#servicios', visible: true }))
+      .filter((service) => service.visible !== false && service.title)
+      .map((service) => ({ text: service.title || '', link: '#servicios', visible: true }))
     : fallbackServiceLinks.map((text) => ({ text, link: '#servicios', visible: true }));
 
   // Contacto: todo viene desde Datos generales del sitio.
-  const contactPhone = s?.phone || '+51 922 459 810';
+  const contactPhone = formatPhoneDisplay(s?.whatsapp) || '922459810';
   const contactEmail = s?.email || CONTACT_EMAIL;
   const quoteEmail = s?.quoteEmail || QUOTE_EMAIL;
   const contactLocation = s?.location || 'Lima, Perú';
@@ -132,17 +145,16 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
 
   // Socials: se toman solo de Datos generales.
   const socialLinks: SocialLink[] = s?.socialLinks?.length
-    ? s.socialLinks.filter((l) => l.visible !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    ? s.socialLinks.filter((l) => l.visible !== false)
     : [
-        {
-          name: 'Instagram',
-          url: 'https://www.instagram.com/karincadenaseventos/',
-          icon: 'instagram',
-          borderColor: '#d2ab80',
-          visible: true,
-          order: 0,
-        },
-      ];
+      {
+        name: 'Instagram',
+        url: '#',
+        icon: 'Instagram',
+        borderColor: '#d2ab80',
+        visible: true,
+      },
+    ];
 
   const brandText = cleanText(d?.brandText) || 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.';
   const footerBgImage = getFooterBackgroundUrl(d);
@@ -152,7 +164,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   // Legal del footer debe venir del documento Footer, no de Datos generales,
   // para evitar que aparezca texto viejo/lorem del siteSettings.
   const legalText = cleanText(d?.legalText) || `© ${currentYear} ${companyName}. Todos los derechos reservados.`;
-  const madeWithLine = cleanText(d?.madeWithLine) || cleanText(s?.madeWithText) || 'Hecho con amor y cariño 💚 para celebraciones memorables.';
+  const madeWithLine = cleanText(d?.madeWithLine) || 'Hecho con amor y cariño 💚 para celebraciones memorables.';
   const backToTopLabel = cleanText(d?.backToTopLabel) || 'Volver arriba';
 
   return (

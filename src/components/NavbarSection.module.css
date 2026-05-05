@@ -811,3 +811,48 @@
     radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.18), transparent 30%),
     linear-gradient(135deg, #397b7a 0%, #2d5f5e 50%, #245250 100%) !important;
 }
+
+/* ========================================================================== 
+   FINAL UX FIX — Navbar: Karin Cadenas en una sola línea + subtítulo correcto
+   ========================================================================== */
+.brandText {
+  min-width: 0 !important;
+}
+
+.brandText strong {
+  max-width: 22ch !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  font-size: clamp(1.05rem, 1.42vw, 1.42rem) !important;
+  letter-spacing: -0.04em !important;
+}
+
+.brandText small {
+  max-width: 22ch !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  letter-spacing: 0.11em !important;
+}
+
+@media (max-width: 720px) {
+  .brand {
+    gap: 9px !important;
+  }
+
+  .logoMark {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brandText strong {
+    max-width: 16ch !important;
+    font-size: clamp(0.98rem, 4.6vw, 1.18rem) !important;
+  }
+
+  .brandText small {
+    max-width: 16ch !important;
+    font-size: 0.62rem !important;
+  }
+}

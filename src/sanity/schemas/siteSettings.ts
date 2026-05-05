@@ -1,5 +1,5 @@
 import {iconList} from './shared';
-import {colorField, fieldHelp, siteGroups, visibilitySubtitle} from './helpers';
+import {colorField, fieldHelp, iconPreviewMedia, siteGroups, visibilitySubtitle} from './helpers';
 
 const siteSettings = {
   name: 'siteSettings',
@@ -71,14 +71,6 @@ const siteSettings = {
       validation: (Rule: any) => Rule.email().warning('Revisa que el correo tenga formato válido.'),
     },
     {
-      name: 'phone',
-      title: 'Teléfono visible',
-      type: 'string',
-      group: 'contact',
-      description: 'Teléfono mostrado como texto para visitantes.',
-      options: fieldHelp({example: '+51 922 459 810'}),
-    },
-    {
       name: 'location',
       title: 'Ubicación',
       type: 'string',
@@ -94,22 +86,6 @@ const siteSettings = {
       group: 'contact',
       description: 'Texto corto sobre atención, horarios o coordinación previa.',
       options: fieldHelp({example: 'Lunes a viernes 9am a 7pm. Sábados previa coordinación.'}),
-    },
-    {
-      name: 'domain',
-      title: 'Dominio web',
-      type: 'url',
-      group: 'contact',
-      description: 'Dominio oficial del sitio.',
-      options: fieldHelp({example: 'https://www.karincadenaseventos.com'}),
-    },
-    {
-      name: 'purchaseNote',
-      title: 'Nota pendiente administrativa',
-      type: 'string',
-      group: 'contact',
-      description: 'Dato interno opcional para recordar pendientes administrativos del proyecto.',
-      options: fieldHelp({example: 'Pendiente dato de compra'}),
     },
     {
       name: 'socialLinks',
@@ -137,33 +113,17 @@ const siteSettings = {
             },
             colorField({title: 'Color del borde animado'}),
             {name: 'visible', title: 'Mostrar esta red', type: 'boolean', initialValue: true, description: 'Activa o desactiva esta red sin borrarla.', options: fieldHelp({helpText: 'Si está apagado, no se mostrará en la web.'})},
-            {name: 'order', title: 'Orden', type: 'number', description: 'Número para ordenar. Menor número aparece primero.', options: fieldHelp({example: '0, 1, 2...'})},
           ],
           preview: {
-            select: {title: 'name', visible: 'visible', borderColor: 'borderColor'},
-            prepare: ({title, visible, borderColor}: any) => ({
+            select: {title: 'name', icon: 'icon', visible: 'visible', borderColor: 'borderColor'},
+            prepare: ({title, icon, visible, borderColor}: any) => ({
               title: title || 'Red social',
               subtitle: visibilitySubtitle(visible, borderColor ? `Color ${borderColor}` : 'Sin color personalizado'),
+              media: iconPreviewMedia(icon, borderColor),
             }),
           },
         },
       ],
-    },
-    {
-      name: 'legalText',
-      title: 'Texto legal del footer',
-      type: 'string',
-      group: 'footer',
-      description: 'Texto pequeño de derechos reservados al final de la página.',
-      options: fieldHelp({example: '© Karin Eventos. Todos los derechos reservados.'}),
-    },
-    {
-      name: 'madeWithText',
-      title: 'Texto pequeño de créditos',
-      type: 'string',
-      group: 'footer',
-      description: 'Frase decorativa o crédito mostrado en el footer.',
-      options: fieldHelp({example: 'Hecho con amor para celebraciones memorables.'}),
     },
     {
       name: 'seo',

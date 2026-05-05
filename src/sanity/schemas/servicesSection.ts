@@ -1,5 +1,5 @@
-import {iconList, overlayPresets} from './shared';
-import {fieldHelp, sectionGroups, visibilitySubtitle} from './helpers';
+import {iconList} from './shared';
+import {fieldHelp, iconPreviewMedia, sectionGroups, visibilitySubtitle} from './helpers';
 
 const servicesSection = {
   name: 'servicesSection',
@@ -17,8 +17,7 @@ const servicesSection = {
   fields: [
     {name: 'visible', title: 'Mostrar sección Servicios', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Útil si todavía estás editando servicios.'})},
     {name: 'backgroundImage', title: 'Imagen de fondo', type: 'image', group: 'background', description: 'Imagen o ambiente de fondo para la sección de servicios.', options: {hotspot: true, ...fieldHelp({helpText: 'Usa una imagen elegante que no compita con las cards.', designNote: 'La sección usa overlay oscuro para que el contenido se lea bien.'})}},
-    {name: 'backgroundAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', group: 'background', description: 'Texto que describe la imagen de fondo.', options: fieldHelp({example: 'Mesa de evento decorada con flores y velas.'})},
-    {name: 'overlay', title: 'Filtro visual del fondo', type: 'string', group: 'background', description: 'Capa que armoniza el fondo con la paleta.', options: {list: overlayPresets.map((p) => p), ...fieldHelp({example: 'Oscuro cinematográfico o Marrón premium carob.'})}},
+    {name: 'backgroundAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', group: 'background', description: 'Texto para lectores de pantalla. No se muestra visualmente en la web, pero ayuda a personas que usan tecnologías de asistencia y mejora la accesibilidad.', options: fieldHelp({example: 'Mesa de evento decorada con flores y velas.'})},
     {name: 'eyebrow', title: 'Etiqueta pequeña superior', type: 'string', group: 'content', description: 'Texto pequeño que aparece arriba del título de Servicios.', options: fieldHelp({example: 'Servicios Karin'})},
     {name: 'title', title: 'Título principal', type: 'string', group: 'content', description: 'Título grande de la sección.', options: fieldHelp({example: 'Nuestros Servicios'})},
     {name: 'highlightWord', title: 'Texto destacado del título', type: 'string', group: 'content', description: 'Palabra o frase que se resaltará dentro del título.', options: fieldHelp({example: 'Servicios'})},
@@ -66,12 +65,11 @@ const servicesSection = {
           {name: 'description', title: 'Descripción del servicio', type: 'text', description: 'Explicación breve del servicio.', options: fieldHelp({helpText: '2 o 3 líneas como máximo para mantener el diseño limpio.'})},
           {name: 'tags', title: 'Etiquetas del servicio', type: 'array', description: 'Pequeñas etiquetas tipo beneficios o características.', options: fieldHelp({example: 'Menú personalizado, Presentación editorial'}), of: [{type: 'string'}]},
           {name: 'image', title: 'Imagen del servicio', type: 'image', description: 'Imagen que representa el servicio.', options: {hotspot: true, ...fieldHelp({helpText: 'Usa fotos verticales o con buen centro visual.'})}},
-          {name: 'imageAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', description: 'Texto que describe la imagen del servicio.', options: fieldHelp({example: 'Mesa de catering con presentación elegante.'})},
+          {name: 'imageAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', description: 'Texto para lectores de pantalla. Los visitantes no lo leen normalmente; describe la foto para accesibilidad.', options: fieldHelp({example: 'Mesa de catering con presentación elegante.'})},
           {name: 'icon', title: 'Icono', type: 'string', description: 'Icono asociado al servicio.', options: {list: iconList.map((i) => i), ...fieldHelp({helpText: 'Elige el icono que mejor represente este servicio.'})}},
           {name: 'visible', title: 'Mostrar este servicio', type: 'boolean', initialValue: true, description: 'Oculta o muestra este servicio sin borrarlo.', options: fieldHelp({helpText: 'Útil para guardar servicios que todavía no quieres publicar.'})},
-          {name: 'order', title: 'Orden', type: 'number', description: 'Número para ordenar. Menor número aparece primero.', options: fieldHelp({example: '0, 1, 2...'})},
         ],
-        preview: {select: {title: 'title', subtitle: 'eyebrow', visible: 'visible', media: 'image'}, prepare: ({title, subtitle, visible, media}: any) => ({title: title || 'Servicio', subtitle: visibilitySubtitle(visible, subtitle), media})},
+        preview: {select: {title: 'title', subtitle: 'eyebrow', visible: 'visible', media: 'image', icon: 'icon'}, prepare: ({title, subtitle, visible, media, icon}: any) => ({title: title || 'Servicio', subtitle: visibilitySubtitle(visible, subtitle), media: media || iconPreviewMedia(icon)})},
       }],
     },
   ],

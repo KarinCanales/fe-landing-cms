@@ -1632,86 +1632,50 @@
   .footerColumn ul { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
 
-
 /* ========================================================================== 
-   FINAL FIX 10 — Footer: columnas consistentes, más anchas y mejor centradas
+   FINAL UX FIX — Footer: grid equilibrado, cards consistentes y contacto legible
    ========================================================================== */
-
 .footerMain {
-  display: grid !important;
-  width: min(1320px, 100%) !important;
+  width: min(1280px, 100%) !important;
   margin-inline: auto !important;
   grid-template-columns:
-    minmax(300px, 1.18fr)
-    minmax(180px, 0.74fr)
-    minmax(230px, 0.88fr)
-    minmax(330px, 1.2fr) !important;
+    minmax(260px, 1.08fr)
+    minmax(180px, 0.78fr)
+    minmax(220px, 0.88fr)
+    minmax(310px, 1.16fr) !important;
   gap: clamp(20px, 2.2vw, 34px) !important;
   align-items: stretch !important;
-  padding: clamp(34px, 4vw, 54px) 0 !important;
 }
 
 .brandBlock,
 .footerColumn,
 .contactCard {
   min-width: 0 !important;
-  max-width: none !important;
   height: 100% !important;
   padding: 24px !important;
   border: 1px solid rgba(229, 210, 184, 0.13) !important;
   border-radius: 26px !important;
   background:
-    radial-gradient(circle at 18% 0%, rgba(229, 210, 184, 0.09), transparent 30%),
-    rgba(9, 20, 20, 0.46) !important;
-  box-shadow:
-    0 18px 46px rgba(0, 0, 0, 0.16),
-    inset 0 1px 0 rgba(255, 250, 242, 0.08) !important;
-  backdrop-filter: blur(16px) saturate(1.04) !important;
-}
-
-.brandBlock p,
-.footerColumn a,
-.contactCard a,
-.contactCard > span,
-.footerBottom p,
-.backToTop {
-  min-width: 0 !important;
-  overflow-wrap: anywhere !important;
-  word-break: normal !important;
-}
-
-.contactCard {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 13px !important;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(229, 210, 184, 0.12), transparent 32%),
-    rgba(9, 20, 20, 0.56) !important;
+    radial-gradient(circle at 18% 0%, rgba(229, 210, 184, 0.1), transparent 32%),
+    rgba(9, 20, 20, 0.48) !important;
+  backdrop-filter: blur(18px) saturate(1.04) !important;
 }
 
 .contactCard a,
 .contactCard > span {
   display: grid !important;
   grid-template-columns: 18px minmax(0, 1fr) !important;
-  align-items: flex-start !important;
+  align-items: start !important;
   gap: 11px !important;
   width: 100% !important;
 }
 
-.contactCard a span,
-.contactCard > span span {
+.contactCard span,
+.contactCard a,
+.brandBlock p,
+.footerColumn a {
   min-width: 0 !important;
   overflow-wrap: anywhere !important;
-}
-
-.footerBottom {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto !important;
-  gap: 18px !important;
-}
-
-.footerBottom p:first-child,
-.madeWith {
-  max-width: none !important;
 }
 
 @media (max-width: 1120px) {
@@ -1723,16 +1687,5 @@
 @media (max-width: 680px) {
   .footerMain {
     grid-template-columns: 1fr !important;
-  }
-
-  .brandBlock,
-  .footerColumn,
-  .contactCard {
-    padding: 20px !important;
-  }
-
-  .footerBottom {
-    grid-template-columns: 1fr !important;
-    justify-items: start !important;
   }
 }

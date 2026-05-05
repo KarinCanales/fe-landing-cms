@@ -185,7 +185,6 @@ export default function CatalogSection({ sanityData }: Props) {
     return d.items
       .filter((item) => item.visible !== false)
       .slice()
-      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
       .map((rawItem, idx) => {
         const item = rawItem as FlexibleCatalogItem;
         let media: CatalogMedia | undefined;

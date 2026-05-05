@@ -56,6 +56,12 @@ function cleanPhone(value?: string | null) {
   return value?.replace(/\D/g, "") || "";
 }
 
+function formatPhoneDisplay(value?: string | null) {
+  const raw = value?.trim();
+  if (!raw) return '';
+  return raw.replace(/^https?:\/\/(wa\.me|api\.whatsapp\.com)\/?/i, '').replace(/^send\?phone=/i, '').replace(/[^\d+]/g, '');
+}
+
 function normalizeWhatsappUrl(value?: string | null) {
   const raw = value?.trim();
 
@@ -101,7 +107,6 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
     const serviceTitles = sanityServices?.services?.length
       ? sanityServices.services
           .filter((service) => service.visible !== false && service.title)
-          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
           .map((service) => service.title?.trim() || "")
           .filter(Boolean)
       : fallbackServices.map((service) => service.title);
@@ -114,7 +119,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
     const cards: DisplayContactCard[] = [
       {
         label: "WhatsApp",
-        value: sanitySettings?.phone || "+51 922 459 810",
+        value: formatPhoneDisplay(sanitySettings?.whatsapp) || '922459810',
         href: whatsappHref,
         icon: "message-circle",
         external: true,
@@ -149,7 +154,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
     }
 
     return cards;
-  }, [contactEmail, quoteEmail, sanitySettings?.phone, sanitySettings?.schedule, sanitySettings?.whatsapp]);
+  }, [contactEmail, quoteEmail, sanitySettings?.schedule, sanitySettings?.whatsapp]);
 
   const [form, setForm] = useState<ContactFormState>(initialFormState);
   const [status, setStatus] = useState<FormStatus>("idle");

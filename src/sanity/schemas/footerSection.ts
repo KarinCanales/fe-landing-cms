@@ -1,4 +1,3 @@
-import {overlayPresets} from './shared';
 import {fieldHelp, footerGroups} from './helpers';
 
 const footerSection = {
@@ -16,14 +15,7 @@ const footerSection = {
       group: 'background',
       options: {hotspot: true, ...fieldHelp({helpText: 'Foto ambiental que aparece detrás del footer.'})},
     },
-    {name: 'backgroundAlt', title: 'Alt de imagen de fondo', type: 'string', group: 'background'},
-    {
-      name: 'overlay',
-      title: 'Overlay de fondo',
-      type: 'string',
-      group: 'background',
-      options: {list: overlayPresets.map((p) => p), ...fieldHelp({helpText: 'Filtro visual para integrar la imagen con la paleta.'})},
-    },
+    {name: 'backgroundAlt', title: 'Descripción de la imagen para accesibilidad', type: 'string', group: 'background', description: 'Texto para lectores de pantalla. No se muestra visualmente en la web, pero ayuda a personas que usan tecnologías de asistencia y mejora la accesibilidad.'},
     {name: 'ctaEyebrow', title: 'Texto pequeño del CTA superior', type: 'string', group: 'cta'},
     {name: 'ctaTitle', title: 'Título del CTA superior', type: 'string', group: 'cta'},
     {name: 'ctaHighlightWord', title: 'Fragmento destacado del CTA', type: 'string', group: 'cta'},

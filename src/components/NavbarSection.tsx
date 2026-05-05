@@ -59,6 +59,22 @@ function normalizeColorMode(value?: string | null): "neutral" | "adaptive" {
   return "adaptive";
 }
 
+function getNavbarBrandCopy(companyName?: string | null, companySubtitle?: string | null) {
+  const rawName = (companyName || 'Karin Cadenas').trim();
+  const normalized = rawName
+    .replace(/\s*\|\s*/g, ' ')
+    .replace(/\bBODAS\s*&\s*EVENTOS\b/gi, '')
+    .replace(/\bBODAS\s+Y\s+EVENTOS\b/gi, '')
+    .replace(/\bEVENTOS\b/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  return {
+    title: normalized || 'Karin Cadenas',
+    subtitle: (companySubtitle || 'Bodas & Eventos').trim(),
+  };
+}
+
 function buildSectionThemeMap(sanityNavbar?: NavbarData) {
   const map: Record<string, NavTheme> = { ...DEFAULT_SECTION_THEMES };
 
@@ -103,6 +119,8 @@ export default function NavbarSection({
   const whatsappLabel = "WhatsApp";
 
   const whatsappLabelLong = "Escribir por WhatsApp";
+
+  const brandCopy = getNavbarBrandCopy(sanitySettings?.companyName, sanitySettings?.companySubtitle);
 
   const logoSrc = resolveImageWithUrl(
     sanitySettings?.logo,
@@ -308,7 +326,7 @@ export default function NavbarSection({
             <span className={styles.logoMark}>
               <Image
                 src={logoSrc}
-                alt={sanitySettings?.companyName || "Karin Eventos"}
+                alt={brandCopy.title}
                 width={64}
                 height={64}
                 priority
@@ -317,10 +335,8 @@ export default function NavbarSection({
             </span>
 
             <span className={styles.brandText}>
-              <strong>{sanitySettings?.companyName || "Karin"}</strong>
-              <small>
-                {sanitySettings?.companySubtitle || "Eventos & experiencias"}
-              </small>
+              <strong>{brandCopy.title}</strong>
+              <small>{brandCopy.subtitle}</small>
             </span>
           </a>
 
@@ -386,7 +402,7 @@ export default function NavbarSection({
               <div className={styles.mobileHeader}>
                 <span>
                   <Sparkles size={15} />
-                  Explorar {sanitySettings?.companyName || "Karin"}
+                  Explorar {brandCopy.title}
                 </span>
 
                 <button

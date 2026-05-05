@@ -26,13 +26,13 @@ type Props = { sanityData?: CatalogData };
 type CatalogMedia =
   | { type: 'image'; src: string; alt: string }
   | {
-      type: 'youtube';
-      src: string;
-      id: string;
-      embedUrl: string;
-      poster?: string;
-      alt: string;
-    };
+    type: 'youtube';
+    src: string;
+    id: string;
+    embedUrl: string;
+    poster?: string;
+    alt: string;
+  };
 
 type GalleryEntry = {
   itemIndex: number;
@@ -143,7 +143,6 @@ export default function CatalogSection({ sanityData }: Props) {
     return d.items
       .filter((item) => item.visible !== false)
       .slice()
-      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
       .map((item, idx) => {
         let media: CatalogMedia | undefined;
         const isYoutube = shouldTreatAsYoutube(item);
@@ -539,9 +538,8 @@ export default function CatalogSection({ sanityData }: Props) {
                   {selectedMedia ? (
                     selectedMedia.type === 'image' ? (
                       <div
-                        className={`${styles.zoomLayer} ${zoom > 1 ? styles.zoomLayerDraggable : ''} ${
-                          dragState ? styles.zoomLayerDragging : ''
-                        }`}
+                        className={`${styles.zoomLayer} ${zoom > 1 ? styles.zoomLayerDraggable : ''} ${dragState ? styles.zoomLayerDragging : ''
+                          }`}
                         style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom})` }}
                         onPointerDown={handlePointerDown}
                         onPointerMove={handlePointerMove}

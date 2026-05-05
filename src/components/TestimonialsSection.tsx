@@ -111,7 +111,6 @@ export default function TestimonialsSection({ sanityData }: Props) {
     if (d?.testimonials?.length) {
       return d.testimonials
         .filter((t) => t.visible !== false)
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         .map((t) => ({
           names: t.names || "",
           event: t.event || "",

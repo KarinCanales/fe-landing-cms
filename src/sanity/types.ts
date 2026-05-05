@@ -28,7 +28,6 @@ export type SocialLink = {
   icon?: IconName;
   borderColor?: string;
   visible?: boolean;
-  order?: number;
 };
 
 export type SiteSettingsData = {
@@ -39,14 +38,9 @@ export type SiteSettingsData = {
   whatsapp?: string;
   email?: string;
   quoteEmail?: string;
-  phone?: string;
   location?: string;
   schedule?: string;
-  domain?: string;
-  purchaseNote?: string;
   socialLinks?: SocialLink[];
-  legalText?: string;
-  madeWithText?: string;
   seo?: {
     title?: string;
     description?: string;
@@ -61,7 +55,6 @@ export type NavLink = {
   label: string;
   href: string;
   enabled?: boolean;
-  order?: number;
 };
 
 export type NavbarData = {
@@ -79,7 +72,6 @@ type BaseSectionData = {
   backgroundImage?: SanityImage;
   backgroundImageUrl?: string;
   backgroundAlt?: string;
-  overlay?: string;
 };
 
 export type HeroData = BaseSectionData & {
@@ -113,14 +105,12 @@ export type BenefitCard = {
   icon?: IconName;
   size?: 'sm' | 'md' | 'lg';
   visible?: boolean;
-  order?: number;
 };
 
 export type StatItem = {
   value?: string;
   label?: string;
   visible?: boolean;
-  order?: number;
 };
 
 export type BenefitsData = BaseSectionData & {
@@ -143,7 +133,6 @@ export type ServiceItem = {
   imageAlt?: string;
   icon?: IconName;
   visible?: boolean;
-  order?: number;
 };
 
 export type ServicesData = BaseSectionData & {
@@ -192,7 +181,6 @@ export type CatalogItem = {
 
   visible?: boolean;
   featured?: boolean;
-  order?: number;
 };
 
 export type CatalogData = BaseSectionData & {
@@ -211,7 +199,6 @@ export type TestimonialItem = {
   photoUrl?: string;
   rating?: number;
   visible?: boolean;
-  order?: number;
 };
 
 export type TestimonialsData = BaseSectionData & {
@@ -234,7 +221,6 @@ export type ContactCardItem = {
 export type EventTypeOption = {
   label?: string;
   visible?: boolean;
-  order?: number;
 };
 
 export type ContactData = BaseSectionData & {
@@ -253,7 +239,6 @@ export type FooterNavColumn = {
   title?: string;
   links?: Array<{ label?: string; href?: string }>;
   visible?: boolean;
-  order?: number;
 };
 
 export type FooterData = BaseSectionData & {
@@ -272,13 +257,12 @@ export type FooterData = BaseSectionData & {
   navColumnTitle?: string;
   servicesColumnTitle?: string;
   contactTitle?: string;
+  legalText?: string;
   navigationColumns?: FooterNavColumn[];
   serviceLinks?: Array<{ text?: string; link?: string; visible?: boolean }>;
   contactInfo?: { phone?: string; email?: string; location?: string; schedule?: string };
   socialLinks?: SocialLink[];
-  legalText?: string;
   madeWithLine?: string;
-  madeWithText?: string;
   madeWithSuffix?: string;
   backToTopLabel?: string;
 } | null;

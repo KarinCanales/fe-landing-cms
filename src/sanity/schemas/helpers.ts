@@ -1,4 +1,6 @@
+import React from 'react';
 import {ColorInput} from '../components/ColorInput';
+import {resolveIcon} from '../icons';
 
 export const sectionGroups = [
   {name: 'content', title: 'Contenido principal', default: true},
@@ -12,7 +14,6 @@ export const siteGroups = [
   {name: 'contact', title: 'Datos de contacto'},
   {name: 'social', title: 'Redes sociales'},
   {name: 'seo', title: 'Vista al compartir / Google'},
-  {name: 'footer', title: 'Textos legales'},
 ];
 
 export const footerGroups = [
@@ -86,5 +87,31 @@ export function colorField({
       Rule.regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/).warning(
         'Usa un color hexadecimal válido. Ejemplo: #d2ab80.',
       ),
+  };
+}
+
+
+export function iconPreviewMedia(icon?: string | null, color?: string | null) {
+  const Icon = resolveIcon(icon || undefined);
+  const accent = color || '#2a5a55';
+
+  return function IconPreview() {
+    return React.createElement(
+      'span',
+      {
+        style: {
+          width: 34,
+          height: 34,
+          display: 'grid',
+          placeItems: 'center',
+          borderRadius: 12,
+          color: accent,
+          background: 'rgba(229, 224, 216, 0.16)',
+          border: `1px solid ${accent}55`,
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,.12)',
+        },
+      },
+      React.createElement(Icon, {size: 18}),
+    );
   };
 }

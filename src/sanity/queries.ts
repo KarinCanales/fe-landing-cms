@@ -14,14 +14,9 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   whatsapp,
   email,
   quoteEmail,
-  phone,
   location,
   schedule,
-  domain,
-  purchaseNote,
-  "socialLinks": socialLinks[]{ name, url, icon, borderColor, visible, order } | order(order asc),
-  legalText,
-  madeWithText,
+  "socialLinks": socialLinks[]{ name, url, icon, borderColor, visible },
   seo { title, description, ogImage, "ogImageUrl": ogImage.asset->url }
 }`;
 
@@ -35,7 +30,6 @@ export const HERO_QUERY = `*[_type == "heroSection"][0]{
   backgroundImage,
   "backgroundImageUrl": backgroundImage.asset->url,
   backgroundAlt,
-  overlay,
   eyebrow,
   titleLine1,
   titleLine2,
@@ -54,14 +48,13 @@ export const BENEFITS_QUERY = `*[_type == "benefitsSection"][0]{
   backgroundImage,
   "backgroundImageUrl": backgroundImage.asset->url,
   backgroundAlt,
-  overlay,
   theme,
   eyebrow,
   title,
   highlightWord,
   description,
-  "cards": cards[]{ title, eyebrow, description, icon, size, visible, order } | order(order asc),
-  "stats": stats[]{ value, label, visible, order } | order(order asc)
+  "cards": cards[]{ title, eyebrow, description, icon, size, visible },
+  "stats": stats[]{ value, label, visible }
 }`;
 
 export const SERVICES_QUERY = `*[_type == "servicesSection"][0]{
@@ -69,7 +62,6 @@ export const SERVICES_QUERY = `*[_type == "servicesSection"][0]{
   backgroundImage,
   "backgroundImageUrl": backgroundImage.asset->url,
   backgroundAlt,
-  overlay,
   eyebrow,
   title,
   highlightWord,
@@ -84,9 +76,8 @@ export const SERVICES_QUERY = `*[_type == "servicesSection"][0]{
     "imageUrl": image.asset->url,
     imageAlt,
     icon,
-    visible,
-    order
-  } | order(order asc)
+    visible
+  }
 }`;
 
 export const CATALOG_QUERY = `*[_type == "catalogSection"][0]{
@@ -94,7 +85,6 @@ export const CATALOG_QUERY = `*[_type == "catalogSection"][0]{
   backgroundImage,
   "backgroundImageUrl": backgroundImage.asset->url,
   backgroundAlt,
-  overlay,
   eyebrow,
   title,
   highlightWord,
@@ -126,9 +116,8 @@ export const CATALOG_QUERY = `*[_type == "catalogSection"][0]{
     link,
     "legacyVideoAssetUrl": video.asset->url,
     visible,
-    featured,
-    order
-  } | order(order asc)
+    featured
+  }
 }`;
 
 export const TESTIMONIALS_QUERY = `*[_id == "testimonialsSection"][0]{
@@ -136,7 +125,6 @@ export const TESTIMONIALS_QUERY = `*[_id == "testimonialsSection"][0]{
   "backgroundImage": coalesce(backgroundImage, testimonialsBackgroundImage, testimonialBackgroundImage, background, backgroundPhoto),
   "backgroundImageUrl": coalesce(backgroundImage.asset->url, testimonialsBackgroundImage.asset->url, testimonialBackgroundImage.asset->url, background.asset->url, backgroundPhoto.asset->url),
   backgroundAlt,
-  overlay,
   eyebrow,
   title,
   highlightWord,
@@ -148,9 +136,8 @@ export const TESTIMONIALS_QUERY = `*[_id == "testimonialsSection"][0]{
     photo,
     "photoUrl": photo.asset->url,
     rating,
-    visible,
-    order
-  } | order(order asc)
+    visible
+  }
 }`;
 
 export const CONTACT_QUERY = `*[_type == "contactSection"][0]{
@@ -158,7 +145,6 @@ export const CONTACT_QUERY = `*[_type == "contactSection"][0]{
   backgroundImage,
   "backgroundImageUrl": backgroundImage.asset->url,
   backgroundAlt,
-  overlay,
   eyebrow,
   title,
   highlightWord,
@@ -174,7 +160,6 @@ export const FOOTER_QUERY = `*[_type == "footerSection"][0]{
   "backgroundImage": coalesce(backgroundImage, footerBackgroundImage, background, backgroundPhoto),
   "backgroundImageUrl": coalesce(backgroundImage.asset->url, footerBackgroundImage.asset->url, background.asset->url, backgroundPhoto.asset->url),
   backgroundAlt,
-  overlay,
   ctaEyebrow,
   ctaTitle,
   ctaHighlightWord,

@@ -1462,217 +1462,74 @@
   .servicesAccordion { height: auto !important; min-height: 0 !important; }
 }
 
-
 /* ========================================================================== 
-   FINAL FIX 10 — Servicios: responsive real + CTA legible
+   FINAL UX FIX — Servicios: tablet sin cápsulas gigantes y números legibles
    ========================================================================== */
-.ctaButton {
-  color: #102d2a !important;
-  background: linear-gradient(135deg, #fff8ec 0%, #ead8bf 50%, #d2ab80 100%) !important;
-  border: 1px solid rgba(229, 210, 184, 0.46) !important;
-  box-shadow:
-    0 18px 42px rgba(9, 20, 20, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.46) !important;
-  opacity: 1 !important;
-}
-
-.ctaButton:hover {
-  color: #102d2a !important;
-  background: linear-gradient(135deg, #fffaf2 0%, #e5d2b8 54%, #c99d6d 100%) !important;
-  border-color: rgba(255, 250, 242, 0.7) !important;
-}
-
-@media (min-width: 700px) and (max-width: 1100px) {
-  .servicesSection {
-    min-height: auto !important;
-    padding-top: calc(88px + 28px) !important;
-    padding-bottom: 64px !important;
-    overflow: hidden !important;
-  }
-
-  .sectionHeader {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px) !important;
-    align-items: start !important;
-    gap: clamp(18px, 3vw, 34px) !important;
-    margin-bottom: 28px !important;
-  }
-
-  .title {
-    font-size: clamp(3.25rem, 7.4vw, 5.7rem) !important;
-    line-height: 0.94 !important;
-  }
-
-  .lead {
-    padding: 16px 18px !important;
-    font-size: clamp(0.95rem, 1.7vw, 1.12rem) !important;
-    line-height: 1.55 !important;
-  }
-
+@media (min-width: 641px) and (max-width: 980px) {
   .servicesAccordion {
-    display: flex !important;
-    height: clamp(420px, 50vh, 560px) !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    height: auto !important;
     min-height: 0 !important;
-    gap: clamp(10px, 1.7vw, 16px) !important;
-    padding: 10px !important;
-    border: 1px solid rgba(229, 210, 184, 0.16) !important;
-    border-radius: 52px !important;
-    background:
-      linear-gradient(145deg, rgba(229, 224, 216, 0.08), rgba(229, 210, 184, 0.04)),
-      rgba(9, 20, 20, 0.16) !important;
-    box-shadow: 0 30px 80px rgba(9, 20, 20, 0.26), inset 0 1px 0 rgba(255, 250, 242, 0.1) !important;
-    backdrop-filter: blur(14px) saturate(1.04) !important;
+    gap: 16px !important;
+    padding: 12px !important;
+    border-radius: 34px !important;
   }
 
   .serviceCard,
   .serviceCard.isActive,
   .serviceCard.isActive:not(:hover):not(:focus-visible) {
-    flex: 1 1 0 !important;
-    width: auto !important;
-    min-width: 0 !important;
-    height: 100% !important;
+    height: clamp(330px, 45vw, 430px) !important;
     aspect-ratio: auto !important;
+    border-radius: 34px !important;
+    flex: none !important;
     grid-column: auto !important;
-    border-radius: 999px !important;
   }
 
-  .serviceCard.isActive,
   .serviceCard:hover,
   .serviceCard:focus-visible {
-    flex: 3.2 1 0 !important;
-    border-radius: 42px !important;
+    grid-column: span 2 !important;
+    height: clamp(330px, 45vw, 430px) !important;
+    border-radius: 36px !important;
+  }
+
+  .cardNumber,
+  .serviceCard.isActive .cardNumber,
+  .serviceCard:not(.isActive) .cardNumber {
+    top: 14px !important;
+    right: auto !important;
+    left: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    transform: translateX(-50%) !important;
   }
 
   .compactTitle,
   .serviceCard.isActive:not(:hover):not(:focus-visible) .compactTitle {
-    display: block !important;
-    opacity: 1 !important;
+    width: min(260px, 50vw) !important;
     transform: translate(-50%, -50%) rotate(-90deg) !important;
-  }
-
-  .serviceCard.isActive .compactTitle,
-  .serviceCard:hover .compactTitle,
-  .serviceCard:focus-visible .compactTitle {
-    opacity: 0 !important;
-    transform: translate(-50%, -50%) rotate(-90deg) translateY(16px) !important;
-    pointer-events: none !important;
-  }
-
-  .cardContent,
-  .serviceCard.isActive:not(:hover):not(:focus-visible) .cardContent {
-    left: clamp(22px, 3vw, 34px) !important;
-    right: clamp(22px, 3vw, 34px) !important;
-    bottom: clamp(22px, 3vw, 34px) !important;
-    padding: 0 !important;
-    opacity: 0 !important;
-    transform: translateY(18px) !important;
-    pointer-events: none !important;
-  }
-
-  .serviceCard.isActive .cardContent,
-  .serviceCard:hover .cardContent,
-  .serviceCard:focus-visible .cardContent {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
-  }
-
-  .cardTitle {
-    font-size: clamp(2.55rem, 5.8vw, 4.5rem) !important;
-    max-width: 11ch !important;
-  }
-
-  .cardDescription {
-    max-width: 39ch !important;
-    display: block !important;
-    overflow: visible !important;
-    font-size: clamp(0.92rem, 1.5vw, 1.02rem) !important;
-    line-height: 1.55 !important;
   }
 }
 
-@media (max-width: 699px) {
-  .servicesSection {
-    min-height: auto !important;
-    padding-top: calc(76px + 24px) !important;
-    padding-bottom: 56px !important;
-    overflow: hidden !important;
-  }
-
-  .sectionHeader {
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
-    margin-bottom: 24px !important;
-  }
-
-  .title {
-    font-size: clamp(3rem, 14vw, 4.65rem) !important;
-    line-height: 0.92 !important;
-  }
-
-  .servicesAccordion {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    height: auto !important;
-    min-height: 0 !important;
-    gap: 18px !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .serviceCard,
-  .serviceCard.isActive {
-    flex: none !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: clamp(360px, 72vh, 470px) !important;
-    aspect-ratio: auto !important;
-    border-radius: 32px !important;
-  }
-
-  .compactTitle {
-    display: none !important;
-  }
-
-  .cardContent,
-  .serviceCard.isActive .cardContent {
-    left: 22px !important;
-    right: 22px !important;
-    bottom: 22px !important;
-    padding: 0 !important;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-  }
-
-  .serviceCard .cardNumber,
+@media (min-width: 981px) and (max-width: 1180px) {
+  .cardNumber,
   .serviceCard.isActive .cardNumber {
-    top: 18px !important;
-    right: 18px !important;
-    left: auto !important;
+    top: 14px !important;
+    right: auto !important;
+    left: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    transform: translateX(-50%) !important;
   }
+}
 
-  .cardTitle {
-    font-size: clamp(2.45rem, 11vw, 3.35rem) !important;
-  }
-
-  .cardDescription {
-    display: block !important;
-    overflow: visible !important;
-    font-size: 0.96rem !important;
-    line-height: 1.55 !important;
-  }
-
-  .footerRow {
-    gap: 18px !important;
-    margin-top: 22px !important;
-  }
-
-  .footerText,
-  .ctaButton {
-    width: 100% !important;
-  }
+.ctaButton {
+  color: #173130 !important;
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 250, 242, 0.34), transparent 38%),
+    linear-gradient(135deg, #ead8bf 0%, #d2ab80 62%, #c59768 100%) !important;
+  border-color: rgba(229, 210, 184, 0.52) !important;
+  box-shadow:
+    0 18px 42px rgba(9, 20, 20, 0.28),
+    inset 0 1px 0 rgba(255, 250, 242, 0.42) !important;
 }

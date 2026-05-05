@@ -80,7 +80,7 @@ export default function BenefitsSection({ sanityData }: Props) {
 
   const cards = useMemo(() => {
     const raw = d?.cards?.length
-      ? d.cards.filter((c) => c.visible !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+      ? d.cards.filter((c) => c.visible !== false)
       : fallbackBenefitCards;
     return raw.map((c) => ({
       Icon: resolveIcon(c.icon),
@@ -93,7 +93,7 @@ export default function BenefitsSection({ sanityData }: Props) {
 
   const stats = useMemo(() => {
     const raw = d?.stats?.length
-      ? d.stats.filter((s) => s.visible !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+      ? d.stats.filter((s) => s.visible !== false)
       : fallbackStats;
     return raw.map((s) => ({ value: s.value || "", label: s.label || "" }));
   }, [d?.stats]);
@@ -197,11 +197,6 @@ export default function BenefitsSection({ sanityData }: Props) {
               <small>{stat.label}</small>
             </div>
           ))}
-
-          <div className={styles.statAccent} aria-hidden="true">
-            <CalendarCheck size={18} />
-            <span>Servicio cuidado de inicio a fin</span>
-          </div>
         </motion.div>
       </div>
     </section>

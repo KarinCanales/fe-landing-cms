@@ -1,5 +1,6 @@
 'use client';
 
+import {useEffect, useState} from 'react';
 import {set, unset, type StringInputProps} from 'sanity';
 
 const palette = {
@@ -24,6 +25,11 @@ const presetColors = [
 
 export function ColorInput(props: StringInputProps) {
   const value = typeof props.value === 'string' && props.value ? props.value : '#d2ab80';
+  const [draftColor, setDraftColor] = useState(value);
+
+  useEffect(() => {
+    setDraftColor(value);
+  }, [value]);
 
   const update = (nextValue: string) => {
     if (!nextValue) {
@@ -46,8 +52,9 @@ export function ColorInput(props: StringInputProps) {
         <input
           aria-label="Elegir color"
           type="color"
-          value={value}
-          onChange={(event) => update(event.currentTarget.value)}
+          value={draftColor}
+          onChange={(event) => setDraftColor(event.currentTarget.value)}
+          onBlur={(event) => update(event.currentTarget.value)}
           style={{
             width: 52,
             height: 42,
@@ -89,7 +96,7 @@ export function ColorInput(props: StringInputProps) {
               width: 28,
               height: 28,
               borderRadius: 999,
-              border: color.toLowerCase() === value.toLowerCase() ? `2px solid ${palette.ink}` : '1px solid rgba(47,40,29,.22)',
+              border: color.toLowerCase() === draftColor.toLowerCase() ? `2px solid ${palette.ink}` : '1px solid rgba(47,40,29,.22)',
               background: color,
               boxShadow: '0 6px 14px rgba(47,40,29,.1)',
               cursor: 'pointer',
@@ -104,8 +111,8 @@ export function ColorInput(props: StringInputProps) {
             padding: '0 10px',
             border: '1px solid rgba(114,92,58,.22)',
             borderRadius: 999,
-            color: palette.carob,
-            background: 'rgba(229,224,216,.55)',
+            color: '#fffaf2',
+            background: 'linear-gradient(135deg, #2a5a55, #173d39)',
             fontSize: 12,
             fontWeight: 750,
             cursor: 'pointer',
