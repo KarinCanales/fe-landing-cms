@@ -26,34 +26,34 @@ type ImagePresetConfig = {
 
 const IMAGE_PRESETS: Record<ImagePreset, ImagePresetConfig> = {
   hero: {
-    width: 1600,
-    quality: 70,
+    width: 1200,
+    quality: 66,
     fit: "max",
   },
   background: {
-    width: 1600,
-    quality: 68,
+    width: 1100,
+    quality: 62,
     fit: "max",
   },
   card: {
-    width: 820,
-    quality: 72,
+    width: 680,
+    quality: 66,
     fit: "max",
   },
   thumbnail: {
-    width: 480,
-    quality: 70,
+    width: 360,
+    quality: 62,
     fit: "max",
   },
   avatar: {
-    width: 240,
-    height: 240,
-    quality: 74,
+    width: 160,
+    height: 160,
+    quality: 68,
     fit: "crop",
   },
   logo: {
-    width: 320,
-    quality: 75,
+    width: 220,
+    quality: 70,
     fit: "max",
   },
   og: {

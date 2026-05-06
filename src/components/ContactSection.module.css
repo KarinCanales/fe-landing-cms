@@ -1564,3 +1564,34 @@
 
 /* Form labels e inputs */
 .formCard { color: #173130 !important; }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE PASS — formulario más suave en celulares
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  .contactSection {
+    content-visibility: auto;
+    contain-intrinsic-size: 1180px;
+  }
+
+  .backgroundImage,
+  .sanityBackgroundImage,
+  .paperTexture,
+  .ribbonLine,
+  .floatingOrb,
+  .arcaneLayer,
+  .arcaneRing,
+  .arcaneSparkle,
+  .smallLines,
+  .detailPoints {
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .formCard,
+  .contactCards a,
+  .submitButton,
+  .selectMenu {
+    backdrop-filter: none !important;
+  }
+}

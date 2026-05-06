@@ -1816,3 +1816,53 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE PASS — menos repaints y layout work en celulares
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  .benefits {
+    content-visibility: auto;
+    contain-intrinsic-size: 1180px;
+  }
+
+  .gridTexture,
+  .meteors,
+  .meteor,
+  .orbOne,
+  .orbTwo,
+  .orbThree {
+    display: none !important;
+  }
+
+  .card,
+  .stat,
+  .kicker,
+  .iconBox {
+    backdrop-filter: none !important;
+  }
+
+  .card,
+  .stat,
+  .cardShine,
+  .cardLine span,
+  .copyLine span::after,
+  .statIcon,
+  .stat::before,
+  .stat::after,
+  .backgroundWash::before,
+  .backgroundWash::after {
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .backgroundImage,
+  .sanityBackgroundImage {
+    transform: none !important;
+    filter: saturate(0.82) brightness(1.02) contrast(0.92) !important;
+  }
+
+  .stat:hover {
+    transform: translate3d(0, -1px, 0) !important;
+  }
+}

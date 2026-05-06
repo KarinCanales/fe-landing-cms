@@ -1289,3 +1289,47 @@
       rgba(9, 20, 20, 0.50) 100%
     ) !important;
 }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE PASS — reduce LCP/render delay and compositor work
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  .hero {
+    min-height: 100svh;
+    padding-top: 108px;
+    padding-bottom: 64px;
+  }
+
+  .hero-image {
+    transform: none !important;
+    filter: saturate(0.9) brightness(0.72) !important;
+  }
+
+  .hero-mesh,
+  .hero-morph,
+  .hero-morph-left,
+  .hero-animated-lines,
+  .hero-particles {
+    display: none !important;
+  }
+
+  .hero-kicker,
+  .button,
+  .hero-feature-card,
+  .floating-note {
+    backdrop-filter: none !important;
+  }
+
+  .mesh-blob,
+  .hero-line,
+  .hero-particles span,
+  .floating-note,
+  .word-rotator span {
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .hero-feature-card {
+    box-shadow: 0 20px 48px rgba(9, 20, 20, 0.26) !important;
+  }
+}

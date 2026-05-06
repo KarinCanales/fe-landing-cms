@@ -1848,3 +1848,47 @@
     font-size: 1.52rem !important;
   }
 }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE PASS — carrusel más liviano en celulares
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  .testimonialsSection {
+    content-visibility: auto;
+    contain-intrinsic-size: 1120px;
+  }
+
+  .meshOne,
+  .meshTwo,
+  .meshThree,
+  .orbitalLine,
+  .sparkles {
+    display: none !important;
+  }
+
+  .sanityBackgroundImage {
+    transform: none !important;
+    filter: saturate(0.62) brightness(1.08) contrast(0.82) blur(0.8px) !important;
+  }
+
+  .storyPanel,
+  .card,
+  .navButton,
+  .stars {
+    backdrop-filter: none !important;
+  }
+
+  .activeCard,
+  .card,
+  .cardGlow,
+  .nameLine,
+  .storyPanel {
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .scroller {
+    scroll-behavior: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
@@ -93,13 +94,14 @@ export default function Hero({ sanityData }: HeroProps) {
 
   return (
     <section ref={heroRef} className={ambientClass} id="inicio">
-      <img
+      <Image
         src={bgImage}
         alt={bgAlt}
         className={styles['hero-image']}
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
+        fill
+        priority
+        sizes="100vw"
+        quality={72}
       />
 
       <div className={styles['hero-overlay']} />
@@ -135,12 +137,7 @@ export default function Hero({ sanityData }: HeroProps) {
       </div>
 
       <div className={`${styles['hero-content']} ${styles.container}`}>
-        <motion.div
-          className={styles['hero-copy']}
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: [0.19, 1, 0.22, 1] }}
-        >
+        <div className={styles['hero-copy']}>
           <div className={styles['hero-kicker']}>
             <Sparkles size={16} />
             {eyebrow}
@@ -181,7 +178,7 @@ export default function Hero({ sanityData }: HeroProps) {
               {ctaSecondaryLabel}
             </a>
           </div>
-        </motion.div>
+        </div>
 
         <div className={styles['hero-stack']} aria-label="Resumen de servicios destacados">
           <div className={styles['hero-feature-shell']}>

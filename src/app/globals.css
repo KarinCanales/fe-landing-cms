@@ -652,3 +652,14 @@ footer[id] {
     scroll-margin-top: 80px;
   }
 }
+
+/* Mobile performance baseline: evita scroll suave costoso y reduce repaints globales. */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    text-rendering: optimizeSpeed;
+  }
+}

@@ -1833,3 +1833,49 @@
     align-items: end !important;
   }
 }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE PASS — catálogo y modal con menos trabajo visual
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  .catalogSection {
+    content-visibility: auto;
+    contain-intrinsic-size: 1250px;
+  }
+
+  .catalogAura,
+  .orbitalFrame,
+  .floatingPetals,
+  .catalogGrain {
+    display: none !important;
+  }
+
+  .galleryShell,
+  .infoCard,
+  .card,
+  .badge,
+  .cta,
+  .modalBottom,
+  .thumbnails,
+  .zoomControls,
+  .iconButton,
+  .modalArrow {
+    backdrop-filter: none !important;
+  }
+
+  .catalogSection::before,
+  .catalogSection::after,
+  .mediaBackdrop,
+  .card,
+  .cardImage,
+  .imageShade,
+  .modalPanel,
+  .modalPanelImmersive {
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .cardImage {
+    filter: saturate(0.9) brightness(0.82) contrast(0.96) !important;
+  }
+}

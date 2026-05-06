@@ -126,7 +126,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   const contactTitle = cleanText(d?.contactTitle) || 'Contacto';
 
   // Navegación fija del footer.
-  const navLinks = [{ title: navColumnTitle, links: fallbackNavigationLinks, visible: true, order: 0 }];
+  const navLinks = [{ title: navColumnTitle, links: fallbackNavigationLinks, visible: true }];
 
   // Servicios: se toman de la misma lista editable de Servicios.
   const serviceLinks = sanityServices?.services?.length
