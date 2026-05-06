@@ -663,3 +663,131 @@ footer[id] {
     text-rendering: optimizeSpeed;
   }
 }
+
+/* ========================================================================== 
+   MOBILE PERFORMANCE V2 — modo celular realmente ligero
+   --------------------------------------------------------------------------
+   En móviles reales prioriza fluidez sobre adornos: sin animaciones continuas,
+   sin blur de vidrio global y sin transiciones de propiedades caras.
+   ========================================================================== */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  main *,
+  main *::before,
+  main *::after {
+    animation: none !important;
+    transition-property: color, background-color, border-color, opacity, transform !important;
+    transition-duration: 120ms !important;
+    transition-timing-function: ease-out !important;
+    will-change: auto !important;
+  }
+
+  main div[class*="mesh"],
+  main span[class*="mesh"],
+  main div[class*="Mesh"],
+  main span[class*="Mesh"],
+  main div[class*="blob"],
+  main span[class*="blob"],
+  main div[class*="Blob"],
+  main span[class*="Blob"],
+  main div[class*="meteor"],
+  main span[class*="meteor"],
+  main div[class*="Meteor"],
+  main span[class*="Meteor"],
+  main div[class*="aurora"],
+  main span[class*="aurora"],
+  main div[class*="Aurora"],
+  main span[class*="Aurora"],
+  main div[class*="sparkles"],
+  main span[class*="sparkles"],
+  main div[class*="Sparkles"],
+  main span[class*="Sparkles"],
+  main div[class*="firework"],
+  main span[class*="firework"],
+  main div[class*="Firework"],
+  main span[class*="Firework"],
+  main div[class*="gridTexture"],
+  main span[class*="gridTexture"],
+  main div[class*="GridTexture"],
+  main span[class*="GridTexture"],
+  main div[class*="orbital"],
+  main span[class*="orbital"],
+  main div[class*="Orbital"],
+  main span[class*="Orbital"],
+  main svg[class*="morph"],
+  main div[class*="animated"],
+  main span[class*="animated"],
+  main div[class*="Animated"],
+  main span[class*="Animated"] {
+    display: none !important;
+  }
+
+  main [class*="card"],
+  main [class*="Card"],
+  main [class*="panel"],
+  main [class*="Panel"],
+  main [class*="button"],
+  main [class*="Button"],
+  main [class*="pill"],
+  main [class*="Pill"],
+  main [class*="shell"],
+  main [class*="Shell"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #beneficios,
+  #servicios,
+  #testimonios,
+  #catalogo,
+  #contacto,
+  footer {
+    overflow: clip;
+    contain: layout paint style;
+  }
+
+  #servicios img,
+  #testimonios img,
+  #catalogo img,
+  footer img {
+    transform: none !important;
+  }
+}
+
+/* Mobile V2: no cargar/pintar fondos fotográficos pesados debajo del Hero */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  #beneficios,
+  #testimonios {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.74), transparent 36%),
+      linear-gradient(135deg, #f6efe5 0%, #e8e3da 58%, #ead8bf 100%) !important;
+  }
+
+  #servicios,
+  #catalogo,
+  #contacto,
+  #footer {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(182, 188, 152, 0.1), transparent 34%),
+      linear-gradient(135deg, #173d39 0%, #102d2a 100%) !important;
+  }
+
+  #beneficios [class*="BackgroundImage"],
+  #beneficios [class*="backgroundImage"],
+  #servicios [class*="BackgroundImage"],
+  #servicios [class*="backgroundImage"],
+  #testimonios [class*="BackgroundImage"],
+  #testimonios [class*="backgroundImage"],
+  #catalogo [class*="BackgroundImage"],
+  #catalogo [class*="backgroundImage"],
+  #contacto [class*="BackgroundImage"],
+  #contacto [class*="backgroundImage"],
+  #footer [class*="BackgroundImage"],
+  #footer [class*="backgroundImage"] {
+    display: none !important;
+    background-image: none !important;
+  }
+}

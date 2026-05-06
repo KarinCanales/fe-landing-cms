@@ -9,11 +9,10 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import { fetchHomePageData } from '@/sanity/fetch';
 
 /**
- * Mientras el cliente edita desde Sanity, no conviene que Next sirva una
- * versión estática vieja de la página. Esto hace que cada refresh lea Sanity.
+ * Producción: usa ISR para evitar render/fetch en cada visita.
+ * Las ediciones de Sanity pueden tardar hasta 5 min en reflejarse si no hay webhook.
  */
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 300;
 
 export default async function Home() {
   const data = await fetchHomePageData();
