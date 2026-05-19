@@ -6,7 +6,7 @@
   --vanilla: #e5d2b8;
   --chai: #d2ab80;
   --carob: #725c3a;
-  --deep: #2f281d;
+  --deep: #173130;
   --matcha: #809671;
   --pistachio: #b3b792;
 
@@ -15,13 +15,13 @@
   padding: clamp(82px, 8vw, 124px) 0;
   color: var(--cream);
   background:
-    radial-gradient(circle at 16% 10%, rgba(229, 210, 184, 0.18), transparent 30%),
-    radial-gradient(circle at 88% 28%, rgba(179, 183, 146, 0.16), transparent 33%),
+    radial-gradient(circle at 16% 10%, rgba(229, 210, 184, 0.16), transparent 30%),
+    radial-gradient(circle at 88% 28%, rgba(179, 183, 146, 0.14), transparent 33%),
     linear-gradient(
       112deg,
-      rgba(37, 31, 24, 0.96) 0%,
-      rgba(47, 40, 29, 0.9) 38%,
-      rgba(114, 92, 58, 0.72) 78%,
+      rgba(18, 38, 38, 0.96) 0%,
+      rgba(23, 49, 48, 0.90) 38%,
+      rgba(45, 95, 94, 0.72) 78%,
       rgba(128, 150, 113, 0.48) 135%
     ),
     var(--catalog-bg-image);
@@ -37,18 +37,18 @@
   z-index: -7;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 14% 18%, rgba(229, 210, 184, 0.14), transparent 36%),
+    radial-gradient(ellipse at 14% 18%, rgba(229, 210, 184, 0.12), transparent 36%),
     radial-gradient(ellipse at 88% 82%, rgba(128, 150, 113, 0.14), transparent 38%),
     linear-gradient(
       90deg,
-      rgba(20, 16, 12, 0.86) 0%,
-      rgba(20, 16, 12, 0.68) 42%,
-      rgba(47, 40, 29, 0.48) 100%
+      rgba(9, 20, 20, 0.86) 0%,
+      rgba(9, 20, 20, 0.68) 42%,
+      rgba(23, 49, 48, 0.48) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(20, 16, 12, 0.18) 0%,
-      rgba(20, 16, 12, 0.7) 100%
+      rgba(9, 20, 20, 0.18) 0%,
+      rgba(9, 20, 20, 0.70) 100%
     );
 }
 
@@ -196,7 +196,7 @@
   gap: 10px;
   width: fit-content;
   margin-bottom: 16px;
-  padding: 10px 15px;
+  padding: 10px 14px;
   border: 1px solid rgba(229, 210, 184, 0.24);
   border-radius: 999px;
   color: var(--vanilla);
@@ -207,9 +207,11 @@
     0 16px 38px rgba(20, 16, 12, 0.22),
     inset 0 1px 0 rgba(255, 250, 242, 0.12);
   backdrop-filter: blur(14px);
-  font-size: 0.76rem;
-  font-weight: 900;
-  letter-spacing: 0.24em;
+  font-family: var(--font-sans, "Inter", sans-serif);
+  font-size: 0.74rem;
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -300,13 +302,13 @@
 .galleryShell {
   position: relative;
   overflow: hidden;
-  padding: clamp(18px, 2vw, 24px);
+  padding: clamp(16px, 1.6vw, 22px);
   border: 1px solid rgba(229, 210, 184, 0.16);
   border-radius: 40px;
   background:
-    radial-gradient(circle at 10% 0%, rgba(229, 210, 184, 0.11), transparent 28%),
-    linear-gradient(145deg, rgba(229, 224, 216, 0.095), rgba(229, 210, 184, 0.04)),
-    rgba(20, 16, 12, 0.18);
+    radial-gradient(circle at 10% 0%, rgba(229, 210, 184, 0.10), transparent 28%),
+    linear-gradient(145deg, rgba(229, 224, 216, 0.09), rgba(229, 210, 184, 0.04)),
+    rgba(9, 20, 20, 0.18);
   box-shadow:
     0 34px 94px rgba(20, 16, 12, 0.3),
     inset 0 1px 0 rgba(255, 250, 242, 0.1);
@@ -343,20 +345,15 @@
   --col-1: 1fr;
   --col-2: 1fr;
   --col-3: 1fr;
-  --row-1: 1fr;
-  --row-2: 1fr;
 
   position: relative;
   display: grid;
   grid-template-columns: var(--col-1) var(--col-2) var(--col-3);
-  grid-template-rows: var(--row-1) var(--row-2);
-  grid-auto-rows: clamp(170px, 14vw, 220px);
+  grid-auto-rows: clamp(240px, 22vw, 320px);
   grid-auto-flow: dense;
-  min-height: clamp(560px, 48vw, 720px);
   gap: 16px;
   transition:
-    grid-template-columns 620ms cubic-bezier(0.22, 1, 0.36, 1),
-    grid-template-rows 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    grid-template-columns 620ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card {
@@ -369,7 +366,7 @@
   border: 1px solid rgba(229, 210, 184, 0.16);
   border-radius: 30px;
   color: var(--cream);
-  background: var(--deep);
+  background: rgba(23, 49, 48, 0.28);
   cursor: pointer;
   isolation: isolate;
   box-shadow:
@@ -526,18 +523,18 @@
   bottom: 0;
   z-index: 2;
   display: flex;
-  min-height: min(74%, 300px);
+  min-height: min(52%, 200px);
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(20px, 2vw, 30px);
-  padding-top: clamp(34px, 4vw, 56px);
+  padding: clamp(18px, 2vw, 26px);
+  padding-top: clamp(28px, 3vw, 42px);
   color: var(--cream);
   background:
     linear-gradient(
       180deg,
       transparent 0%,
-      rgba(20, 16, 12, 0.12) 18%,
-      rgba(20, 16, 12, 0.78) 100%
+      rgba(20, 16, 12, 0.18) 22%,
+      rgba(20, 16, 12, 0.84) 100%
     );
   overflow: hidden;
   transition:
@@ -549,8 +546,8 @@
 
 .card:hover .cardContent,
 .card:focus-within .cardContent {
-  min-height: min(86%, 360px);
-  padding-top: clamp(44px, 5vw, 72px);
+  min-height: min(64%, 260px);
+  padding-top: clamp(36px, 4vw, 56px);
 }
 
 .cardCategory {
@@ -571,6 +568,7 @@
 
 .card h3 {
   display: -webkit-box;
+  min-height: 2em;
   margin: 0;
   overflow: hidden;
   font-family: var(--font-serif, "Playfair Display", serif);
@@ -586,7 +584,8 @@
 .card p {
   display: -webkit-box;
   max-width: 48ch;
-  margin: 12px 0 0;
+  max-height: 0;
+  margin: 0;
   overflow: hidden;
   color: rgba(255, 250, 242, 0.84);
   font-size: 0.96rem;
@@ -596,13 +595,17 @@
   transform: translateY(10px);
   transition:
     opacity 280ms ease,
-    transform 280ms ease;
+    transform 280ms ease,
+    max-height 350ms ease,
+    margin 280ms ease;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
 
 .card:hover p,
 .card:focus-within p {
+  max-height: 120px;
+  margin: 12px 0 0;
   opacity: 1;
   transform: translateY(0);
 }
@@ -674,16 +677,6 @@
     --col-1: 0.72fr;
     --col-2: 0.72fr;
     --col-3: 1.72fr;
-  }
-
-  .gallery:has(.card:nth-child(-n + 3):hover) {
-    --row-1: 1.62fr;
-    --row-2: 0.72fr;
-  }
-
-  .gallery:has(.card:nth-child(n + 4):nth-child(-n + 6):hover) {
-    --row-1: 0.72fr;
-    --row-2: 1.62fr;
   }
 
   .gallery:has(.card:hover) .card:not(:hover) {
@@ -821,7 +814,9 @@
   z-index: 1;
   min-height: 0;
   overflow: hidden;
-  background: #140f0b;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 46%),
+    #091413;
 }
 
 .modalStage:fullscreen {
@@ -1053,8 +1048,7 @@
 
 @media (max-width: 1120px) {
   .gallery {
-    grid-auto-rows: clamp(160px, 18vw, 210px);
-    min-height: clamp(520px, 58vw, 660px);
+    grid-auto-rows: clamp(200px, 20vw, 280px);
   }
 }
 
@@ -1083,14 +1077,7 @@
   .gallery {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: none;
     grid-auto-rows: clamp(210px, 32vw, 280px);
-    min-height: auto;
-  }
-
-  .card p {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   .modalPanel {
@@ -1142,14 +1129,9 @@
   .cardContent,
   .card:hover .cardContent,
   .card:focus-within .cardContent {
-    min-height: min(78%, 320px);
-    padding: 22px;
-    padding-top: 40px;
-  }
-
-  .card p {
-    opacity: 1;
-    transform: translateY(0);
+    min-height: min(52%, 200px);
+    padding: 20px;
+    padding-top: 32px;
   }
 
   .cardFooter {
@@ -1571,31 +1553,15 @@
   }
 }
 
-/* Polish patch: eje X común + heading alternado a la derecha. */
+/* Desktop heading: title left, info card right */
 @media (min-width: 981px) {
   .container {
     width: min(1180px, calc(100% - 36px));
   }
 
   .headingRow {
-    grid-template-columns: minmax(280px, 390px) minmax(0, 0.9fr);
-  }
-
-  .headingBlock {
-    grid-column: 2;
-    justify-self: end;
-    text-align: right;
-  }
-
-  .infoCard {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .eyebrow {
-    margin-right: 0;
-    margin-left: auto;
-    margin-bottom: 22px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 390px);
+    align-items: end;
   }
 }
 
@@ -1609,234 +1575,57 @@
   }
 }
 
-/* ========================================================================== 
-   Corrección visual: quitar heading alternado a la derecha.
-   Vuelve al orden original del catálogo: título a la izquierda, card informativa
-   a la derecha.
-   ========================================================================== */
-@media (min-width: 981px) {
+@media (min-width: 760px) and (max-width: 1120px) {
   .headingRow {
-    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 390px) !important;
-    align-items: end !important;
-  }
-
-  .headingBlock {
-    grid-column: 1 !important;
-    justify-self: start !important;
-    text-align: left !important;
-  }
-
-  .infoCard {
-    grid-column: 2 !important;
-    grid-row: auto !important;
-  }
-
-  .eyebrow {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    align-items: end;
   }
 }
 
-/* FINAL FIX — mini card consistente con Hero */
-.eyebrow {
-  padding: 10px 14px;
-  font-family: var(--font-sans, "Inter", sans-serif);
-  font-size: 0.74rem;
-  font-weight: 850;
-  line-height: 1.2;
-  letter-spacing: 0.14em;
-}
-
-/* ==========================================================================
-   FIX 5 — Catálogo: alineación perfecta de la card extrema derecha
-   ========================================================================== */
-
-/* El galleryShell tiene overflow:hidden + border-radius:40px. Las cards en
-   las esquinas (especialmente top-right) quedan ligeramente recortadas por
-   el clip del shell. La solución es asegurar que el padding interior es
-   suficiente y que las columnas usan fracciones iguales sin variaciones. */
-
-.galleryShell {
-  padding: clamp(16px, 1.6vw, 22px) !important;
-}
-
-/* Las tres columnas siempre arrancan con el mismo weight base */
-.gallery {
-  --col-1: 1fr !important;
-  --col-2: 1fr !important;
-  --col-3: 1fr !important;
-}
-
-/* Cada card ocupa exactamente su celda — sin desbordamientos */
-.card {
-  min-width: 0 !important;
-  width: 100% !important;
-  align-self: stretch !important;
-  justify-self: stretch !important;
-}
-
-/* La card de la última columna (posición 3, 6, 9…) tiene exactamente el
-   mismo borde interior que las otras. Si el clip del shell recortaba su
-   borde derecho, este margin asegura un buffer mínimo. */
-.card:nth-child(3n) {
-  margin-right: 0 !important;
-}
-
-/* Las filas inferiores también alinean sus cards */
-.gallery {
-  align-items: stretch !important;
-  justify-items: stretch !important;
-}
-
-/* Evitar que el hover afecte al layout más de lo declarado */
-@media (hover: hover) and (pointer: fine) and (min-width: 861px) {
-  .gallery:has(.card:nth-child(3n + 1):hover) {
-    --col-1: 1.68fr !important;
-    --col-2: 0.74fr !important;
-    --col-3: 0.74fr !important;
-  }
-
-  .gallery:has(.card:nth-child(3n + 2):hover) {
-    --col-1: 0.74fr !important;
-    --col-2: 1.68fr !important;
-    --col-3: 0.74fr !important;
-  }
-
-  .gallery:has(.card:nth-child(3n):hover) {
-    --col-1: 0.74fr !important;
-    --col-2: 0.74fr !important;
-    --col-3: 1.68fr !important;
-  }
-}
-
-/* ==========================================================================
-   REBRAND v2 — Catálogo: fondos teal oscuros
-   rgba(37,31,24,x) → rgba(18,38,38,x)
-   rgba(47,40,29,x) → rgba(23,49,48,x)
-   rgba(20,16,12,x) → rgba(9,20,20,x)
-   rgba(114,92,58,x) en dark → rgba(45,95,94,x)
-   ========================================================================== */
-
-/* Variables locales */
-.catalogSection {
-  --deep: #173130 !important;  /* era #2f281d */
-}
-
-/* Fondo principal */
-.catalogSection {
-  background:
-    radial-gradient(circle at 16% 10%, rgba(229, 210, 184, 0.16), transparent 30%),
-    radial-gradient(circle at 88% 28%, rgba(179, 183, 146, 0.14), transparent 33%),
-    linear-gradient(
-      112deg,
-      rgba(18, 38, 38, 0.96) 0%,
-      rgba(23, 49, 48, 0.90) 38%,
-      rgba(45, 95, 94, 0.72) 78%,
-      rgba(128, 150, 113, 0.48) 135%
-    ),
-    var(--catalog-bg-image) !important;
-  background-size: cover !important;
-  background-position: center !important;
-}
-
-/* Capa ::before */
-.catalogSection::before {
-  background:
-    radial-gradient(ellipse at 14% 18%, rgba(229, 210, 184, 0.12), transparent 36%),
-    linear-gradient(
-      90deg,
-      rgba(9, 20, 20, 0.86) 0%,
-      rgba(9, 20, 20, 0.68) 42%,
-      rgba(23, 49, 48, 0.48) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(9, 20, 20, 0.18) 0%,
-      rgba(9, 20, 20, 0.70) 100%
-    ) !important;
-}
-
-/* GalleryShell (contenedor de cards) */
-.galleryShell {
-  background:
-    radial-gradient(circle at 10% 0%, rgba(229, 210, 184, 0.10), transparent 28%),
-    linear-gradient(145deg, rgba(229, 224, 216, 0.09), rgba(229, 210, 184, 0.04)),
-    rgba(9, 20, 20, 0.18) !important;
-}
-
-/* Cards individuales */
-.card {
-  background: rgba(23, 49, 48, 0.28) !important;
-}
-
-/* Badge pills */
-.badge {
-  background:
-    linear-gradient(135deg, rgba(45, 95, 94, 0.48), rgba(23, 49, 48, 0.78)) !important;
-}
-
-/* Modal backdrop/panel dark */
-.modalStage {
-  background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 46%),
-    #091413 !important;
-}
-
-/* ========================================================================== 
-   FINAL UX FIX — Catálogo modal: X a la derecha y texto sin tapar miniaturas
-   ========================================================================== */
+/* Immersive modal layout: close button right, description above thumbnails */
 .modalPanelImmersive .modalTopbar {
-  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .modalPanelImmersive .modalTopbar .immersiveTitle {
-  justify-self: center !important;
-  grid-column: 1 / 2 !important;
+  justify-self: center;
+  grid-column: 1 / 2;
 }
 
 .modalPanelImmersive .modalTopbar .iconButton {
-  justify-self: end !important;
-  grid-column: 2 / 3 !important;
+  justify-self: end;
+  grid-column: 2 / 3;
 }
 
 .modalPanelImmersive .modalBottom {
-  bottom: 86px !important;
+  bottom: 86px;
 }
 
 .modalPanelImmersive .modalBottom p {
-  max-width: min(520px, 42vw) !important;
+  max-width: min(520px, 42vw);
 }
 
 .modalPanelImmersive .zoomControls {
-  position: fixed !important;
-  right: 18px !important;
-  bottom: 18px !important;
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
 }
 
 @media (max-width: 760px) {
   .modalPanelImmersive .modalTopbar {
-    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .modalPanelImmersive .modalBottom {
-    bottom: 12px !important;
+    bottom: 12px;
   }
 
   .modalPanelImmersive .zoomControls {
-    position: static !important;
+    position: static;
   }
 }
 
-@media (min-width: 760px) and (max-width: 1120px) {
-  .headingRow {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px) !important;
-    align-items: end !important;
-  }
-}
-
-/* ========================================================================== 
-   MOBILE PERFORMANCE PASS — catálogo y modal con menos trabajo visual
-   ========================================================================== */
+/* Mobile performance: reduce visual layers on touch devices */
 @media (max-width: 820px), (hover: none) and (pointer: coarse) {
   .catalogSection {
     content-visibility: auto;
@@ -1847,7 +1636,7 @@
   .orbitalFrame,
   .floatingPetals,
   .catalogGrain {
-    display: none !important;
+    display: none;
   }
 
   .galleryShell,
@@ -1860,7 +1649,7 @@
   .zoomControls,
   .iconButton,
   .modalArrow {
-    backdrop-filter: none !important;
+    backdrop-filter: none;
   }
 
   .catalogSection::before,
@@ -1871,11 +1660,11 @@
   .imageShade,
   .modalPanel,
   .modalPanelImmersive {
-    animation: none !important;
-    will-change: auto !important;
+    animation: none;
+    will-change: auto;
   }
 
   .cardImage {
-    filter: saturate(0.9) brightness(0.82) contrast(0.96) !important;
+    filter: saturate(0.9) brightness(0.82) contrast(0.96);
   }
 }
