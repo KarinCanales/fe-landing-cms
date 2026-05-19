@@ -93,7 +93,7 @@ export const CATALOG_QUERY = `*[_type == "catalogSection"][0]{
     _key,
     mediaType,
     title,
-    "category": category,
+    category,
     description,
     image,
     "imageUrl": image.asset->url,

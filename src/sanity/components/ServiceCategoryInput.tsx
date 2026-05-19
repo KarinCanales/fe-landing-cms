@@ -4,11 +4,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { type StringInputProps, set, unset, useClient } from "sanity";
 
 /**
- * Custom string input that reads service titles from the
+ * Custom string input that reads service entries from the
  * servicesSection document and presents them as selectable options.
  *
  * Source of truth: servicesSection → services[] → title
- * The field stores the selected service title as a plain string.
+ * Stores the service title as a plain string.
  */
 export function ServiceCategoryInput(props: StringInputProps) {
   const { value, onChange } = props;
@@ -35,8 +35,6 @@ export function ServiceCategoryInput(props: StringInputProps) {
     },
     [onChange]
   );
-
-  const matched = value && services.includes(value);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -77,10 +75,9 @@ export function ServiceCategoryInput(props: StringInputProps) {
         </span>
       )}
 
-      {value && !loading && !matched && (
+      {value && !loading && !services.includes(value) && (
         <span style={{ fontSize: "0.8rem", color: "#e8a838" }}>
-          "{value}" no coincide con ningún servicio actual. Puede que haya sido
-          renombrado o eliminado.
+          &ldquo;{value}&rdquo; no coincide con ningún servicio actual.
         </span>
       )}
     </div>

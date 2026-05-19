@@ -1,4 +1,6 @@
-import { ServiceCategoryInput } from '../components/ServiceCategoryInput';
+import React from 'react';
+import { Play } from 'lucide-react';
+import { ServiceCategoryInput } from '../components/ServiceCategoryInput';
 
 const catalogSection = {
   name: 'catalogSection',
@@ -258,11 +260,18 @@ const catalogSection = {
               const typeLabel = mediaType === 'youtube' ? 'YouTube' : 'Foto';
               const status = selection.visible === false ? 'Oculto' : 'Visible';
               const featured = selection.featured ? ' · Destacado' : '';
+              const categoryLabel = selection.category || 'Sin categoría';
+
+              // Media: prefer cover/thumbnail, then YouTube icon, then nothing
+              let media = selection.coverImage || selection.thumbnail;
+              if (!media && mediaType === 'youtube') {
+                media = React.createElement(Play);
+              }
 
               return {
                 title: selection.title || 'Contenido sin título',
-                subtitle: `${typeLabel} · ${selection.category || 'Sin categoría'} · ${status}${featured}`,
-                media: selection.coverImage || selection.thumbnail,
+                subtitle: `${typeLabel} · ${categoryLabel} · ${status}${featured}`,
+                media,
               };
             },
           },

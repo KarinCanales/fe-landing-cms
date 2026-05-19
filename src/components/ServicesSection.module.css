@@ -802,63 +802,20 @@
     font-size: clamp(1.06rem, 2.1vw, 1.24rem);
   }
 
+  /* Accordion: keep horizontal layout, adjust sizing for tablet */
   .servicesAccordion {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    height: auto;
-    min-height: 0;
-    gap: 16px;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
+    height: min(56vh, 520px);
+    min-height: 420px;
+    border-radius: 38px;
+    padding: 8px;
   }
 
-  /* All cards: same fixed height, rounded rectangles, no size change on hover */
-  .serviceCard,
+  .serviceCard {
+    border-radius: 999px;
+  }
+
   .serviceCard.isActive {
-    flex: none;
-    height: clamp(380px, 50vw, 460px);
-    border-radius: 32px;
-    transition:
-      transform 300ms ease,
-      box-shadow 300ms ease;
-  }
-
-  .serviceCard:hover,
-  .serviceCard:focus-visible {
-    transform: translateY(-3px);
-  }
-
-  /* Hide compact title, show content on ALL cards */
-  .compactTitle {
-    display: none;
-  }
-
-  .cardContent,
-  .serviceCard.isActive .cardContent {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-    left: 22px;
-    right: 22px;
-    bottom: 22px;
-  }
-
-  .cardNumber {
-    top: 16px;
-    left: 16px;
-    width: 36px;
-    height: 36px;
-    transform: none;
-  }
-
-  .serviceCard.isActive .cardNumber {
-    left: 16px;
-    right: auto;
-    transform: none;
+    border-radius: 34px;
   }
 
   .cardTitle {
@@ -928,8 +885,27 @@
   }
 
   .servicesAccordion {
+    display: grid;
     grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
     gap: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  /* All cards in grid mode: no flex sizing */
+  .serviceCard,
+  .serviceCard.isActive {
+    flex: none;
+  }
+
+  .compactTitle {
+    display: block;
   }
 
   /* ── Collapsed state: horizontal bar ── */

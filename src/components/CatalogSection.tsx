@@ -229,6 +229,11 @@ export default function CatalogSection({ sanityData }: Props) {
   const [pan, setPan] = useState<Pan>({ x: 0, y: 0 });
   const [dragState, setDragState] = useState<DragState>(null);
   const [isImmersive, setIsImmersive] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [isMediaLoading, setIsMediaLoading] = useState(false);
+
+  const visibleEntries = galleryEntries.slice(0, visibleCount);
+  const hasMore = galleryEntries.length > visibleCount;
 
   const selectedEntry = selectedIdx !== null ? galleryEntries[selectedIdx] ?? null : null;
   const selectedMedia = selectedEntry?.media;
@@ -253,11 +258,13 @@ export default function CatalogSection({ sanityData }: Props) {
 
       if (event.key === 'ArrowRight') {
         resetImagePosition();
+        setIsMediaLoading(true);
         setSelectedIdx((current) => (current !== null ? (current + 1) % galleryEntries.length : current));
       }
 
       if (event.key === 'ArrowLeft') {
         resetImagePosition();
+        setIsMediaLoading(true);
         setSelectedIdx((current) =>
           current !== null ? (current - 1 + galleryEntries.length) % galleryEntries.length : current,
         );
@@ -282,17 +289,20 @@ export default function CatalogSection({ sanityData }: Props) {
   const openModal = (index: number) => {
     resetImagePosition();
     setIsImmersive(true);
+    setIsMediaLoading(true);
     setSelectedIdx(index);
   };
 
   const closeModal = () => {
     setSelectedIdx(null);
     setIsImmersive(false);
+    setIsMediaLoading(false);
     resetImagePosition();
   };
 
   const goToEntry = (direction: 'prev' | 'next') => {
     resetImagePosition();
+    setIsMediaLoading(true);
     setSelectedIdx((current) => {
       if (current === null) return current;
 
@@ -410,7 +420,7 @@ export default function CatalogSection({ sanityData }: Props) {
             </div>
 
             <motion.div className={styles.gallery}>
-              {galleryEntries.map((entry, galleryIndex) => {
+              {visibleEntries.map((entry, galleryIndex) => {
                 const media = entry.media;
 
                 return (
@@ -496,6 +506,17 @@ export default function CatalogSection({ sanityData }: Props) {
                 );
               })}
             </motion.div>
+
+            {hasMore && (
+              <button
+                type="button"
+                className={styles.showMoreButton}
+                onClick={() => setVisibleCount((c) => c + 6)}
+              >
+                Ver más
+                <ArrowUpRight size={16} />
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -557,13 +578,23 @@ export default function CatalogSection({ sanityData }: Props) {
                 )}
 
                 <div className={styles.modalMediaWrap} onClick={handleEmptyStageClick}>
+                  {isMediaLoading && selectedMedia?.type === 'image' && (
+                    <div className={styles.modalLoader}>
+                      <div className={styles.spinner} />
+                    </div>
+                  )}
+
                   {selectedMedia ? (
                     selectedMedia.type === 'image' ? (
                       <div
                         className={`${styles.zoomLayer} ${zoom > 1 ? styles.zoomLayerDraggable : ''} ${
                           dragState ? styles.zoomLayerDragging : ''
                         }`}
-                        style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom})` }}
+                        style={{
+                          transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom})`,
+                          opacity: isMediaLoading ? 0 : 1,
+                          transition: 'opacity 200ms ease',
+                        }}
                         onPointerDown={handlePointerDown}
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
@@ -571,6 +602,7 @@ export default function CatalogSection({ sanityData }: Props) {
                         onWheel={handleWheel}
                       >
                         <Image
+                          key={selectedMedia.src}
                           src={selectedMedia.src}
                           alt={selectedMedia.alt}
                           fill
@@ -578,10 +610,11 @@ export default function CatalogSection({ sanityData }: Props) {
                           sizes="100vw"
                           priority
                           quality={80}
+                          onLoad={() => setIsMediaLoading(false)}
                         />
                       </div>
                     ) : selectedMedia.embedUrl ? (
-                      <div className={styles.youtubeFrameShell}>
+                      <div className={styles.youtubeFrameShell} onLoad={() => setIsMediaLoading(false)}>
                         <iframe
                           key={selectedMedia.embedUrl}
                           className={styles.youtubeFrame}
