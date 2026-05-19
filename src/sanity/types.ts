@@ -150,7 +150,6 @@ export type CatalogItem = {
   title?: string;
   category?: string;
   description?: string;
-  badge?: string;
 
   // Foto subida a Sanity.
   image?: SanityImage;

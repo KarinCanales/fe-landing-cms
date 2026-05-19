@@ -793,6 +793,7 @@
   }
 
   .title {
+    max-width: 10ch;
     font-size: clamp(3.6rem, 10vw, 5.8rem);
   }
 

@@ -7,7 +7,6 @@ export {default as testimonialsSection} from './testimonialsSection';
 export {default as catalogSection} from './catalogSection';
 export {default as contactSection} from './contactSection';
 export {default as footerSection} from './footerSection';
-export {default as serviceCategory} from './serviceCategory';
 
 export {iconList, overlayPresets, sectionThemes, navbarThemes, cardSizes} from './shared';
 
@@ -20,7 +19,6 @@ import testimonialsSectionSchema from './testimonialsSection';
 import catalogSectionSchema from './catalogSection';
 import contactSectionSchema from './contactSection';
 import footerSectionSchema from './footerSection';
-import serviceCategorySchema from './serviceCategory';
 
 export const schemaTypes = [
   siteSettingsSchema,
@@ -32,5 +30,4 @@ export const schemaTypes = [
   catalogSectionSchema,
   contactSectionSchema,
   footerSectionSchema,
-  serviceCategorySchema,
 ];

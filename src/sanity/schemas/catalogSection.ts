@@ -1,3 +1,4 @@
+import { ServiceCategoryInput } from '../components/ServiceCategoryInput';
 
 const catalogSection = {
   name: 'catalogSection',
@@ -132,11 +133,10 @@ const catalogSection = {
             {
               name: 'category',
               title: 'Categoría (opcional)',
-              type: 'reference',
-              to: [{type: 'serviceCategory'}],
-              description: 'Selecciona una categoría de la lista maestra. Para crear o editar categorías, ve a la sección correspondiente.',
-              options: {
-                disableNew: true,
+              type: 'string',
+              description: 'Selecciona un servicio como categoría. La lista viene de la sección Servicios.',
+              components: {
+                input: ServiceCategoryInput,
               },
             },
             {
@@ -246,7 +246,7 @@ const catalogSection = {
           preview: {
             select: {
               title: 'title',
-              categoryTitle: 'category.title',
+              category: 'category',
               mediaType: 'mediaType',
               visible: 'visible',
               featured: 'featured',
@@ -261,7 +261,7 @@ const catalogSection = {
 
               return {
                 title: selection.title || 'Contenido sin título',
-                subtitle: `${typeLabel} · ${selection.categoryTitle || 'Sin categoría'} · ${status}${featured}`,
+                subtitle: `${typeLabel} · ${selection.category || 'Sin categoría'} · ${status}${featured}`,
                 media: selection.coverImage || selection.thumbnail,
               };
             },
