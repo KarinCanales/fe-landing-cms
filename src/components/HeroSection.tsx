@@ -31,6 +31,11 @@ export default function Hero({ sanityData }: HeroProps) {
   const isInView = useInView(heroRef, { amount: 0.25 });
   const reduceMotion = useReducedMotion();
   const [activeCard, setActiveCard] = useState(0);
+  const [flipState, setFlipState] = useState<{
+    active: number;
+    previous: number | null;
+    cycle: number;
+  }>({ active: 0, previous: null, cycle: 0 });
 
   // Resolve CMS data with fallbacks
   const bgImage = resolveImageWithUrl(d?.backgroundImage, d?.backgroundImageUrl, '/images/_miscelanea/velas.webp', 'hero');
@@ -42,7 +47,10 @@ export default function Hero({ sanityData }: HeroProps) {
     [d?.titleLine2, d?.titleLine3].filter(Boolean).join(' ') ||
     'Empecemos por la tuya.';
   const subtitle = d?.subtitle || 'Creamos celebraciones personalizadas con detalles sofisticados y coordinación impecable.';
-  const flipWords = d?.flipWords?.length ? d.flipWords : fallbackFlipWords;
+  const flipWords = useMemo(() => {
+    const words = (d?.flipWords?.length ? d.flipWords : fallbackFlipWords).filter(Boolean);
+    return (words.length ? words : fallbackFlipWords).slice(0, 3);
+  }, [d?.flipWords]);
 
   const ctaPrimaryLabel = d?.ctaPrimary?.label || 'Cotiza ahora';
   const primaryHref = normalizeCmsHref(d?.ctaPrimary?.href, '#contacto');
@@ -83,6 +91,20 @@ export default function Hero({ sanityData }: HeroProps) {
     return () => window.clearInterval(timer);
   }, [isInView, reduceMotion, heroCards.length]);
 
+  useEffect(() => {
+    if (reduceMotion || flipWords.length <= 1) return;
+
+    const timer = window.setInterval(() => {
+      setFlipState(({ active, cycle }) => ({
+        active: (active + 1) % flipWords.length,
+        previous: active,
+        cycle: cycle + 1,
+      }));
+    }, 2600);
+
+    return () => window.clearInterval(timer);
+  }, [flipWords.length, reduceMotion]);
+
   const ambientClass = useMemo(() => {
     const pausedClass = reduceMotion || !isInView ? styles['hero-paused'] : '';
     return `${styles.hero} ${pausedClass}`;
@@ -92,6 +114,11 @@ export default function Hero({ sanityData }: HeroProps) {
   if (!card) return null;
   const CurrentIcon = card.Icon;
   const DividerIcon = card.DividerIcon;
+  const activeFlipIndex = flipState.active % flipWords.length;
+  const previousFlipIndex =
+    flipState.previous === null ? null : flipState.previous % flipWords.length;
+  const currentFlipWord = flipWords[activeFlipIndex] || flipWords[0] || '';
+  const previousFlipWord = previousFlipIndex === null ? '' : flipWords[previousFlipIndex] || '';
 
   return (
     <section ref={heroRef} className={ambientClass} id="inicio">
@@ -157,9 +184,26 @@ export default function Hero({ sanityData }: HeroProps) {
           >
             Especialistas en&nbsp;
             <span className={styles['word-rotator']} aria-hidden="true">
-              {flipWords.map((word) => (
-                <span key={word}>{word}</span>
-              ))}
+              {previousFlipWord && !reduceMotion ? (
+                <span
+                  key={`exit-${flipState.cycle}-${previousFlipWord}`}
+                  className={`${styles['word-rotator-word']} ${styles['word-exit']} ${
+                    previousFlipIndex !== null && previousFlipIndex % 2 === 0
+                      ? styles['word-vanilla']
+                      : styles['word-pistachio']
+                  }`}
+                >
+                  {previousFlipWord}
+                </span>
+              ) : null}
+              <span
+                key={`enter-${flipState.cycle}-${currentFlipWord}`}
+                className={`${styles['word-rotator-word']} ${
+                  flipState.cycle > 0 && !reduceMotion ? styles['word-enter'] : styles['word-static']
+                } ${activeFlipIndex % 2 === 0 ? styles['word-vanilla'] : styles['word-pistachio']}`}
+              >
+                {currentFlipWord}
+              </span>
             </span>
           </div>
 

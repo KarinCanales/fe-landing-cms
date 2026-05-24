@@ -316,62 +316,69 @@
   width: min(260px, 54vw);
   height: 1.2em;
   overflow: hidden;
+  perspective: 620px;
   transform: translateY(0.08em);
 }
 
-.word-rotator span {
-  position: absolute;
-  inset: 0 auto auto 0;
-  opacity: 0;
-  transform: translateY(110%);
-  animation: rotateWords 12s ease-in-out infinite;
+.word-rotator-word {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  transform-origin: 50% 60%;
   white-space: nowrap;
 }
 
-.word-rotator span:nth-child(1) {
-  animation-delay: 0s;
+.word-static {
+  position: relative;
 }
 
-.word-rotator span:nth-child(2) {
-  animation-delay: 3s;
+.word-enter,
+.word-exit {
+  position: absolute;
+  inset: 0 auto auto 0;
 }
 
-.word-rotator span:nth-child(3) {
-  animation-delay: 6s;
+.word-enter {
+  animation: wordEnter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.word-rotator span:nth-child(4) {
-  animation-delay: 9s;
+.word-exit {
+  animation: wordExit 360ms cubic-bezier(0.64, 0, 0.78, 0) both;
 }
 
-.word-rotator span:nth-child(1),
-.word-rotator span:nth-child(3) {
+.word-vanilla {
   color: #e5d2b8; /* vanilla / amarillo suave */
   text-shadow: 0 0 18px rgba(229, 210, 184, 0.18);
 }
 
-.word-rotator span:nth-child(2),
-.word-rotator span:nth-child(4) {
+.word-pistachio {
   color: #b3b792; /* pistachio */
   text-shadow: 0 0 18px rgba(179, 183, 146, 0.22);
 }
 
-@keyframes rotateWords {
-  0% {
+@keyframes wordEnter {
+  0%,
+  32% {
     opacity: 0;
-    transform: translateY(110%);
+    transform: translateY(92%) rotateX(-28deg);
   }
 
-  7%,
-  22% {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes wordExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
   }
 
-  29%,
+  72%,
   100% {
     opacity: 0;
-    transform: translateY(-110%);
+    transform: translateY(-116%) rotateX(26deg);
   }
 }
 
@@ -798,7 +805,6 @@
 .hero-paused .hero-particles span,
 .hero-paused .floating-note,
 .hero-paused .scroll-cue span,
-.hero-paused .word-rotator span,
 .hero-paused .hero-feature-line-fill {
   animation-play-state: paused;
 }
@@ -965,20 +971,16 @@
   .hero-particles span,
   .floating-note,
   .scroll-cue span,
-  .word-rotator span,
+  .word-rotator-word,
   .hero-feature-line-fill,
   .magnetic-button::after {
     animation: none !important;
     transition: none !important;
   }
 
-  .word-rotator span {
-    opacity: 0;
-    transform: none !important;
-  }
-
-  .word-rotator span:first-child {
+  .word-rotator-word {
     opacity: 1;
+    transform: none !important;
   }
 
   .button,
@@ -1299,7 +1301,7 @@
     will-change: auto !important;
   }
 
-  .word-rotator span {
+  .word-rotator-word {
     will-change: transform, opacity;
   }
 
