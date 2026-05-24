@@ -31,11 +31,7 @@ export default function Hero({ sanityData }: HeroProps) {
   const isInView = useInView(heroRef, { amount: 0.25 });
   const reduceMotion = useReducedMotion();
   const [activeCard, setActiveCard] = useState(0);
-  const [flipState, setFlipState] = useState<{
-    active: number;
-    previous: number | null;
-    cycle: number;
-  }>({ active: 0, previous: null, cycle: 0 });
+  const [activeFlipWord, setActiveFlipWord] = useState(0);
 
   // Resolve CMS data with fallbacks
   const bgImage = resolveImageWithUrl(d?.backgroundImage, d?.backgroundImageUrl, '/images/_miscelanea/velas.webp', 'hero');
@@ -95,11 +91,7 @@ export default function Hero({ sanityData }: HeroProps) {
     if (reduceMotion || flipWords.length <= 1) return;
 
     const timer = window.setInterval(() => {
-      setFlipState(({ active, cycle }) => ({
-        active: (active + 1) % flipWords.length,
-        previous: active,
-        cycle: cycle + 1,
-      }));
+      setActiveFlipWord((index) => (index + 1) % flipWords.length);
     }, 2600);
 
     return () => window.clearInterval(timer);
@@ -114,11 +106,8 @@ export default function Hero({ sanityData }: HeroProps) {
   if (!card) return null;
   const CurrentIcon = card.Icon;
   const DividerIcon = card.DividerIcon;
-  const activeFlipIndex = flipState.active % flipWords.length;
-  const previousFlipIndex =
-    flipState.previous === null ? null : flipState.previous % flipWords.length;
+  const activeFlipIndex = activeFlipWord % flipWords.length;
   const currentFlipWord = flipWords[activeFlipIndex] || flipWords[0] || '';
-  const previousFlipWord = previousFlipIndex === null ? '' : flipWords[previousFlipIndex] || '';
 
   return (
     <section ref={heroRef} className={ambientClass} id="inicio">
@@ -184,26 +173,33 @@ export default function Hero({ sanityData }: HeroProps) {
           >
             Especialistas en&nbsp;
             <span className={styles['word-rotator']} aria-hidden="true">
-              {previousFlipWord && !reduceMotion ? (
+              {reduceMotion ? (
                 <span
-                  key={`exit-${flipState.cycle}-${previousFlipWord}`}
-                  className={`${styles['word-rotator-word']} ${styles['word-exit']} ${
-                    previousFlipIndex !== null && previousFlipIndex % 2 === 0
-                      ? styles['word-vanilla']
-                      : styles['word-pistachio']
+                  className={`${styles['word-rotator-word']} ${
+                    activeFlipIndex % 2 === 0 ? styles['word-vanilla'] : styles['word-pistachio']
                   }`}
                 >
-                  {previousFlipWord}
+                  {currentFlipWord}
                 </span>
-              ) : null}
-              <span
-                key={`enter-${flipState.cycle}-${currentFlipWord}`}
-                className={`${styles['word-rotator-word']} ${
-                  flipState.cycle > 0 && !reduceMotion ? styles['word-enter'] : styles['word-static']
-                } ${activeFlipIndex % 2 === 0 ? styles['word-vanilla'] : styles['word-pistachio']}`}
-              >
-                {currentFlipWord}
-              </span>
+              ) : (
+                <AnimatePresence initial={false}>
+                  <motion.span
+                    key={`${activeFlipIndex}-${currentFlipWord}`}
+                    className={`${styles['word-rotator-word']} ${
+                      activeFlipIndex % 2 === 0 ? styles['word-vanilla'] : styles['word-pistachio']
+                    }`}
+                    initial={{ opacity: 0, y: '1.45em', rotateX: -24 }}
+                    animate={{ opacity: 1, y: '0em', rotateX: 0 }}
+                    exit={{ opacity: 0, y: '-1.45em', rotateX: 24 }}
+                    transition={{
+                      duration: 0.56,
+                      ease: [0.45, 0, 0.2, 1],
+                    }}
+                  >
+                    {currentFlipWord}
+                  </motion.span>
+                </AnimatePresence>
+              )}
             </span>
           </div>
 
