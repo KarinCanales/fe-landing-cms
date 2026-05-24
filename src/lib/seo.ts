@@ -134,7 +134,7 @@ export function buildHomeJsonLd(data: HomePageData) {
   const businessName = cleanText(settings?.companyName) || SITE_NAME;
   const description = cleanText(settings?.seo?.description) || SITE_DESCRIPTION;
   const logo = localOrAbsoluteUrl(
-    resolveLogoImage(settings?.logo, settings?.logoUrl || "/images/_logo/logo2.webp"),
+    resolveLogoImage(settings?.logo, settings?.logoUrl || "/images/_logo/logo.webp"),
   );
   const image = localOrAbsoluteUrl(getSocialImage());
   const location = cleanText(settings?.location) || "Lima, Peru";

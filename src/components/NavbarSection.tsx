@@ -138,7 +138,7 @@ export default function NavbarSection({
   const logoSrc = resolveImageWithUrl(
     sanitySettings?.logo,
     sanitySettings?.logoUrl,
-    "/images/_logo/logo2.webp",
+    "/images/_logo/logo.webp",
     "logo",
   );
 

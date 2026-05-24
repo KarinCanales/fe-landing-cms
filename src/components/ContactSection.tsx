@@ -236,6 +236,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
 
   return (
     <section id="contacto" className={styles.contactSection} style={sectionStyle}>
+      <span id="Contacto" className={styles.legacyAnchor} aria-hidden="true" />
       <div className={styles.paperGlow} aria-hidden="true" />
       <div className={styles.auroraRibbons} aria-hidden="true">
         <span />

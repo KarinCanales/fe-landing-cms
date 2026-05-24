@@ -33,6 +33,15 @@
   box-sizing: border-box;
 }
 
+.legacyAnchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
 /* Filtro cálido para que cualquier imagen de fondo se vea editorial, no quemada */
 .contactSection::before {
   content: "";
