@@ -339,11 +339,11 @@
 }
 
 .word-enter {
-  animation: wordEnter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: wordEnter 560ms cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 .word-exit {
-  animation: wordExit 360ms cubic-bezier(0.64, 0, 0.78, 0) both;
+  animation: wordExit 560ms cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 .word-vanilla {
@@ -357,10 +357,13 @@
 }
 
 @keyframes wordEnter {
-  0%,
-  32% {
+  0% {
     opacity: 0;
-    transform: translateY(92%) rotateX(-28deg);
+    transform: translateY(120%) rotateX(-24deg);
+  }
+
+  12% {
+    opacity: 1;
   }
 
   100% {
@@ -375,10 +378,13 @@
     transform: translateY(0) rotateX(0);
   }
 
-  72%,
+  88% {
+    opacity: 1;
+  }
+
   100% {
     opacity: 0;
-    transform: translateY(-116%) rotateX(26deg);
+    transform: translateY(-120%) rotateX(24deg);
   }
 }
 
