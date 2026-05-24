@@ -1,4 +1,5 @@
 import { sanityClient, isSanityConfigured } from './client';
+import { normalizeCmsHref } from '@/lib/links';
 import {
   SITE_SETTINGS_QUERY,
   NAVBAR_QUERY,
@@ -10,7 +11,9 @@ import {
   CONTACT_QUERY,
   FOOTER_QUERY,
 } from './queries';
-import type { HomePageData } from './types';
+import type { HeroData, HomePageData, SiteSettingsData } from './types';
+
+const SANITY_REVALIDATE_SECONDS = 300;
 
 async function safeFetch<T>(query: string): Promise<T | null> {
   if (!isSanityConfigured) return null;
@@ -20,16 +23,40 @@ async function safeFetch<T>(query: string): Promise<T | null> {
       query,
       {},
       {
-        cache: 'no-store',
-        next: { revalidate: 0 },
+        next: { revalidate: SANITY_REVALIDATE_SECONDS },
       } as never,
     );
 
     return result ?? null;
   } catch (err) {
-    console.warn('[Sanity] Query failed, using fallback:', err);
+    const message = err instanceof Error ? `${err.name}: ${err.message}` : 'Unknown error';
+    console.warn(`[Sanity] Query failed, using fallback. ${message}`);
     return null;
   }
+}
+
+function normalizeHeroData(hero: HeroData): HeroData {
+  if (!hero) return hero;
+
+  return {
+    ...hero,
+    ctaPrimary: hero.ctaPrimary
+      ? {
+          ...hero.ctaPrimary,
+          href: normalizeCmsHref(hero.ctaPrimary.href, '#contacto'),
+        }
+      : hero.ctaPrimary,
+    ctaSecondary: hero.ctaSecondary
+      ? {
+          ...hero.ctaSecondary,
+          href: normalizeCmsHref(hero.ctaSecondary.href, '#catalogo'),
+        }
+      : hero.ctaSecondary,
+  };
+}
+
+export async function fetchSiteSettings(): Promise<SiteSettingsData> {
+  return safeFetch<NonNullable<SiteSettingsData>>(SITE_SETTINGS_QUERY);
 }
 
 export async function fetchHomePageData(): Promise<HomePageData> {
@@ -58,7 +85,7 @@ export async function fetchHomePageData(): Promise<HomePageData> {
   return {
     settings,
     navbar,
-    hero,
+    hero: normalizeHeroData(hero as HeroData),
     benefits,
     services,
     catalog,

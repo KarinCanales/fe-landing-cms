@@ -9,6 +9,7 @@ import styles from './HeroSection.module.css';
 import type { HeroData, SiteSettingsData } from '@/sanity/types';
 import { resolveIcon } from '@/sanity/icons';
 import { resolveImageWithUrl } from '@/sanity/image';
+import { normalizeCmsHref } from '@/lib/links';
 import {
   fallbackFlipWords,
   fallbackHeroCards,
@@ -44,10 +45,10 @@ export default function Hero({ sanityData }: HeroProps) {
   const flipWords = d?.flipWords?.length ? d.flipWords : fallbackFlipWords;
 
   const ctaPrimaryLabel = d?.ctaPrimary?.label || 'Cotiza ahora';
-  const primaryHref = d?.ctaPrimary?.href || '#contacto';
+  const primaryHref = normalizeCmsHref(d?.ctaPrimary?.href, '#contacto');
 
   const ctaSecondaryLabel = d?.ctaSecondary?.label || 'Ver portafolio';
-  const ctaSecondaryHref = d?.ctaSecondary?.href || '#catalogo';
+  const ctaSecondaryHref = normalizeCmsHref(d?.ctaSecondary?.href, '#catalogo');
 
   const heroCards = useMemo(() => {
     const raw = d?.featureCards?.length
@@ -60,7 +61,7 @@ export default function Hero({ sanityData }: HeroProps) {
       Icon: resolveIcon(c.icon),
       DividerIcon: Sparkles,
     }));
-  }, [d?.featureCards]);
+  }, [d]);
 
   const floatingNotes = useMemo(() => {
     const raw = d?.floatingNotes?.length
@@ -70,7 +71,7 @@ export default function Hero({ sanityData }: HeroProps) {
       text: n.text || '',
       Icon: resolveIcon(n.icon),
     }));
-  }, [d?.floatingNotes]);
+  }, [d]);
 
   const particleIndexes = useMemo(() => Array.from({ length: 12 }, (_, i) => i), []);
 
@@ -169,7 +170,7 @@ export default function Hero({ sanityData }: HeroProps) {
               className={`${styles.button} ${styles.primary} ${styles['magnetic-button']}`}
               href={primaryHref}
               target={primaryHref.startsWith('http') ? '_blank' : undefined}
-              rel={primaryHref.startsWith('http') ? 'noreferrer' : undefined}
+              rel={primaryHref.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
               {ctaPrimaryLabel} <ArrowRight size={18} />
             </a>

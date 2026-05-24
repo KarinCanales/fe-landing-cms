@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import {
   ArrowUpRight,
   Clock3,
@@ -145,16 +146,8 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
 
   // Socials: se toman solo de Datos generales.
   const socialLinks: SocialLink[] = s?.socialLinks?.length
-    ? s.socialLinks.filter((l) => l.visible !== false)
-    : [
-      {
-        name: 'Instagram',
-        url: '#',
-        icon: 'Instagram',
-        borderColor: '#d2ab80',
-        visible: true,
-      },
-    ];
+    ? s.socialLinks.filter((l) => l.visible !== false && l.url && l.url !== '#')
+    : [];
 
   const brandText = cleanText(d?.brandText) || 'Bodas, eventos, catering y decoración con una mirada cálida, elegante y profundamente cuidada.';
   const footerBgImage = getFooterBackgroundUrl(d);
@@ -225,9 +218,11 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
             <a href="#inicio" className={styles.logo} aria-label="Ir al inicio">
               <span className={`${styles.logoMark} ${footerLogo ? styles.logoMarkImage : ''}`}>
                 {footerLogo ? (
-                  <img
+                  <Image
                     src={footerLogo}
                     alt={`Logo de ${companyName}`}
+                    width={92}
+                    height={92}
                     className={styles.logoImage}
                     loading="lazy"
                   />
@@ -244,7 +239,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
                   key={social.name}
                   href={social.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={social.name}
                   className={styles.socialItem}
                   style={social.borderColor ? { '--social-border-color': social.borderColor } as CSSProperties : undefined}
@@ -260,9 +255,14 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
             <nav key={col.title} className={styles.footerColumn} aria-label={`Navegación: ${col.title}`}>
               <h3>{col.title}</h3>
               <ul>
-                {(col.links || []).map((link) => (
+                {(col.links || [])
+                  .filter(
+                    (link): link is { label: string; href: string } =>
+                      Boolean(link.href && link.label),
+                  )
+                  .map((link) => (
                   <li key={link.href || link.label}>
-                    <a href={link.href || '#'}>{link.label}</a>
+                    <a href={link.href}>{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -284,7 +284,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
           {/* Contact info */}
           <address className={styles.contactCard}>
             <h3>{contactTitle}</h3>
-            <a href={phoneUrl} target="_blank" rel="noreferrer">
+            <a href={phoneUrl} target="_blank" rel="noopener noreferrer">
               <Phone size={17} /><span>{contactPhone}</span>
             </a>
             <a href={`mailto:${contactEmail}`}>

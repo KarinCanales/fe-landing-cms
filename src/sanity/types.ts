@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * Sanity CMS types — mirrors the schema definitions.
  * These types describe the shape of data returned by GROQ queries.

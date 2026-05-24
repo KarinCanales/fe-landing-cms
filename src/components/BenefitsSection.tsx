@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { CalendarCheck, Flower2, Sparkles } from "lucide-react";
+import { Flower2, Sparkles } from "lucide-react";
 import styles from "./BenefitsSection.module.css";
 import type { BenefitsData } from "@/sanity/types";
 import { resolveIcon } from "@/sanity/icons";
@@ -89,14 +89,14 @@ export default function BenefitsSection({ sanityData }: Props) {
       desc: c.description || "",
       size: c.size || "sm",
     }));
-  }, [d?.cards]);
+  }, [d]);
 
   const stats = useMemo(() => {
     const raw = d?.stats?.length
       ? d.stats.filter((s) => s.visible !== false)
       : fallbackStats;
     return raw.map((s) => ({ value: s.value || "", label: s.label || "" }));
-  }, [d?.stats]);
+  }, [d]);
 
   if (d?.visible === false) return null;
 

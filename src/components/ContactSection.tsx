@@ -81,6 +81,8 @@ function normalizeWhatsappUrl(value?: string | null) {
 
 export default function ContactSection({ sanityData, sanitySettings, sanityServices }: Props) {
   const d = sanityData;
+  const eventTypeLabelId = "event-type-label";
+  const eventTypeMenuId = "event-type-options";
 
   const eyebrow = d?.eyebrow || "Conversemos sobre tu evento";
   const titleText = d?.title || "Cuéntanos qué estás imaginando.";
@@ -112,7 +114,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
       : fallbackServices.map((service) => service.title);
 
     return Array.from(new Set([...serviceTitles, "Otro"]));
-  }, [sanityServices?.services]);
+  }, [sanityServices]);
 
   const contactCards = useMemo<DisplayContactCard[]>(() => {
     const whatsappHref = normalizeWhatsappUrl(sanitySettings?.whatsapp) || WHATSAPP_URL;
@@ -154,7 +156,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
     }
 
     return cards;
-  }, [contactEmail, quoteEmail, sanitySettings?.schedule, sanitySettings?.whatsapp]);
+  }, [contactEmail, quoteEmail, sanitySettings]);
 
   const [form, setForm] = useState<ContactFormState>(initialFormState);
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -296,7 +298,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
                     className={styles.contactCard}
                     href={card.href}
                     target={card.external ? "_blank" : undefined}
-                    rel={card.external ? "noreferrer" : undefined}
+                    rel={card.external ? "noopener noreferrer" : undefined}
                   >
                     <span>
                       <Icon size={18} />
@@ -367,7 +369,7 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
 
           <div className={`${styles.fieldGrid} ${isEventTypeOpen ? styles.fieldGridSelectOpen : ""}`}>
             <div className={`${styles.field} ${isEventTypeOpen ? styles.fieldSelectOpen : ""}`}>
-              <span>Tipo de evento</span>
+              <span id={eventTypeLabelId}>Tipo de evento</span>
 
               <div className={styles.customSelect} ref={eventTypeRef}>
                 <button
@@ -378,6 +380,8 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
                   onClick={() => setIsEventTypeOpen((current) => !current)}
                   aria-haspopup="listbox"
                   aria-expanded={isEventTypeOpen}
+                  aria-controls={eventTypeMenuId}
+                  aria-labelledby={eventTypeLabelId}
                 >
                   {form.eventType || "Selecciona una opción"}
                   <ChevronDown size={17} />
@@ -386,7 +390,12 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
                 <input type="hidden" name="eventType" value={form.eventType} required />
 
                 {isEventTypeOpen && (
-                  <div className={styles.selectMenu} role="listbox">
+                  <div
+                    id={eventTypeMenuId}
+                    className={styles.selectMenu}
+                    role="listbox"
+                    aria-labelledby={eventTypeLabelId}
+                  >
                     {eventTypes.map((eventType) => (
                       <button
                         key={eventType}
@@ -432,7 +441,8 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
               className={`${styles.feedback} ${
                 status === "success" ? styles.feedbackSuccess : styles.feedbackError
               }`}
-              role="status"
+              role={status === "error" ? "alert" : "status"}
+              aria-live={status === "error" ? "assertive" : "polite"}
             >
               {status === "success" ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
               <span>{feedback}</span>

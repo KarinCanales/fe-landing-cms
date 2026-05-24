@@ -6,7 +6,6 @@ import { ArrowUpRight, CalendarCheck, Flower2, Sparkles } from "lucide-react";
 import styles from "./ServicesSection.module.css";
 import type { ServicesData } from "@/sanity/types";
 import { resolveImageWithUrl } from "@/sanity/image";
-import { resolveIcon } from "@/sanity/icons";
 import { fallbackServices } from "@/data/fallbacks";
 
 type Props = { sanityData?: ServicesData };
@@ -33,13 +32,11 @@ export default function ServicesSection({ sanityData }: Props) {
   const leadText =
     d?.leadCard?.text ||
     "Catering, decoración, planificación y bodas de destino con una misma dirección estética y logística.";
-  const LeadIcon = resolveIcon(d?.leadCard?.icon, CalendarCheck);
   const showLead = d?.leadCard?.visible !== false;
 
   const footerText =
     d?.footerCard?.text ||
     "Catering y decoración, wedding planner y destination wedding trabajando como una sola experiencia.";
-  const FooterIcon = resolveIcon(d?.footerCard?.icon, Flower2);
   const showFooter = d?.footerCard?.visible !== false;
 
   const services: ServiceDisplay[] = useMemo(() => {
@@ -63,7 +60,7 @@ export default function ServicesSection({ sanityData }: Props) {
       imageAlt: s.alt,
       tags: s.tags,
     }));
-  }, [d?.services]);
+  }, [d]);
 
   if (d?.visible === false) return null;
 
@@ -98,7 +95,7 @@ export default function ServicesSection({ sanityData }: Props) {
           {showLead && (
             <p className={styles.lead}>
               <span className={styles.leadIcon} aria-hidden="true">
-                <LeadIcon size={18} />
+                <CalendarCheck size={18} />
               </span>
               <span>{leadText}</span>
             </p>
@@ -127,8 +124,7 @@ export default function ServicesSection({ sanityData }: Props) {
                   src={service.imageSrc}
                   alt={service.imageAlt}
                   fill
-                  priority={index === 0}
-                  loading={index === 0 ? "eager" : "lazy"}
+                  loading="lazy"
                   quality={72}
                   sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 38vw"
                   className={styles.serviceImage}
@@ -171,7 +167,7 @@ export default function ServicesSection({ sanityData }: Props) {
           <div className={styles.footerRow}>
             <p className={styles.footerText}>
               <span className={styles.footerIcon} aria-hidden="true">
-                <FooterIcon size={18} />
+                <Flower2 size={18} />
               </span>
               <span>{footerText}</span>
             </p>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { MouseEvent } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -89,6 +89,16 @@ function buildSectionThemeMap(sanityNavbar?: NavbarData) {
   return map;
 }
 
+function getFocusableElements(container: HTMLElement | null) {
+  if (!container) return [];
+
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((element) => !element.hasAttribute("disabled"));
+}
+
 export default function NavbarSection({
   sanityNavbar,
   sanitySettings,
@@ -97,6 +107,9 @@ export default function NavbarSection({
   const [hasMounted, setHasMounted] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<NavTheme>("dark");
+  const [currentSection, setCurrentSection] = useState("inicio");
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const mobilePanelRef = useRef<HTMLElement | null>(null);
 
   // Menú fijo: no se edita desde Sanity para evitar romper la navegación.
   const navLinks = useMemo(() => {
@@ -163,11 +176,6 @@ export default function NavbarSection({
   }, []);
 
   useEffect(() => {
-    if (colorMode !== "adaptive") {
-      setCurrentTheme("dark");
-      return;
-    }
-
     let frame = 0;
 
     const updateAdaptiveTheme = () => {
@@ -203,7 +211,10 @@ export default function NavbarSection({
         }
       }
 
-      setCurrentTheme(sectionThemeMap[activeId] || "dark");
+      setCurrentSection(activeId);
+      setCurrentTheme(
+        colorMode === "adaptive" ? sectionThemeMap[activeId] || "dark" : "dark",
+      );
     };
 
     const scheduleUpdate = () => {
@@ -242,20 +253,47 @@ export default function NavbarSection({
     if (!isOpen) return;
 
     const originalOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const menuButton = menuButtonRef.current;
 
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusableElements(mobilePanelRef.current);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+        return;
+      }
+
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
+
+    window.requestAnimationFrame(() => {
+      getFocusableElements(mobilePanelRef.current)[0]?.focus();
+    });
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      (previouslyFocused || menuButton)?.focus?.();
     };
   }, [isOpen]);
 
@@ -346,6 +384,9 @@ export default function NavbarSection({
                 key={`${link.href}-${link.label}`}
                 href={link.href}
                 onClick={(event) => scrollToSection(event, link.href)}
+                aria-current={
+                  link.href === `#${currentSection}` ? "location" : undefined
+                }
               >
                 {link.label}
               </a>
@@ -357,7 +398,7 @@ export default function NavbarSection({
               className={styles.whatsappButton}
               href={whatsappUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <span className={styles.buttonContent}>
                 <MessageCircle size={17} />
@@ -367,6 +408,7 @@ export default function NavbarSection({
             </a>
 
             <button
+              ref={menuButtonRef}
               type="button"
               className={styles.menuButton}
               onClick={() => setIsOpen((current) => !current)}
@@ -390,6 +432,7 @@ export default function NavbarSection({
             onClick={closeMenu}
           >
             <motion.nav
+              ref={mobilePanelRef}
               id="mobile-navigation"
               className={styles.mobilePanel}
               initial={{ opacity: 0, y: -18, scale: 0.98 }}
@@ -420,6 +463,9 @@ export default function NavbarSection({
                     key={`${link.href}-${link.label}`}
                     href={link.href}
                     onClick={(event) => scrollToSection(event, link.href, closeMenu)}
+                    aria-current={
+                      link.href === `#${currentSection}` ? "location" : undefined
+                    }
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
@@ -438,7 +484,7 @@ export default function NavbarSection({
                 className={styles.mobileCta}
                 href={whatsappUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 onClick={closeMenu}
               >
                 <span className={styles.buttonContent}>

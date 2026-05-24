@@ -129,7 +129,7 @@ export default function TestimonialsSection({ sanityData }: Props) {
       image: t.image,
       rating: t.rating,
     }));
-  }, [d?.testimonials]);
+  }, [d]);
 
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
@@ -146,6 +146,7 @@ export default function TestimonialsSection({ sanityData }: Props) {
   const [isDragging, setIsDragging] = useState(false);
   const [displayedStoryIndex, setDisplayedStoryIndex] = useState(0);
   const [isStoryChanging, setIsStoryChanging] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const activeTestimonial =
     testimonials[displayedStoryIndex] || testimonials[0];
@@ -230,12 +231,24 @@ export default function TestimonialsSection({ sanityData }: Props) {
     return () => clearTimeout(t);
   }, [centerCard]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    updatePreference();
+    mediaQuery.addEventListener("change", updatePreference);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updatePreference);
+    };
+  }, []);
+
   // Auto-rotate
   useEffect(() => {
-    if (isPaused || isDragging || testimonials.length <= 1) return;
+    if (prefersReducedMotion || isPaused || isDragging || testimonials.length <= 1) return;
     const interval = setInterval(() => goTo(activeIndex + 1), AUTO_ROTATE_MS);
     return () => clearInterval(interval);
-  }, [activeIndex, goTo, isDragging, isPaused, testimonials.length]);
+  }, [activeIndex, goTo, isDragging, isPaused, prefersReducedMotion, testimonials.length]);
 
   // Scroll listener
   useEffect(() => {

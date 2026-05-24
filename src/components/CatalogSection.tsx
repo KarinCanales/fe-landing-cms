@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -153,6 +153,16 @@ function getVideoPosterImage(item: FlexibleCatalogItem) {
   return item.coverImage || item.posterImage || item.thumbnail;
 }
 
+function getFocusableElements(container: HTMLElement | null) {
+  if (!container) return [];
+
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), iframe, input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((element) => !element.hasAttribute('disabled'));
+}
+
 export default function CatalogSection({ sanityData }: Props) {
   const d = sanityData;
 
@@ -222,7 +232,7 @@ export default function CatalogSection({ sanityData }: Props) {
           media,
         };
       });
-  }, [d?.items]);
+  }, [d]);
 
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [zoom, setZoom] = useState(1);
@@ -231,28 +241,60 @@ export default function CatalogSection({ sanityData }: Props) {
   const [isImmersive, setIsImmersive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
   const [isMediaLoading, setIsMediaLoading] = useState(false);
+  const modalPanelRef = useRef<HTMLDivElement | null>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const visibleEntries = galleryEntries.slice(0, visibleCount);
   const hasMore = galleryEntries.length > visibleCount;
 
   const selectedEntry = selectedIdx !== null ? galleryEntries[selectedIdx] ?? null : null;
   const selectedMedia = selectedEntry?.media;
+  const isModalOpen = selectedIdx !== null;
 
-  const resetImagePosition = () => {
+  const resetImagePosition = useCallback(() => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
     setDragState(null);
-  };
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setSelectedIdx(null);
+    setIsImmersive(false);
+    setIsMediaLoading(false);
+    resetImagePosition();
+  }, [resetImagePosition]);
 
   useEffect(() => {
-    if (selectedIdx === null) return;
+    if (!isModalOpen) return;
 
     const originalOverflow = document.body.style.overflow;
+    const previouslyFocused =
+      lastFocusedElementRef.current || (document.activeElement as HTMLElement | null);
     document.body.style.overflow = 'hidden';
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeModal();
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        const focusable = getFocusableElements(modalPanelRef.current);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (!first || !last) return;
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+          return;
+        }
+
+        if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
         return;
       }
 
@@ -272,32 +314,24 @@ export default function CatalogSection({ sanityData }: Props) {
     };
 
     window.addEventListener('keydown', handleKey);
+    window.requestAnimationFrame(() => {
+      getFocusableElements(modalPanelRef.current)[0]?.focus();
+    });
 
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', handleKey);
+      previouslyFocused?.focus?.();
+      lastFocusedElementRef.current = null;
     };
-  }, [selectedIdx, galleryEntries.length]);
-
-  useEffect(() => {
-    if (zoom <= 1) {
-      setPan({ x: 0, y: 0 });
-      setDragState(null);
-    }
-  }, [zoom]);
+  }, [closeModal, galleryEntries.length, isModalOpen, resetImagePosition]);
 
   const openModal = (index: number) => {
+    lastFocusedElementRef.current = document.activeElement as HTMLElement | null;
     resetImagePosition();
     setIsImmersive(true);
     setIsMediaLoading(true);
     setSelectedIdx(index);
-  };
-
-  const closeModal = () => {
-    setSelectedIdx(null);
-    setIsImmersive(false);
-    setIsMediaLoading(false);
-    resetImagePosition();
   };
 
   const goToEntry = (direction: 'prev' | 'next') => {
@@ -364,12 +398,22 @@ export default function CatalogSection({ sanityData }: Props) {
     }
   };
 
+  const updateZoom = (nextZoom: number) => {
+    const normalizedZoom = Math.min(2.8, Math.max(1, +nextZoom.toFixed(2)));
+    setZoom(normalizedZoom);
+
+    if (normalizedZoom <= 1) {
+      setPan({ x: 0, y: 0 });
+      setDragState(null);
+    }
+  };
+
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     if (!selectedMedia || selectedMedia.type !== 'image') return;
 
     event.preventDefault();
     const nextZoom = event.deltaY < 0 ? zoom + 0.16 : zoom - 0.16;
-    setZoom(Math.min(2.8, Math.max(1, +nextZoom.toFixed(2))));
+    updateZoom(nextZoom);
   };
 
   if (d?.visible === false) return null;
@@ -424,17 +468,11 @@ export default function CatalogSection({ sanityData }: Props) {
                 const media = entry.media;
 
                 return (
-                  <motion.article
+                  <motion.button
                     key={`${entry.itemIndex}-${entry.mediaIndex}-${entry.title}`}
+                    type="button"
                     className={styles.card}
-                    tabIndex={0}
                     onClick={() => openModal(galleryIndex)}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        openModal(galleryIndex);
-                      }
-                    }}
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.24 }}
@@ -453,11 +491,13 @@ export default function CatalogSection({ sanityData }: Props) {
                             sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw"
                           />
                         ) : media.poster ? (
-                          <img
+                          <Image
                             className={`${styles.cardImage} ${styles.youtubePoster}`}
                             src={media.poster}
                             alt={media.alt}
-                            loading="lazy"
+                            fill
+                            quality={64}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw"
                           />
                         ) : (
                           <div className={styles.placeholder}>
@@ -489,20 +529,14 @@ export default function CatalogSection({ sanityData }: Props) {
                       <h3>{entry.title}</h3>
                       {entry.description ? <p>{entry.description}</p> : null}
                       <div className={styles.cardFooter}>
-                        <button
-                          type="button"
+                        <span
                           className={styles.cta}
-                          onPointerDown={(event) => event.stopPropagation()}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            openModal(galleryIndex);
-                          }}
                         >
                           Ver galería <ArrowUpRight size={16} />
-                        </button>
+                        </span>
                       </div>
                     </div>
-                  </motion.article>
+                  </motion.button>
                 );
               })}
             </motion.div>
@@ -529,24 +563,27 @@ export default function CatalogSection({ sanityData }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleBackdropClick}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Vista ampliada de ${selectedEntry.title}`}
           >
             <motion.div
+              ref={modalPanelRef}
               className={`${styles.modalPanel} ${isImmersive ? styles.modalPanelImmersive : ''}`}
               initial={{ opacity: 0, scale: 0.96, y: 18 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 18 }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="catalog-dialog-title"
+              aria-describedby="catalog-dialog-description"
+              tabIndex={-1}
             >
               <div className={styles.modalTopbar}>
                 {isImmersive ? (
                   <>
                     <div className={styles.immersiveTitle}>
                       <span>{selectedEntry.category}</span>
-                      <h3>{selectedEntry.title}</h3>
+                      <h3 id="catalog-dialog-title">{selectedEntry.title}</h3>
                     </div>
                     <button type="button" className={styles.iconButton} onClick={closeModal} aria-label="Cerrar galería">
                       <X size={20} />
@@ -556,7 +593,7 @@ export default function CatalogSection({ sanityData }: Props) {
                   <>
                     <div>
                       <span>{selectedEntry.category}</span>
-                      <h3>{selectedEntry.title}</h3>
+                      <h3 id="catalog-dialog-title">{selectedEntry.title}</h3>
                     </div>
                     <button type="button" className={styles.iconButton} onClick={closeModal} aria-label="Cerrar galería">
                       <X size={20} />
@@ -623,12 +660,20 @@ export default function CatalogSection({ sanityData }: Props) {
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           referrerPolicy="strict-origin-when-cross-origin"
                           allowFullScreen
+                          onLoad={() => setIsMediaLoading(false)}
                         />
                       </div>
                     ) : (
                       <div className={styles.youtubeMissing}>
                         {selectedMedia.poster ? (
-                          <img src={selectedMedia.poster} alt="" className={styles.youtubeMissingImage} />
+                          <Image
+                            src={selectedMedia.poster}
+                            alt=""
+                            fill
+                            className={styles.youtubeMissingImage}
+                            sizes="100vw"
+                            quality={70}
+                          />
                         ) : null}
                         <div className={styles.youtubeMissingMessage}>
                           <Play size={30} fill="currentColor" />
@@ -657,12 +702,12 @@ export default function CatalogSection({ sanityData }: Props) {
               </div>
 
               <div className={styles.modalBottom}>
-                <p>{selectedEntry.description}</p>
+                <p id="catalog-dialog-description">{selectedEntry.description}</p>
                 <div className={styles.zoomControls}>
                   <button
                     type="button"
                     className={styles.iconButton}
-                    onClick={() => setZoom((current) => Math.max(1, +(current - 0.2).toFixed(1)))}
+                    onClick={() => updateZoom(zoom - 0.2)}
                     disabled={!selectedMedia || selectedMedia.type !== 'image' || zoom <= 1}
                     aria-label="Alejar imagen"
                   >
@@ -680,7 +725,7 @@ export default function CatalogSection({ sanityData }: Props) {
                   <button
                     type="button"
                     className={styles.iconButton}
-                    onClick={() => setZoom((current) => Math.min(2.8, +(current + 0.2).toFixed(1)))}
+                    onClick={() => updateZoom(zoom + 0.2)}
                     disabled={!selectedMedia || selectedMedia.type !== 'image' || zoom >= 2.8}
                     aria-label="Acercar imagen"
                   >
@@ -697,6 +742,7 @@ export default function CatalogSection({ sanityData }: Props) {
                     className={index === selectedIdx ? styles.activeThumb : ''}
                     onClick={() => {
                       resetImagePosition();
+                      setIsMediaLoading(true);
                       setSelectedIdx(index);
                     }}
                     aria-label={`Ver ${entry.media?.type === 'youtube' ? 'video' : 'imagen'} de ${entry.title}`}
@@ -706,7 +752,14 @@ export default function CatalogSection({ sanityData }: Props) {
                     ) : entry.media?.type === 'youtube' ? (
                       <>
                         {entry.media.poster ? (
-                          <img src={entry.media.poster} alt="" className={`${styles.thumbImage} ${styles.youtubeThumbImage}`} />
+                          <Image
+                            src={entry.media.poster}
+                            alt=""
+                            fill
+                            className={`${styles.thumbImage} ${styles.youtubeThumbImage}`}
+                            sizes="96px"
+                            quality={50}
+                          />
                         ) : (
                           <span className={styles.videoThumbFallback}>
                             <Play size={16} fill="currentColor" />
