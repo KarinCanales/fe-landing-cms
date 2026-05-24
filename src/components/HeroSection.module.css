@@ -972,6 +972,15 @@
     transition: none !important;
   }
 
+  .word-rotator span {
+    opacity: 0;
+    transform: none !important;
+  }
+
+  .word-rotator span:first-child {
+    opacity: 1;
+  }
+
   .button,
   .hero-feature-card,
   .hero-stack-dots button {
@@ -1285,10 +1294,13 @@
   .mesh-blob,
   .hero-line,
   .hero-particles span,
-  .floating-note,
-  .word-rotator span {
+  .floating-note {
     animation: none !important;
     will-change: auto !important;
+  }
+
+  .word-rotator span {
+    will-change: transform, opacity;
   }
 
   .hero-feature-card {
