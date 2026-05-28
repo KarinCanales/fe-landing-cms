@@ -14,7 +14,7 @@ import type { Metadata } from 'next';
  * Producción: usa ISR para evitar render/fetch en cada visita.
  * Las ediciones de Sanity pueden tardar hasta 5 min en reflejarse si no hay webhook.
  */
-export const revalidate = process.env.NODE_ENV === 'production' ? 300 : 0;
+export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSiteSettings();
