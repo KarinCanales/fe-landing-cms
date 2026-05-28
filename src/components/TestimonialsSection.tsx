@@ -214,14 +214,14 @@ export default function TestimonialsSection({ sanityData }: Props) {
   // Story panel fade transition
   useEffect(() => {
     if (activeIndex === displayedStoryIndex) return;
-    const frame = requestAnimationFrame(() => setIsStoryChanging(true));
-    const timer = setTimeout(() => {
+    setIsStoryChanging(true);
+    const timer = window.setTimeout(() => {
       setDisplayedStoryIndex(activeIndex);
-      requestAnimationFrame(() => setIsStoryChanging(false));
+      setIsStoryChanging(false);
     }, 170);
     return () => {
-      cancelAnimationFrame(frame);
       clearTimeout(timer);
+      setIsStoryChanging(false);
     };
   }, [activeIndex, displayedStoryIndex]);
 

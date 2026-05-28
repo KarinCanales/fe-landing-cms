@@ -13,19 +13,16 @@ import {
 } from './queries';
 import type { HeroData, HomePageData, SiteSettingsData } from './types';
 
-const SANITY_REVALIDATE_SECONDS = 300;
+const SANITY_REVALIDATE_SECONDS = process.env.NODE_ENV === 'production' ? 300 : 0;
 
 async function safeFetch<T>(query: string): Promise<T | null> {
   if (!isSanityConfigured) return null;
 
   try {
-    const result = await sanityClient.fetch<T>(
-      query,
-      {},
-      {
-        next: { revalidate: SANITY_REVALIDATE_SECONDS },
-      } as never,
-    );
+    const result = await sanityClient.fetch<T>(query, {}, {
+      next: { revalidate: SANITY_REVALIDATE_SECONDS },
+      ...(SANITY_REVALIDATE_SECONDS === 0 ? { cache: 'no-store' } : null),
+    } as never);
 
     return result ?? null;
   } catch (err) {
