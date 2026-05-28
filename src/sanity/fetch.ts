@@ -13,21 +13,58 @@ import {
 } from './queries';
 import type { HeroData, HomePageData, SiteSettingsData } from './types';
 
-const SANITY_REVALIDATE_SECONDS = process.env.NODE_ENV === 'production' ? 300 : 0;
+const DEFAULT_REVALIDATE_SECONDS = 60;
 
-async function safeFetch<T>(query: string): Promise<T | null> {
+function getRevalidateSeconds() {
+  const value = Number(process.env.SANITY_REVALIDATE_SECONDS);
+
+  if (Number.isFinite(value) && value >= 0) {
+    return value;
+  }
+
+  return DEFAULT_REVALIDATE_SECONDS;
+}
+
+export const SHOULD_BYPASS_SANITY_CACHE = process.env.SANITY_DISABLE_CACHE === 'true';
+
+const SANITY_REVALIDATE_SECONDS = SHOULD_BYPASS_SANITY_CACHE ? 0 : getRevalidateSeconds();
+
+type FetchTag =
+  | 'siteSettings'
+  | 'navbarSettings'
+  | 'heroSection'
+  | 'benefitsSection'
+  | 'servicesSection'
+  | 'catalogSection'
+  | 'testimonialsSection'
+  | 'contactSection'
+  | 'footerSection';
+
+function getFetchOptions(tag: FetchTag) {
+  if (SHOULD_BYPASS_SANITY_CACHE || SANITY_REVALIDATE_SECONDS === 0) {
+    return {
+      cache: 'no-store',
+    } as const;
+  }
+
+  return {
+    next: {
+      revalidate: SANITY_REVALIDATE_SECONDS,
+      tags: ['sanity', tag],
+    },
+  } as const;
+}
+
+async function safeFetch<T>(query: string, tag: FetchTag): Promise<T | null> {
   if (!isSanityConfigured) return null;
 
   try {
-    const result = await sanityClient.fetch<T>(query, {}, {
-      next: { revalidate: SANITY_REVALIDATE_SECONDS },
-      ...(SANITY_REVALIDATE_SECONDS === 0 ? { cache: 'no-store' } : null),
-    } as never);
+    const result = await sanityClient.fetch<T>(query, {}, getFetchOptions(tag) as never);
 
     return result ?? null;
   } catch (err) {
     const message = err instanceof Error ? `${err.name}: ${err.message}` : 'Unknown error';
-    console.warn(`[Sanity] Query failed, using fallback. ${message}`);
+    console.warn(`[Sanity] Query failed for ${tag}, using fallback. ${message}`);
     return null;
   }
 }
@@ -53,7 +90,7 @@ function normalizeHeroData(hero: HeroData): HeroData {
 }
 
 export async function fetchSiteSettings(): Promise<SiteSettingsData> {
-  return safeFetch<NonNullable<SiteSettingsData>>(SITE_SETTINGS_QUERY);
+  return safeFetch<NonNullable<SiteSettingsData>>(SITE_SETTINGS_QUERY, 'siteSettings');
 }
 
 export async function fetchHomePageData(): Promise<HomePageData> {
@@ -68,15 +105,15 @@ export async function fetchHomePageData(): Promise<HomePageData> {
     contact,
     footer,
   ] = await Promise.all([
-    safeFetch(SITE_SETTINGS_QUERY),
-    safeFetch(NAVBAR_QUERY),
-    safeFetch(HERO_QUERY),
-    safeFetch(BENEFITS_QUERY),
-    safeFetch(SERVICES_QUERY),
-    safeFetch(CATALOG_QUERY),
-    safeFetch(TESTIMONIALS_QUERY),
-    safeFetch(CONTACT_QUERY),
-    safeFetch(FOOTER_QUERY),
+    safeFetch(SITE_SETTINGS_QUERY, 'siteSettings'),
+    safeFetch(NAVBAR_QUERY, 'navbarSettings'),
+    safeFetch(HERO_QUERY, 'heroSection'),
+    safeFetch(BENEFITS_QUERY, 'benefitsSection'),
+    safeFetch(SERVICES_QUERY, 'servicesSection'),
+    safeFetch(CATALOG_QUERY, 'catalogSection'),
+    safeFetch(TESTIMONIALS_QUERY, 'testimonialsSection'),
+    safeFetch(CONTACT_QUERY, 'contactSection'),
+    safeFetch(FOOTER_QUERY, 'footerSection'),
   ]);
 
   return {

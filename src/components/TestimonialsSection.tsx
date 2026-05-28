@@ -214,14 +214,22 @@ export default function TestimonialsSection({ sanityData }: Props) {
   // Story panel fade transition
   useEffect(() => {
     if (activeIndex === displayedStoryIndex) return;
-    setIsStoryChanging(true);
+
+    const frame = window.requestAnimationFrame(() => {
+      setIsStoryChanging(true);
+    });
+
     const timer = window.setTimeout(() => {
       setDisplayedStoryIndex(activeIndex);
-      setIsStoryChanging(false);
+
+      window.requestAnimationFrame(() => {
+        setIsStoryChanging(false);
+      });
     }, 170);
+
     return () => {
-      clearTimeout(timer);
-      setIsStoryChanging(false);
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
     };
   }, [activeIndex, displayedStoryIndex]);
 
@@ -245,10 +253,23 @@ export default function TestimonialsSection({ sanityData }: Props) {
 
   // Auto-rotate
   useEffect(() => {
-    if (prefersReducedMotion || isPaused || isDragging || testimonials.length <= 1) return;
+    if (
+      prefersReducedMotion ||
+      isPaused ||
+      isDragging ||
+      testimonials.length <= 1
+    )
+      return;
     const interval = setInterval(() => goTo(activeIndex + 1), AUTO_ROTATE_MS);
     return () => clearInterval(interval);
-  }, [activeIndex, goTo, isDragging, isPaused, prefersReducedMotion, testimonials.length]);
+  }, [
+    activeIndex,
+    goTo,
+    isDragging,
+    isPaused,
+    prefersReducedMotion,
+    testimonials.length,
+  ]);
 
   // Scroll listener
   useEffect(() => {

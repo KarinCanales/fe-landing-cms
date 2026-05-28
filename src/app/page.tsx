@@ -7,14 +7,16 @@ import NavbarSection from '@/components/NavbarSection';
 import ServicesSection from '@/components/ServiceSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { buildHomeJsonLd, buildHomeMetadata, stringifyJsonLd } from '@/lib/seo';
-import { fetchHomePageData, fetchSiteSettings } from '@/sanity/fetch';
+import { fetchHomePageData, fetchSiteSettings, SHOULD_BYPASS_SANITY_CACHE } from '@/sanity/fetch';
+import { connection } from 'next/server';
 import type { Metadata } from 'next';
 
 /**
- * Producción: usa ISR para evitar render/fetch en cada visita.
- * Las ediciones de Sanity pueden tardar hasta 5 min en reflejarse si no hay webhook.
+ * ISR corto para producción. Los cambios de Sanity deben invalidarse con
+ * /api/revalidate mediante webhook. Para pruebas locales con datos siempre
+ * frescos, usa SANITY_DISABLE_CACHE=true.
  */
-export const revalidate = 300;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSiteSettings();
@@ -22,6 +24,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+  if (SHOULD_BYPASS_SANITY_CACHE) {
+    await connection();
+  }
+
   const data = await fetchHomePageData();
   const jsonLd = buildHomeJsonLd(data);
 
