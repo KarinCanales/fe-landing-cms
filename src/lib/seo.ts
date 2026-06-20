@@ -6,7 +6,7 @@ import {
   QUOTE_EMAIL,
   WHATSAPP_NUMBER,
 } from "@/data/fallbacks";
-import { resolveLogoImage } from "@/sanity/image";
+import { resolveLogoImage, resolveOgImage } from "@/sanity/image";
 import {
   absoluteUrl,
   DEFAULT_SOCIAL_IMAGE,
@@ -44,14 +44,19 @@ function localOrAbsoluteUrl(path?: string | null) {
   return /^https?:\/\//i.test(value) ? value : absoluteUrl(value);
 }
 
-function getSocialImage() {
-  return absoluteUrl(DEFAULT_SOCIAL_IMAGE);
+function getSocialImage(settings?: SiteSettingsData) {
+  const image = resolveOgImage(
+    settings?.seo?.ogImage,
+    settings?.seo?.ogImageUrl || DEFAULT_SOCIAL_IMAGE,
+  );
+
+  return localOrAbsoluteUrl(image) || absoluteUrl(DEFAULT_SOCIAL_IMAGE);
 }
 
 export function buildHomeMetadata(settings?: SiteSettingsData): Metadata {
   const title = cleanText(settings?.seo?.title) || SITE_TITLE;
   const description = cleanText(settings?.seo?.description) || SITE_DESCRIPTION;
-  const socialImage = getSocialImage();
+  const socialImage = getSocialImage(settings);
 
   return {
     title: { absolute: title },
@@ -136,7 +141,7 @@ export function buildHomeJsonLd(data: HomePageData) {
   const logo = localOrAbsoluteUrl(
     resolveLogoImage(settings?.logo, settings?.logoUrl || "/images/_logo/logo.webp"),
   );
-  const image = localOrAbsoluteUrl(getSocialImage());
+  const image = getSocialImage(settings);
   const location = cleanText(settings?.location) || "Lima, Peru";
   const sameAs = (settings?.socialLinks || [])
     .filter((social) => social.visible !== false)
