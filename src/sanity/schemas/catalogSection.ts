@@ -2,16 +2,19 @@
 import React from 'react';
 import { Play } from 'lucide-react';
 import { ServiceCategoryInput } from '../components/ServiceCategoryInput';
+import { studioGroup } from './helpers';
 
 const catalogSection = {
   name: 'catalogSection',
   title: 'Catálogo',
   type: 'document',
+  description:
+    'Galería de fotos y videos para mostrar montajes, detalles y momentos importantes de bodas y eventos.',
   groups: [
-    { name: 'content', title: 'Contenido principal', default: true },
-    { name: 'background', title: 'Fondo' },
-    { name: 'items', title: 'Fotos y videos' },
-    { name: 'visibility', title: 'Visibilidad' },
+    studioGroup('content', 'Textos de la galería', { default: true }),
+    studioGroup('background', 'Foto de fondo'),
+    studioGroup('items', 'Fotos y videos'),
+    studioGroup('visibility', 'Mostrar u ocultar'),
   ],
   fields: [
     {
@@ -86,10 +89,10 @@ const catalogSection = {
       title: 'Fotos y videos del catálogo',
       type: 'array',
       group: 'items',
-      description: 'Aquí puedes agregar fotos del catálogo o enlaces de YouTube. No se suben videos pesados para no consumir almacenamiento.',
+      description: 'Aquí puedes agregar fotos o videos de YouTube para enseñar el trabajo realizado.',
       options: {
-        helpText: 'Para fotos, sube una imagen. Para videos, pega el enlace de YouTube y, si quieres, agrega una portada bonita.',
-        warning: 'No subas videos como archivo. Usa enlaces de YouTube para que la web sea más ligera y no consuma almacenamiento de Sanity.',
+        helpText: 'Para una foto, sube la imagen. Para un video, pega el enlace de YouTube y agrega una portada bonita si la tienes.',
+        warning: 'Es mejor usar enlaces de YouTube para videos largos. Así la página carga más rápido.',
       },
       of: [
         {
@@ -192,10 +195,10 @@ const catalogSection = {
               title: 'Enlace del video de YouTube',
               type: 'url',
               hidden: ({ parent }: any) => parent?.mediaType !== 'youtube',
-              description: 'Pega aquí el link del video de YouTube. No subas el video como archivo.',
+              description: 'Pega aquí el enlace del video de YouTube.',
               options: {
                 helpText: 'Acepta enlaces como https://www.youtube.com/watch?v=... o https://youtu.be/...',
-                warning: 'Usar YouTube evita consumir almacenamiento y hace que la página cargue mejor.',
+                warning: 'Si el video es largo, YouTube es la opción más cómoda para mantener la web ligera.',
               },
               validation: (Rule: any) =>
                 Rule.custom((url: string, context: any) => {

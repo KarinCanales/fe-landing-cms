@@ -6,7 +6,7 @@ const benefitsSection = {
   title: 'Beneficios',
   type: 'document',
   description:
-    'Sección que explica por qué elegir a Karin. Normalmente usa un fondo claro y cards con beneficios de confianza.',
+    'Sección para explicar por qué confiar en Karin: organización, cuidado del detalle, acompañamiento y tranquilidad para el evento.',
   groups: sectionGroups,
   fields: [
     {name: 'visible', title: 'Mostrar sección Beneficios', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Útil si todavía estás editando esta sección.'})},
@@ -16,13 +16,13 @@ const benefitsSection = {
     {name: 'eyebrow', title: 'Etiqueta pequeña superior', type: 'string', group: 'content', description: 'Texto pequeño que aparece arriba del título.', options: fieldHelp({example: 'Excelencia garantizada'})},
     {name: 'title', title: 'Título principal', type: 'string', group: 'content', description: 'Título grande de la sección.', options: fieldHelp({example: 'Tu tranquilidad es nuestro mayor lujo.'})},
     {name: 'highlightWord', title: 'Texto destacado del título', type: 'string', group: 'content', description: 'Palabra o frase que tendrá un color/estilo diferente dentro del título.', options: fieldHelp({example: 'mayor lujo.'})},
-    {name: 'description', title: 'Texto descriptivo', type: 'text', group: 'content', description: 'Párrafo de apoyo que explica la promesa de la sección.', options: fieldHelp({helpText: 'Idealmente 1 a 3 líneas para mantener buen ritmo visual.'})},
+    {name: 'description', title: 'Texto descriptivo', type: 'text', group: 'content', description: 'Párrafo corto que refuerza la promesa de la sección.', options: fieldHelp({helpText: 'Lo ideal es 1 o 2 frases claras. Piensa en tranquilidad, confianza y cuidado del detalle.'})},
     {
       name: 'cards',
       title: 'Cards de beneficios',
       type: 'array',
       group: 'cards',
-      description: 'Beneficios individuales mostrados como cards.',
+      description: 'Beneficios individuales mostrados como tarjetas.',
       options: fieldHelp({warning: 'Si agregas muchas cards, usa títulos cortos para que el diseño respire.'}),
       of: [{
         type: 'object',
@@ -40,10 +40,10 @@ const benefitsSection = {
     },
     {
       name: 'stats',
-      title: 'Datos o estadísticas',
+      title: 'Datos de confianza',
       type: 'array',
       group: 'cards',
-      description: 'Pequeños datos de confianza que pueden aparecer dentro de la sección.',
+      description: 'Pequeños datos que ayudan a generar confianza, como años de experiencia, eventos realizados o zona de atención.',
       options: fieldHelp({example: '12+ eventos, Lima, Atención personalizada.'}),
       of: [{
         type: 'object',

@@ -5,7 +5,7 @@ const testimonialsSection = {
   title: 'Testimonios',
   type: 'document',
   description:
-    'Administra las historias y opiniones de clientes. Puedes agregar testimonios, ocultarlos o cambiar el orden.',
+    'Historias y comentarios de clientes. Puedes agregar testimonios, ocultarlos o cambiar el orden en que aparecen.',
   groups: sectionGroups,
   fields: [
     {name: 'visible', title: 'Mostrar sección Testimonios', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Si está apagada, no se mostrará la sección.'})},
@@ -14,16 +14,16 @@ const testimonialsSection = {
     {name: 'eyebrow', title: 'Etiqueta pequeña superior', type: 'string', group: 'content', description: 'Texto pequeño que aparece arriba del título.', options: fieldHelp({example: 'Historias reales'})},
     {name: 'title', title: 'Título principal', type: 'string', group: 'content', description: 'Título grande de la sección.', options: fieldHelp({example: 'Celebraciones que se recuerdan.'})},
     {name: 'highlightWord', title: 'Texto destacado del título', type: 'string', group: 'content', description: 'Palabra o frase resaltada dentro del título.', options: fieldHelp({example: 'se recuerdan.'})},
-    {name: 'storyPanelLabel', title: 'Texto de la card superior', type: 'string', group: 'content', description: 'Etiqueta de la card que indica qué testimonio está activo.', options: fieldHelp({example: 'Ahora en pantalla'})},
+    {name: 'storyPanelLabel', title: 'Texto de la tarjeta superior', type: 'string', group: 'content', description: 'Etiqueta pequeña que acompaña al testimonio visible.', options: fieldHelp({example: 'Ahora en pantalla'})},
     {
       name: 'testimonials',
       title: 'Lista de testimonios',
       type: 'array',
       group: 'cards',
-      description: 'Testimonios que aparecen en el carrusel.',
+      description: 'Testimonios que aparecen en el carrusel de la sección.',
       options: fieldHelp({
         helpText: 'Puedes agregar, eliminar, ocultar o reordenar testimonios.',
-        warning: 'Los testimonios demasiado largos pueden verse pesados. Ideal: 1 a 3 frases.',
+        warning: 'Los testimonios muy largos pueden verse pesados. Ideal: 1 a 3 frases.',
       }),
       of: [{
         type: 'object',

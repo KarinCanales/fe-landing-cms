@@ -1,16 +1,16 @@
-import {fieldHelp} from './helpers';
+import {fieldHelp, studioGroup} from './helpers';
 
 const contactSection = {
   name: 'contactSection',
   title: 'Contacto',
   type: 'document',
   description:
-    'Controla solo los textos y el formulario de la sección. WhatsApp, emails, horario y redes se toman de Datos generales. Las categorías del formulario se toman de Servicios.',
+    'Controla los textos y el formulario de contacto. WhatsApp, correos, horarios y redes se toman automáticamente de Datos generales.',
   groups: [
-    {name: 'content', title: 'Contenido principal', default: true},
-    {name: 'background', title: 'Fondo de la sección'},
-    {name: 'form', title: 'Formulario'},
-    {name: 'settings', title: 'Mostrar / ocultar'},
+    studioGroup('content', 'Textos de contacto', {default: true}),
+    studioGroup('background', 'Foto de fondo'),
+    studioGroup('form', 'Formulario'),
+    studioGroup('settings', 'Mostrar u ocultar'),
   ],
   fields: [
     {name: 'visible', title: 'Mostrar sección Contacto', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Si está apagada, el contacto no aparecerá como sección.'})},
@@ -25,9 +25,9 @@ const contactSection = {
       title: 'Formulario de contacto',
       type: 'object',
       group: 'form',
-      description: 'Las categorías del selector se generan automáticamente desde la lista de Servicios y siempre se agrega la opción “Otro”.',
+      description: 'Ajustes de los textos que aparecen dentro del formulario.',
       options: fieldHelp({
-        helpText: 'Para cambiar las categorías del formulario, edita la sección Servicios. No hay una lista duplicada en Contacto.',
+        helpText: 'Las categorías del formulario salen de la sección Servicios y siempre se agrega la opción “Otro”.',
       }),
       fields: [
         {name: 'title', title: 'Título del formulario', type: 'string', description: 'Título visible encima de los campos del formulario.', options: fieldHelp({example: 'Formulario de cotización'})},

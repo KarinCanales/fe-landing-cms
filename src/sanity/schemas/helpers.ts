@@ -1,35 +1,80 @@
 import React from 'react';
+import {
+  Brush,
+  Camera,
+  Contact,
+  Eye,
+  FileText,
+  FormInput,
+  HeartHandshake,
+  Image as ImageIcon,
+  LayoutGrid,
+  Link,
+  Megaphone,
+  Palette,
+  Settings,
+  Share2,
+  Sparkles,
+  Store,
+  type LucideIcon,
+} from 'lucide-react';
 import {ColorInput} from '../components/ColorInput';
 import {IconInput} from '../components/IconInput';
 import {resolveIcon} from '../icons';
 import {iconList} from './shared';
 
 export const sectionGroups = [
-  {name: 'content', title: 'Contenido principal', default: true},
-  {name: 'background', title: 'Fondo de la sección'},
-  {name: 'cards', title: 'Cards y elementos'},
-  {name: 'settings', title: 'Mostrar / ocultar y ajustes'},
+  {name: 'content', title: 'Textos principales', default: true, icon: FileText},
+  {name: 'background', title: 'Imagen de fondo', icon: ImageIcon},
+  {name: 'cards', title: 'Tarjetas y detalles', icon: LayoutGrid},
+  {name: 'settings', title: 'Mostrar u ocultar', icon: Eye},
 ];
 
 export const siteGroups = [
-  {name: 'identity', title: 'Identidad de marca', default: true},
-  {name: 'contact', title: 'Datos de contacto'},
-  {name: 'social', title: 'Redes sociales'},
-  {name: 'seo', title: 'Vista al compartir / Google'},
+  {name: 'identity', title: 'Marca y logo', default: true, icon: Sparkles},
+  {name: 'contact', title: 'Datos de contacto', icon: Contact},
+  {name: 'social', title: 'Redes sociales', icon: Share2},
+  {name: 'seo', title: 'Cómo se ve el link', icon: Link},
 ];
 
 export const footerGroups = [
-  {name: 'cta', title: 'Bloque principal superior', default: true},
-  {name: 'brand', title: 'Marca'},
-  {name: 'navigation', title: 'Columnas y enlaces'},
-  {name: 'contact', title: 'Datos de contacto'},
-  {name: 'social', title: 'Redes sociales'},
-  {name: 'background', title: 'Fondo y ambiente visual'},
+  {name: 'cta', title: 'Invitación final', default: true, icon: Megaphone},
+  {name: 'brand', title: 'Textos del pie', icon: Store},
+  {name: 'navigation', title: 'Columnas y enlaces', icon: LayoutGrid},
+  {name: 'contact', title: 'Datos de contacto', icon: Contact},
+  {name: 'social', title: 'Redes sociales', icon: Share2},
+  {name: 'background', title: 'Imagen de fondo', icon: ImageIcon},
 ];
 
 export const navbarGroups = [
-  {name: 'style', title: 'Ajustes visuales', default: true},
+  {name: 'style', title: 'Ajustes visuales', default: true, icon: Palette},
 ];
+
+export const studioGroupIcons: Record<string, LucideIcon> = {
+  background: ImageIcon,
+  cards: LayoutGrid,
+  content: FileText,
+  ctas: Megaphone,
+  form: FormInput,
+  items: Camera,
+  services: HeartHandshake,
+  settings: Eye,
+  style: Brush,
+  visibility: Eye,
+};
+
+export function studioGroup(
+  name: string,
+  title: string,
+  options: {default?: boolean; icon?: LucideIcon} = {},
+) {
+  return {
+    name,
+    title,
+    default: options.default,
+    icon: options.icon || studioGroupIcons[name] || Settings,
+  };
+}
 
 export function fieldHelp({
   helpText,

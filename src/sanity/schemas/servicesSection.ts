@@ -1,18 +1,18 @@
 import {iconList} from './shared';
-import {fieldHelp, iconFieldInline, iconPreviewMedia, sectionGroups, visibilitySubtitle} from './helpers';
+import {fieldHelp, iconFieldInline, iconPreviewMedia, studioGroup, visibilitySubtitle} from './helpers';
 
 const servicesSection = {
   name: 'servicesSection',
   title: 'Servicios',
   type: 'document',
   description:
-    'Sección donde se administran los servicios. Cada servicio puede tener imagen, texto, etiquetas e icono.',
+    'Aquí se ordenan los servicios que ofrece la empresa. Cada servicio puede tener foto, descripción breve, etiquetas e icono.',
   groups: [
-    {name: 'content', title: 'Contenido principal', default: true},
-    {name: 'background', title: 'Fondo de la sección'},
-    {name: 'cards', title: 'Cards auxiliares'},
-    {name: 'services', title: 'Lista de servicios'},
-    {name: 'settings', title: 'Mostrar / ocultar'},
+    studioGroup('content', 'Textos de la sección', {default: true}),
+    studioGroup('background', 'Foto de fondo'),
+    studioGroup('cards', 'Mensajes de apoyo'),
+    studioGroup('services', 'Lista de servicios'),
+    studioGroup('settings', 'Mostrar u ocultar'),
   ],
   fields: [
     {name: 'visible', title: 'Mostrar sección Servicios', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la sección sin borrar su contenido.', options: fieldHelp({helpText: 'Útil si todavía estás editando servicios.'})},

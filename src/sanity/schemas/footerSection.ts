@@ -2,10 +2,10 @@ import {fieldHelp, footerGroups} from './helpers';
 
 const footerSection = {
   name: 'footerSection',
-  title: 'Sección Footer',
+  title: 'Parte final',
   type: 'document',
   description:
-    'Edita los textos y el fondo visual del pie de página. El logo, los datos de contacto, las redes sociales y los servicios se toman automáticamente de "Datos generales" y "Servicios".',
+    'Edita la invitación final, los textos de cierre y la foto de fondo. El logo, contacto, redes y servicios se toman automáticamente de otras secciones.',
   groups: footerGroups.filter((group) => ['cta', 'brand', 'background'].includes(group.name)),
   fields: [
     {
@@ -42,10 +42,10 @@ const footerSection = {
     },
     {
       name: 'ctaTitle',
-      title: 'Título grande de la tarjeta de cierre',
+      title: 'Título grande del cierre',
       type: 'string',
       group: 'cta',
-      description: 'El título principal que aparece grande en la tarjeta al inicio del pie de página. Es la última frase que invita al visitante a contactarte.',
+      description: 'Frase principal que invita al visitante a escribir o cotizar antes de terminar la página.',
       options: fieldHelp({
         example: 'Hagamos realidad tu próxima celebración',
       }),
@@ -124,7 +124,7 @@ const footerSection = {
       title: 'Texto central inferior',
       type: 'string',
       group: 'brand',
-      description: 'Mensaje decorativo que aparece centrado en la parte baja del pie de página. Puedes usar emojis.',
+      description: 'Mensaje breve que aparece centrado en la parte baja del pie de página.',
       options: fieldHelp({
         example: 'Hecho con amor y cariño 💚 para celebraciones memorables.',
       }),

@@ -6,7 +6,7 @@ const siteSettings = {
   title: 'Datos generales del sitio',
   type: 'document',
   description:
-    'Edita una sola vez la identidad, logo, datos de contacto, correos, horarios y redes. Estos datos se reutilizan automáticamente en navbar, contacto y footer.',
+    'Datos base de la marca: logo, nombre, WhatsApp, correos, horarios y redes. Se escriben una vez y el sitio los usa en varias secciones.',
   groups: siteGroups,
   fields: [
     {
@@ -127,12 +127,12 @@ const siteSettings = {
     },
     {
       name: 'seo',
-      title: 'Vista del link al compartir / Google',
+      title: 'Cómo se ve el link al compartir',
       type: 'object',
       group: 'seo',
-      description: 'Información que ayuda a que la página se vea bien cuando se comparte en WhatsApp, Facebook o Google.',
+      description: 'Texto e imagen que aparecen cuando alguien comparte el enlace de la web por WhatsApp, redes o buscadores.',
       options: fieldHelp({
-        helpText: 'No afecta directamente el diseño dentro de la página, sino cómo aparece el enlace compartido.',
+        helpText: 'No cambia el diseño de la página. Solo mejora la presentación del enlace cuando se comparte.',
       }),
       fields: [
         {name: 'title', title: 'Título al compartir', type: 'string', description: 'Título que verá una persona cuando se comparte el link.', options: fieldHelp({example: 'Karin Eventos & Experiencias'})},

@@ -1,18 +1,18 @@
 import {iconList} from './shared';
-import {fieldHelp, iconFieldInline, iconPreviewMedia, visibilitySubtitle} from './helpers';
+import {fieldHelp, iconFieldInline, iconPreviewMedia, studioGroup, visibilitySubtitle} from './helpers';
 
 const heroSection = {
   name: 'heroSection',
   title: 'Inicio / Primera pantalla',
   type: 'document',
   description:
-    'Es la primera impresión de la web. Aquí se editan el título principal, la imagen de fondo, los botones y las cards rotativas del lado derecho.',
+    'Es la portada de la web. Aquí se cambian el mensaje principal, la foto de fondo, los botones y las tarjetas que acompañan la primera impresión.',
   groups: [
-    {name: 'content', title: 'Contenido principal', default: true},
-    {name: 'background', title: 'Fondo de la sección'},
-    {name: 'ctas', title: 'Botones'},
-    {name: 'cards', title: 'Cards del lado derecho'},
-    {name: 'settings', title: 'Mostrar / ocultar'},
+    studioGroup('content', 'Textos de portada', {default: true}),
+    studioGroup('background', 'Foto de fondo'),
+    studioGroup('ctas', 'Botones de acción'),
+    studioGroup('cards', 'Tarjetas laterales'),
+    studioGroup('settings', 'Mostrar u ocultar'),
   ],
   fields: [
     {name: 'visible', title: 'Mostrar sección de inicio', type: 'boolean', group: 'settings', initialValue: true, description: 'Activa o desactiva toda la primera pantalla sin borrar su contenido.', options: fieldHelp({helpText: 'Normalmente debe estar activada porque es la portada de la web.'})},
