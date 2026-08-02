@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,6 +17,10 @@ import styles from "./NavbarSection.module.css";
 import type { NavbarData, SiteSettingsData } from "@/sanity/types";
 import { fallbackNavLinks, WHATSAPP_URL } from "@/data/fallbacks";
 import { resolveImageWithUrl } from "@/sanity/image";
+import {
+  getHomeAnchorIdFromHref,
+  savePendingHomeAnchor,
+} from "@/lib/hashScroll";
 
 type NavbarProps = {
   sanityNavbar?: NavbarData;
@@ -23,15 +28,6 @@ type NavbarProps = {
 };
 
 type NavTheme = "dark" | "light" | "botanical" | "warm";
-
-type LenisWindow = Window & {
-  karinLenis?: {
-    scrollTo: (
-      target: number | string | HTMLElement,
-      options?: { offset?: number; immediate?: boolean },
-    ) => void;
-  };
-};
 
 const DEFAULT_SECTION_THEMES: Record<string, NavTheme> = {
   inicio: "dark",
@@ -109,21 +105,11 @@ function getFocusableElements(container: HTMLElement | null) {
   ).filter((element) => !element.hasAttribute("disabled"));
 }
 
-function smoothScrollToY(targetY: number) {
-  const lenis = (window as LenisWindow).karinLenis;
-
-  if (lenis) {
-    lenis.scrollTo(targetY, { offset: 0 });
-    return;
-  }
-
-  window.scrollTo({ top: targetY, behavior: "auto" });
-}
-
 export default function NavbarSection({
   sanityNavbar,
   sanitySettings,
 }: NavbarProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -203,7 +189,9 @@ export default function NavbarSection({
 
     const updateAdaptiveTheme = () => {
       const sections = Array.from(
-        document.querySelectorAll<HTMLElement>("section[id], footer[id]"),
+        document.querySelectorAll<HTMLElement>(
+          "section[data-section-id], section[id], footer[id]",
+        ),
       );
 
       if (!sections.length) return;
@@ -219,9 +207,10 @@ export default function NavbarSection({
 
       for (const section of sections) {
         const rect = section.getBoundingClientRect();
+        const sectionId = section.dataset.sectionId || section.id;
 
         if (rect.top <= probeY && rect.bottom >= probeY) {
-          activeId = section.id;
+          activeId = sectionId;
           closestDistance = 0;
           break;
         }
@@ -230,7 +219,7 @@ export default function NavbarSection({
 
         if (distance < closestDistance) {
           closestDistance = distance;
-          activeId = section.id;
+          activeId = sectionId;
         }
       }
 
@@ -329,56 +318,24 @@ export default function NavbarSection({
       return;
     }
 
-    if (href === "/" || href === "/catalogo") {
-      afterScroll?.();
-      return;
-    }
-
-    const isHomeHash = href.startsWith("/#");
-    const isLocalHash = href.startsWith("#");
-
-    if (isHomeHash && window.location.pathname !== "/") {
-      afterScroll?.();
-      return;
-    }
-
-    if (!isHomeHash && !isLocalHash) {
-      afterScroll?.();
-      return;
-    }
-
-    event.preventDefault();
-
-    const targetId = decodeURIComponent(href.slice(isHomeHash ? 2 : 1));
+    const targetId = getHomeAnchorIdFromHref(href);
 
     if (!targetId) {
       afterScroll?.();
       return;
     }
 
-    if (targetId === "inicio") {
-      window.history.replaceState(null, "", "/#inicio");
-      smoothScrollToY(0);
+    if (window.location.pathname !== "/") {
+      event.preventDefault();
+      savePendingHomeAnchor(targetId);
+      router.push("/", { scroll: false });
       afterScroll?.();
       return;
     }
 
-    const target = document.getElementById(targetId);
-
-    if (!target) {
-      window.history.replaceState(null, "", isHomeHash ? href : `/#${targetId}`);
-      afterScroll?.();
-      return;
-    }
-
-    // Importante: para las secciones grandes, el ancla debe llegar al inicio
-    // real de la sección. Si restamos la altura de la navbar, queda una franja
-    // de la sección anterior arriba y parece que el scroll se quedó corto.
-    const targetTop = window.scrollY + target.getBoundingClientRect().top + 1;
-
-    window.history.replaceState(null, "", isHomeHash ? href : `/#${targetId}`);
-    smoothScrollToY(Math.max(0, targetTop));
-
+    event.preventDefault();
+    window.history.pushState(null, "", `/#${targetId}`);
+    window.dispatchEvent(new Event("hashchange"));
     afterScroll?.();
   };
 
@@ -390,12 +347,13 @@ export default function NavbarSection({
   return (
     <>
       <header
+        data-site-navbar
         className={`${styles.navbar} ${
           hasMounted && hasScrolled ? styles.navbarScrolled : ""
         } ${themeClass}`}
       >
         <div className={styles.shell}>
-          <Link href="/" className={styles.brand} aria-label="Ir al inicio">
+          <Link href="/#inicio" className={styles.brand} aria-label="Ir al inicio">
             <span className={styles.logoMark}>
               <Image
                 src={logoSrc}
@@ -420,10 +378,10 @@ export default function NavbarSection({
                 href={link.href}
                 onClick={(event) => scrollToSection(event, link.href)}
                 aria-current={
-                  (link.href === "/catalogo" && currentPath === "/catalogo") ||
+                  (link.href === currentPath && link.href.startsWith("/") && !link.href.includes("#")) ||
                   (currentPath === "/" &&
                     (link.href === `/#${currentSection}` ||
-                      (link.href === "/" && currentSection === "inicio")))
+                      (link.href === "/#inicio" && currentSection === "inicio")))
                     ? "location"
                     : undefined
                 }
@@ -504,10 +462,10 @@ export default function NavbarSection({
                     href={link.href}
                     onClick={(event) => scrollToSection(event, link.href, closeMenu)}
                     aria-current={
-                      (link.href === "/catalogo" && currentPath === "/catalogo") ||
+                      (link.href === currentPath && link.href.startsWith("/") && !link.href.includes("#")) ||
                       (currentPath === "/" &&
                         (link.href === `/#${currentSection}` ||
-                          (link.href === "/" && currentSection === "inicio")))
+                          (link.href === "/#inicio" && currentSection === "inicio")))
                         ? "location"
                         : undefined
                     }

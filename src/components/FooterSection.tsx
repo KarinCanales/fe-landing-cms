@@ -195,7 +195,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
         {/* Main footer grid */}
         <div className={styles.footerMain}>
           <div className={styles.brandBlock}>
-            <Link href="/" className={styles.logo} aria-label="Ir al inicio">
+            <Link href="/#inicio" className={styles.logo} aria-label="Ir al inicio">
               <span className={`${styles.logoMark} ${footerLogo ? styles.logoMarkImage : ''}`}>
                 {footerLogo ? (
                   <Image

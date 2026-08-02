@@ -4,6 +4,7 @@ import ContactFormSection from '@/components/ContactSection';
 import FooterSection from '@/components/FooterSection';
 import HeroSection from '@/components/HeroSection';
 import NavbarSection from '@/components/NavbarSection';
+import SectionFade from '@/components/SectionFade';
 import ServicesSection from '@/components/ServiceSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { buildHomeJsonLd, buildHomeMetadata, stringifyJsonLd } from '@/lib/seo';
@@ -46,15 +47,21 @@ export default async function Home() {
           sanitySettings={data.settings}
         />
         <HeroSection sanityData={data.hero} sanitySettings={data.settings} />
+        <SectionFade variant="darkToLight" />
         <BenefitsSection sanityData={data.benefits} />
+        <SectionFade variant="lightToDark" />
         <ServicesSection sanityData={data.services} />
+        <SectionFade variant="darkToLight" />
         <TestimonialsSection sanityData={data.testimonials} />
+        <SectionFade variant="lightToDark" />
         <CatalogSection sanityData={data.catalog} />
+        <SectionFade variant="darkToWarm" />
         <ContactFormSection
           sanityData={data.contact}
           sanitySettings={data.settings}
           sanityServices={data.services}
         />
+        <SectionFade variant="warmToDark" />
         <FooterSection
           sanityData={data.footer}
           sanitySettings={data.settings}

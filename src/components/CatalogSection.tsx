@@ -421,6 +421,7 @@ export default function CatalogSection({ sanityData }: Props) {
     <>
       <section
         id="catalogo"
+        data-section-id="catalogo"
         className={styles.catalogSection}
         style={
           backgroundImage

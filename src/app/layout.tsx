@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import HashScrollHandler from "@/components/HashScrollHandler";
+import LogoLoader from "@/components/LogoLoader";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import {
   DEFAULT_SOCIAL_IMAGE,
@@ -13,6 +15,8 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/site";
+import { fetchSiteSettings } from "@/sanity/fetch";
+import { resolveImageWithUrl } from "@/sanity/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,18 +99,31 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await fetchSiteSettings();
+  const companyName = settings?.companyName || "Karin Cadenas Bodas & Eventos";
+  const logoSrc = resolveImageWithUrl(
+    settings?.logo,
+    settings?.logoUrl,
+    "/images/_logo/logo.webp",
+    "logo",
+  );
+
   return (
     <html
       lang={SITE_LANGUAGE}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <LogoLoader logoSrc={logoSrc} companyName={companyName} />
+        <SmoothScrollProvider>
+          <HashScrollHandler />
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   );

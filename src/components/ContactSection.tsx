@@ -235,7 +235,11 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
   if (d?.visible === false) return null;
 
   return (
-    <section id="contacto" className={styles.contactSection} style={sectionStyle}>
+    <section
+      data-section-id="contacto"
+      className={styles.contactSection}
+      style={sectionStyle}
+    >
       <span id="Contacto" className={styles.legacyAnchor} aria-hidden="true" />
       <div className={styles.paperGlow} aria-hidden="true" />
       <div className={styles.auroraRibbons} aria-hidden="true">
@@ -276,6 +280,12 @@ export default function ContactSection({ sanityData, sanitySettings, sanityServi
 
       <div className={styles.container}>
         <div className={styles.copyBlock}>
+          <div
+            id="contacto"
+            data-scroll-anchor
+            className="scrollAnchor"
+            aria-hidden="true"
+          />
           <span className={styles.eyebrow}>
             <Sparkles size={15} />
             {eyebrow}

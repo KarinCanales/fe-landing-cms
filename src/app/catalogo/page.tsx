@@ -4,6 +4,7 @@ import { connection } from 'next/server';
 import CatalogPageClient from './CatalogPageClient';
 import styles from './page.module.css';
 import NavbarSection from '@/components/NavbarSection';
+import SectionFade from '@/components/SectionFade';
 import { fallbackCatalogItems } from '@/data/fallbacks';
 import { SITE_NAME } from '@/lib/site';
 import { resolveImageWithUrl } from '@/sanity/image';
@@ -98,6 +99,7 @@ export default async function CatalogPage() {
           </p>
         </header>
 
+        <SectionFade variant="catalogHeader" />
         <CatalogPageClient catalog={catalog} fallbackItems={fallbackCatalogItems} />
       </main>
     </>

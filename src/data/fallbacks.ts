@@ -63,12 +63,13 @@ export const fallbackLinksPage = {
 // ——————— Navbar ———————
 
 export const fallbackNavLinks = [
-  { label: 'Inicio', href: '/', enabled: true, order: 0 },
+  { label: 'Inicio', href: '/#inicio', enabled: true, order: 0 },
   { label: 'Beneficios', href: '/#beneficios', enabled: true, order: 1 },
   { label: 'Servicios', href: '/#servicios', enabled: true, order: 2 },
   { label: 'Testimonios', href: '/#testimonios', enabled: true, order: 3 },
   { label: 'Catálogo', href: '/catalogo', enabled: true, order: 4 },
   { label: 'Contacto', href: '/#contacto', enabled: true, order: 5 },
+  { label: 'Links', href: '/links', enabled: true, order: 6 },
 ];
 
 // ——————— Hero ———————
@@ -315,12 +316,13 @@ export const fallbackEventTypes = [
 // ——————— Footer ———————
 
 export const fallbackNavigationLinks = [
-  { label: 'Inicio', href: '/' },
+  { label: 'Inicio', href: '/#inicio' },
   { label: 'Beneficios', href: '/#beneficios' },
   { label: 'Servicios', href: '/#servicios' },
-  { label: 'Catálogo', href: '/catalogo' },
   { label: 'Testimonios', href: '/#testimonios' },
+  { label: 'Catálogo', href: '/catalogo' },
   { label: 'Contacto', href: '/#contacto' },
+  { label: 'Links', href: '/links' },
 ];
 
 export const fallbackServiceLinks = [

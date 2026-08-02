@@ -51,9 +51,7 @@ export default function SmoothScrollProvider({
         wheelMultiplier: 1.15,
         touchMultiplier: 1.05,
         infinite: false,
-        anchors: {
-          offset: -96,
-        },
+        anchors: false,
       });
 
       window.karinLenis = lenis;

@@ -349,7 +349,7 @@ export default function TestimonialsSection({ sanityData }: Props) {
 
   return (
     <section
-      id="testimonios"
+      data-section-id="testimonios"
       className={styles.testimonialsSection}
       style={
         {
@@ -376,6 +376,12 @@ export default function TestimonialsSection({ sanityData }: Props) {
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.headingBlock}>
+            <div
+              id="testimonios"
+              data-scroll-anchor
+              className="scrollAnchor"
+              aria-hidden="true"
+            />
             <span className={styles.eyebrow}>
               <Sparkles size={14} />
               {eyebrow}

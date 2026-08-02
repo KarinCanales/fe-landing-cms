@@ -78,6 +78,7 @@
 
   --tracking-tight:   -0.055em;
   --tracking-eyebrow:  0.24em;
+  --site-nav-offset: clamp(72px, 6vw, 96px);
 }
 
 * {
@@ -749,21 +750,17 @@ section[id] {
   }
 }
 
-/* ============================================================
-   FIX 1 — Offset de scroll: las secciones respiran bajo el navbar fijo.
-   El navbar flota a ~18-12px del top y mide ~72px, así que con 96px
-   de margen hay espacio suficiente en todas las resoluciones.
-   ============================================================ */
-section[id],
-footer[id] {
-  scroll-margin-top: 96px;
+.scrollAnchor {
+  display: block;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
 }
 
-/* En móvil el navbar es algo más compacto */
 @media (max-width: 680px) {
-  section[id],
-  footer[id] {
-    scroll-margin-top: 80px;
+  :root {
+    --site-nav-offset: 84px;
   }
 }
 
@@ -853,19 +850,19 @@ footer[id] {
     backdrop-filter: none !important;
   }
 
-  #beneficios,
-  #servicios,
-  #testimonios,
-  #catalogo,
-  #contacto,
+  [data-section-id="beneficios"],
+  [data-section-id="servicios"],
+  [data-section-id="testimonios"],
+  [data-section-id="catalogo"],
+  [data-section-id="contacto"],
   footer {
     overflow: clip;
     contain: layout paint style;
   }
 
-  #servicios img,
-  #testimonios img,
-  #catalogo img,
+  [data-section-id="servicios"] img,
+  [data-section-id="testimonios"] img,
+  [data-section-id="catalogo"] img,
   footer img {
     transform: none !important;
   }
@@ -873,32 +870,32 @@ footer[id] {
 
 /* Mobile V2: no cargar/pintar fondos fotográficos pesados debajo del Hero */
 @media (max-width: 820px), (hover: none) and (pointer: coarse) {
-  #beneficios,
-  #testimonios {
+  [data-section-id="beneficios"],
+  [data-section-id="testimonios"] {
     background:
       radial-gradient(circle at 18% 12%, rgba(255, 250, 242, 0.74), transparent 36%),
       linear-gradient(135deg, #f6efe5 0%, #e8e3da 58%, #ead8bf 100%) !important;
   }
 
-  #servicios,
-  #catalogo,
-  #contacto,
+  [data-section-id="servicios"],
+  [data-section-id="catalogo"],
+  [data-section-id="contacto"],
   #footer {
     background:
       radial-gradient(circle at 18% 12%, rgba(182, 188, 152, 0.1), transparent 34%),
       linear-gradient(135deg, #173d39 0%, #102d2a 100%) !important;
   }
 
-  #beneficios [class*="BackgroundImage"],
-  #beneficios [class*="backgroundImage"],
-  #servicios [class*="BackgroundImage"],
-  #servicios [class*="backgroundImage"],
-  #testimonios [class*="BackgroundImage"],
-  #testimonios [class*="backgroundImage"],
-  #catalogo [class*="BackgroundImage"],
-  #catalogo [class*="backgroundImage"],
-  #contacto [class*="BackgroundImage"],
-  #contacto [class*="backgroundImage"],
+  [data-section-id="beneficios"] [class*="BackgroundImage"],
+  [data-section-id="beneficios"] [class*="backgroundImage"],
+  [data-section-id="servicios"] [class*="BackgroundImage"],
+  [data-section-id="servicios"] [class*="backgroundImage"],
+  [data-section-id="testimonios"] [class*="BackgroundImage"],
+  [data-section-id="testimonios"] [class*="backgroundImage"],
+  [data-section-id="catalogo"] [class*="BackgroundImage"],
+  [data-section-id="catalogo"] [class*="backgroundImage"],
+  [data-section-id="contacto"] [class*="BackgroundImage"],
+  [data-section-id="contacto"] [class*="backgroundImage"],
   #footer [class*="BackgroundImage"],
   #footer [class*="backgroundImage"] {
     display: none !important;

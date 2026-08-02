@@ -105,7 +105,11 @@ export default function BenefitsSection({ sanityData }: Props) {
   } as CSSProperties;
 
   return (
-    <section className={styles.benefits} id="beneficios" style={sectionStyle}>
+    <section
+      className={styles.benefits}
+      data-section-id="beneficios"
+      style={sectionStyle}
+    >
       <div
         className={styles.sanityBackgroundImage}
         style={{ backgroundImage: `url("${bgImage}")` } as CSSProperties}
@@ -129,6 +133,12 @@ export default function BenefitsSection({ sanityData }: Props) {
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           >
+            <div
+              id="beneficios"
+              data-scroll-anchor
+              className="scrollAnchor"
+              aria-hidden="true"
+            />
             <span className={styles.kicker}>
               <Sparkles size={15} />
               {eyebrow}

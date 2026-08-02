@@ -75,13 +75,23 @@ export default function ServicesSection({ sanityData }: Props) {
   } as React.CSSProperties;
 
   return (
-    <section id="servicios" className={styles.servicesSection} style={sectionStyle}>
+    <section
+      data-section-id="servicios"
+      className={styles.servicesSection}
+      style={sectionStyle}
+    >
       <div className={styles.ambientGlowOne} aria-hidden="true" />
       <div className={styles.ambientGlowTwo} aria-hidden="true" />
 
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
           <div>
+            <div
+              id="servicios"
+              data-scroll-anchor
+              className="scrollAnchor"
+              aria-hidden="true"
+            />
             <span className={styles.eyebrow}>
               <Sparkles size={15} />
               {eyebrow}
