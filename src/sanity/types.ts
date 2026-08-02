@@ -265,6 +265,28 @@ export type FooterData = BaseSectionData & {
   backToTopLabel?: string;
 } | null;
 
+export type LinksPageLink = {
+  _key?: string;
+  name?: string;
+  url?: string;
+  type?: 'web' | 'social' | 'whatsapp' | 'email' | 'phone' | 'location' | 'catalog' | 'calendar' | 'video' | 'other' | string;
+  icon?: IconName;
+  description?: string;
+  expandableText?: string;
+  email?: string;
+  phone?: string;
+  active?: boolean;
+  featured?: boolean;
+  order?: number;
+};
+
+export type LinksPageData = {
+  title?: string;
+  subtitle?: string;
+  mainIcon?: IconName;
+  links?: LinksPageLink[];
+} | null;
+
 // ——————— Aggregated page data ———————
 
 export type HomePageData = {

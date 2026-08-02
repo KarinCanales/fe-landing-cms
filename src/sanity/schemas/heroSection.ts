@@ -45,7 +45,7 @@ const heroSection = {
       description: 'Botón de apoyo, menos importante que el principal.',
       fields: [
         {name: 'label', title: 'Texto del botón', type: 'string', description: 'Texto que aparece dentro del botón.', options: fieldHelp({example: 'Ver portafolio'})},
-        {name: 'href', title: 'Destino del botón', type: 'string', description: 'Link o sección a donde lleva el botón.', options: fieldHelp({example: '#catalogo'})},
+        {name: 'href', title: 'Destino del botón', type: 'string', description: 'Link o sección a donde lleva el botón.', options: fieldHelp({example: '/catalogo'})},
       ],
     },
     {

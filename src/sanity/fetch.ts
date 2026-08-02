@@ -10,8 +10,15 @@ import {
   TESTIMONIALS_QUERY,
   CONTACT_QUERY,
   FOOTER_QUERY,
+  LINKS_PAGE_QUERY,
 } from './queries';
-import type { HeroData, HomePageData, SiteSettingsData } from './types';
+import type {
+  CatalogData,
+  HeroData,
+  HomePageData,
+  LinksPageData,
+  SiteSettingsData,
+} from './types';
 
 const DEFAULT_REVALIDATE_SECONDS = 60;
 
@@ -38,7 +45,8 @@ type FetchTag =
   | 'catalogSection'
   | 'testimonialsSection'
   | 'contactSection'
-  | 'footerSection';
+  | 'footerSection'
+  | 'linksPage';
 
 function getFetchOptions(tag: FetchTag) {
   if (SHOULD_BYPASS_SANITY_CACHE || SANITY_REVALIDATE_SECONDS === 0) {
@@ -83,7 +91,7 @@ function normalizeHeroData(hero: HeroData): HeroData {
     ctaSecondary: hero.ctaSecondary
       ? {
           ...hero.ctaSecondary,
-          href: normalizeCmsHref(hero.ctaSecondary.href, '#catalogo'),
+          href: normalizeCmsHref(hero.ctaSecondary.href, '/catalogo'),
         }
       : hero.ctaSecondary,
   };
@@ -127,4 +135,12 @@ export async function fetchHomePageData(): Promise<HomePageData> {
     contact,
     footer,
   } as HomePageData;
+}
+
+export async function fetchLinksPageData(): Promise<LinksPageData> {
+  return safeFetch<NonNullable<LinksPageData>>(LINKS_PAGE_QUERY, 'linksPage');
+}
+
+export async function fetchCatalogPageData(): Promise<CatalogData> {
+  return safeFetch<NonNullable<CatalogData>>(CATALOG_QUERY, 'catalogSection');
 }

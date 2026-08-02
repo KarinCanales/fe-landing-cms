@@ -52,7 +52,7 @@ export default function Hero({ sanityData }: HeroProps) {
   const primaryHref = normalizeCmsHref(d?.ctaPrimary?.href, '#contacto');
 
   const ctaSecondaryLabel = d?.ctaSecondary?.label || 'Ver portafolio';
-  const ctaSecondaryHref = normalizeCmsHref(d?.ctaSecondary?.href, '#catalogo');
+  const ctaSecondaryHref = normalizeCmsHref(d?.ctaSecondary?.href, '/catalogo');
 
   const heroCards = useMemo(() => {
     const raw = d?.featureCards?.length

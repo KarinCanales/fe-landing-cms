@@ -1245,10 +1245,48 @@
   }
 
   .hero-kicker,
+  .hero-flip-line,
   .button,
   .hero-feature-card,
   .floating-note {
     backdrop-filter: none !important;
+  }
+
+  .hero-kicker {
+    max-width: 100%;
+    align-items: flex-start;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.28;
+  }
+
+  .hero-flip-line {
+    align-items: flex-start;
+    border-radius: 24px;
+    line-height: 1.28;
+  }
+
+  .word-rotator {
+    width: 100%;
+    min-width: 0;
+    height: 2.6em;
+  }
+
+  .word-rotator-word {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    gap: 12px;
+  }
+
+  .button {
+    min-width: 0;
+    width: 100%;
+    padding-inline: 18px;
+    text-align: center;
+    white-space: normal;
   }
 
   .mesh-blob,

@@ -6,6 +6,7 @@ import {
   HeartHandshake,
   Home,
   Image as ImageIcon,
+  Link2,
   MessageCircleHeart,
   Settings,
   Sparkles,
@@ -34,6 +35,15 @@ export default defineConfig({
               .title('Datos generales del sitio')
               .icon(Settings)
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+            S.listItem()
+              .title('Página de links')
+              .icon(Link2)
+              .child(
+                S.document()
+                  .schemaType('linksPage')
+                  .documentId('linksPage')
+                  .title('Página de links'),
+              ),
             S.divider(),
             S.listItem()
               .title('Inicio / Primera pantalla')

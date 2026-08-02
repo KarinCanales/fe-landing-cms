@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const SANITY_TAG = 'sanity';
 const HOME_PATH = '/';
+const LINKS_PATH = '/links';
 const KNOWN_SANITY_TYPES = new Set([
   'siteSettings',
   'navbarSettings',
@@ -13,6 +14,7 @@ const KNOWN_SANITY_TYPES = new Set([
   'testimonialsSection',
   'contactSection',
   'footerSection',
+  'linksPage',
 ]);
 
 type RevalidateBody = {
@@ -70,6 +72,7 @@ async function revalidate(request: NextRequest) {
   const type = getSanityType(body);
 
   revalidatePath(HOME_PATH);
+  revalidatePath(LINKS_PATH);
   revalidateTag(SANITY_TAG, { expire: 0 });
 
   if (type) {
@@ -78,7 +81,7 @@ async function revalidate(request: NextRequest) {
 
   return NextResponse.json({
     revalidated: true,
-    path: HOME_PATH,
+    paths: [HOME_PATH, LINKS_PATH],
     tag: SANITY_TAG,
     type: type || null,
     now: new Date().toISOString(),

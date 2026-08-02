@@ -8,15 +8,67 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const CONTACT_EMAIL = 'karin@karincadenaseventos.com';
 export const QUOTE_EMAIL = 'presupuestos@karincadenaseventos.com';
 
+// ——————— Links page ———————
+
+export const fallbackLinksPage = {
+  title: 'Karin Cadenas Bodas & Eventos',
+  subtitle: 'Planificación, catering y decoración con una mirada elegante para celebraciones memorables.',
+  mainIcon: 'sparkles',
+  links: [
+    {
+      name: 'Cotiza tu evento por WhatsApp',
+      url: WHATSAPP_URL,
+      type: 'whatsapp',
+      icon: 'whatsapp',
+      description: 'Respuesta rápida para disponibilidad, paquetes y primeros detalles.',
+      expandableText: 'Comparte fecha tentativa, cantidad de invitados, ciudad y tipo de evento para orientarte mejor.',
+      phone: WHATSAPP_NUMBER,
+      active: true,
+      featured: true,
+      order: 10,
+    },
+    {
+      name: 'Ver catálogo de eventos',
+      url: '/catalogo',
+      type: 'catalog',
+      icon: 'catalog',
+      description: 'Ideas de montajes, ambientación y detalles para inspirar tu celebración.',
+      active: true,
+      featured: false,
+      order: 20,
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/',
+      type: 'social',
+      icon: 'instagram',
+      description: 'Síguenos para ver celebraciones, montajes y detalles recientes.',
+      active: true,
+      featured: false,
+      order: 30,
+    },
+    {
+      name: 'Correo para cotizaciones',
+      url: `mailto:${QUOTE_EMAIL}`,
+      type: 'email',
+      icon: 'email',
+      email: QUOTE_EMAIL,
+      active: true,
+      featured: false,
+      order: 40,
+    },
+  ],
+};
+
 // ——————— Navbar ———————
 
 export const fallbackNavLinks = [
-  { label: 'Inicio', href: '#inicio', enabled: true, order: 0 },
-  { label: 'Beneficios', href: '#beneficios', enabled: true, order: 1 },
-  { label: 'Servicios', href: '#servicios', enabled: true, order: 2 },
-  { label: 'Testimonios', href: '#testimonios', enabled: true, order: 3 },
-  { label: 'Catálogo', href: '#catalogo', enabled: true, order: 4 },
-  { label: 'Contacto', href: '#contacto', enabled: true, order: 5 },
+  { label: 'Inicio', href: '/', enabled: true, order: 0 },
+  { label: 'Beneficios', href: '/#beneficios', enabled: true, order: 1 },
+  { label: 'Servicios', href: '/#servicios', enabled: true, order: 2 },
+  { label: 'Testimonios', href: '/#testimonios', enabled: true, order: 3 },
+  { label: 'Catálogo', href: '/catalogo', enabled: true, order: 4 },
+  { label: 'Contacto', href: '/#contacto', enabled: true, order: 5 },
 ];
 
 // ——————— Hero ———————
@@ -263,12 +315,12 @@ export const fallbackEventTypes = [
 // ——————— Footer ———————
 
 export const fallbackNavigationLinks = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Beneficios', href: '#beneficios' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Catálogo', href: '#catalogo' },
-  { label: 'Testimonios', href: '#testimonios' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Inicio', href: '/' },
+  { label: 'Beneficios', href: '/#beneficios' },
+  { label: 'Servicios', href: '/#servicios' },
+  { label: 'Catálogo', href: '/catalogo' },
+  { label: 'Testimonios', href: '/#testimonios' },
+  { label: 'Contacto', href: '/#contacto' },
 ];
 
 export const fallbackServiceLinks = [

@@ -85,7 +85,28 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+html.reduced-motion-scroll {
+  scroll-behavior: auto !important;
 }
 
 body {
@@ -736,6 +757,47 @@ section[id] {
 section[id],
 footer[id] {
   scroll-margin-top: 96px;
+}
+
+main > section[id],
+main > footer[id] {
+  position: relative;
+}
+
+main > section[id]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 3;
+  height: clamp(72px, 9vw, 118px);
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 20, 20, 0),
+      rgba(9, 20, 20, 0.18) 56%,
+      rgba(9, 20, 20, 0.28)
+    );
+}
+
+main > section[id] + section[id]::before,
+main > section[id] + footer[id]::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: clamp(70px, 8vw, 104px);
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 20, 20, 0.24),
+      rgba(9, 20, 20, 0)
+    );
 }
 
 /* En móvil el navbar es algo más compacto */

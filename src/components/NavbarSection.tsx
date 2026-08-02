@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { MouseEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,6 +23,15 @@ type NavbarProps = {
 };
 
 type NavTheme = "dark" | "light" | "botanical" | "warm";
+
+type LenisWindow = Window & {
+  karinLenis?: {
+    scrollTo: (
+      target: number | string | HTMLElement,
+      options?: { offset?: number; immediate?: boolean },
+    ) => void;
+  };
+};
 
 const DEFAULT_SECTION_THEMES: Record<string, NavTheme> = {
   inicio: "dark",
@@ -99,6 +109,17 @@ function getFocusableElements(container: HTMLElement | null) {
   ).filter((element) => !element.hasAttribute("disabled"));
 }
 
+function smoothScrollToY(targetY: number) {
+  const lenis = (window as LenisWindow).karinLenis;
+
+  if (lenis) {
+    lenis.scrollTo(targetY, { offset: 0 });
+    return;
+  }
+
+  window.scrollTo({ top: targetY, behavior: "auto" });
+}
+
 export default function NavbarSection({
   sanityNavbar,
   sanitySettings,
@@ -108,6 +129,7 @@ export default function NavbarSection({
   const [hasScrolled, setHasScrolled] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<NavTheme>("dark");
   const [currentSection, setCurrentSection] = useState("inicio");
+  const [currentPath, setCurrentPath] = useState("/");
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
   const mobilePanelRef = useRef<HTMLElement | null>(null);
 
@@ -145,6 +167,7 @@ export default function NavbarSection({
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
       setHasMounted(true);
+      setCurrentPath(window.location.pathname || "/");
     });
 
     return () => {
@@ -230,8 +253,6 @@ export default function NavbarSection({
 
     scheduleUpdate();
 
-    const initialTimer = window.setTimeout(scheduleUpdate, 260);
-
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     window.addEventListener("hashchange", scheduleUpdate);
@@ -239,7 +260,6 @@ export default function NavbarSection({
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.clearTimeout(initialTimer);
       window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
@@ -304,14 +324,32 @@ export default function NavbarSection({
     href?: string | null,
     afterScroll?: () => void,
   ) => {
-    if (!href?.startsWith("#")) {
+    if (!href) {
+      afterScroll?.();
+      return;
+    }
+
+    if (href === "/" || href === "/catalogo") {
+      afterScroll?.();
+      return;
+    }
+
+    const isHomeHash = href.startsWith("/#");
+    const isLocalHash = href.startsWith("#");
+
+    if (isHomeHash && window.location.pathname !== "/") {
+      afterScroll?.();
+      return;
+    }
+
+    if (!isHomeHash && !isLocalHash) {
       afterScroll?.();
       return;
     }
 
     event.preventDefault();
 
-    const targetId = decodeURIComponent(href.slice(1));
+    const targetId = decodeURIComponent(href.slice(isHomeHash ? 2 : 1));
 
     if (!targetId) {
       afterScroll?.();
@@ -319,8 +357,8 @@ export default function NavbarSection({
     }
 
     if (targetId === "inicio") {
-      window.history.replaceState(null, "", "#inicio");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.history.replaceState(null, "", "/#inicio");
+      smoothScrollToY(0);
       afterScroll?.();
       return;
     }
@@ -328,7 +366,7 @@ export default function NavbarSection({
     const target = document.getElementById(targetId);
 
     if (!target) {
-      window.history.replaceState(null, "", href);
+      window.history.replaceState(null, "", isHomeHash ? href : `/#${targetId}`);
       afterScroll?.();
       return;
     }
@@ -338,11 +376,8 @@ export default function NavbarSection({
     // de la sección anterior arriba y parece que el scroll se quedó corto.
     const targetTop = window.scrollY + target.getBoundingClientRect().top + 1;
 
-    window.history.replaceState(null, "", href);
-    window.scrollTo({
-      top: Math.max(0, targetTop),
-      behavior: "smooth",
-    });
+    window.history.replaceState(null, "", isHomeHash ? href : `/#${targetId}`);
+    smoothScrollToY(Math.max(0, targetTop));
 
     afterScroll?.();
   };
@@ -360,7 +395,7 @@ export default function NavbarSection({
         } ${themeClass}`}
       >
         <div className={styles.shell}>
-          <a href="#inicio" className={styles.brand} aria-label="Ir al inicio">
+          <Link href="/" className={styles.brand} aria-label="Ir al inicio">
             <span className={styles.logoMark}>
               <Image
                 src={logoSrc}
@@ -376,7 +411,7 @@ export default function NavbarSection({
               <strong>{brandCopy.title}</strong>
               <small>{brandCopy.subtitle}</small>
             </span>
-          </a>
+          </Link>
 
           <nav className={styles.desktopNav} aria-label="Navegación principal">
             {navLinks.map((link) => (
@@ -385,7 +420,12 @@ export default function NavbarSection({
                 href={link.href}
                 onClick={(event) => scrollToSection(event, link.href)}
                 aria-current={
-                  link.href === `#${currentSection}` ? "location" : undefined
+                  (link.href === "/catalogo" && currentPath === "/catalogo") ||
+                  (currentPath === "/" &&
+                    (link.href === `/#${currentSection}` ||
+                      (link.href === "/" && currentSection === "inicio")))
+                    ? "location"
+                    : undefined
                 }
               >
                 {link.label}
@@ -464,7 +504,12 @@ export default function NavbarSection({
                     href={link.href}
                     onClick={(event) => scrollToSection(event, link.href, closeMenu)}
                     aria-current={
-                      link.href === `#${currentSection}` ? "location" : undefined
+                      (link.href === "/catalogo" && currentPath === "/catalogo") ||
+                      (currentPath === "/" &&
+                        (link.href === `/#${currentSection}` ||
+                          (link.href === "/" && currentSection === "inicio")))
+                        ? "location"
+                        : undefined
                     }
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}

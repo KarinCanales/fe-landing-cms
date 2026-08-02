@@ -1,16 +1,17 @@
 import type { CSSProperties } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   ArrowUpRight,
   Clock3,
   Mail,
   MapPin,
-  MessageCircle,
   Phone,
   Sparkles,
 } from 'lucide-react';
 import styles from './FooterSection.module.css';
 import { resolveImageWithUrl } from '@/sanity/image';
+import { renderIcon } from '@/sanity/icons';
 import type { FooterData, ServicesData, SiteSettingsData, SocialLink } from '@/sanity/types';
 import {
   fallbackNavigationLinks,
@@ -85,29 +86,8 @@ function cleanText(value?: string | null) {
   return text ? text : undefined;
 }
 
-function Instagram({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect width="18" height="18" x="3" y="3" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function Facebook({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M13.7 21v-7.7h2.6l.4-3h-3V8.4c0-.9.3-1.5 1.6-1.5H17V4.2c-.8-.1-1.6-.2-2.4-.2-2.4 0-4.1 1.5-4.1 4.2v2.1H7.8v3h2.7V21h3.2Z" />
-    </svg>
-  );
-}
-
 function SocialIcon({ name, size = 19 }: { name?: string; size?: number }) {
-  if (name === 'instagram') return <Instagram size={size} />;
-  if (name === 'facebook') return <Facebook size={size} />;
-  return <MessageCircle size={size} />;
+  return renderIcon(name || 'whatsapp', {size});
 }
 
 export default function FooterSection({ sanityData, sanitySettings, sanityServices }: Props) {
@@ -120,7 +100,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   const ctaTitleText = d?.ctaTitle || 'Cada detalle puede contar una historia.';
   const ctaHighlight = d?.ctaHighlightWord || ' Empecemos por la tuya.';
   const ctaButtonLabel = d?.ctaButtonLabel || 'Cotiza ahora';
-  const ctaButtonLink = '#contacto';
+  const ctaButtonLink = '/#contacto';
 
   const navColumnTitle = cleanText(d?.navColumnTitle) || 'Explorar';
   const servicesColumnTitle = cleanText(d?.servicesColumnTitle) || 'Servicios';
@@ -133,8 +113,8 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
   const serviceLinks = sanityServices?.services?.length
     ? sanityServices.services
       .filter((service) => service.visible !== false && service.title)
-      .map((service) => ({ text: service.title || '', link: '#servicios', visible: true }))
-    : fallbackServiceLinks.map((text) => ({ text, link: '#servicios', visible: true }));
+      .map((service) => ({ text: service.title || '', link: '/#servicios', visible: true }))
+    : fallbackServiceLinks.map((text) => ({ text, link: '/#servicios', visible: true }));
 
   // Contacto: todo viene desde Datos generales del sitio.
   const contactPhone = formatPhoneDisplay(s?.whatsapp) || '922459810';
@@ -206,7 +186,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
             </h2>
           </div>
           <a className={styles.primaryCta} href={ctaButtonLink} aria-label={ctaButtonLabel}>
-            <MessageCircle size={19} />
+            <SocialIcon name="whatsapp" size={19} />
             {ctaButtonLabel}
             <ArrowUpRight size={17} />
           </a>
@@ -215,7 +195,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
         {/* Main footer grid */}
         <div className={styles.footerMain}>
           <div className={styles.brandBlock}>
-            <a href="#inicio" className={styles.logo} aria-label="Ir al inicio">
+            <Link href="/" className={styles.logo} aria-label="Ir al inicio">
               <span className={`${styles.logoMark} ${footerLogo ? styles.logoMarkImage : ''}`}>
                 {footerLogo ? (
                   <Image
@@ -231,7 +211,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
                 )}
               </span>
               <strong>{companyName}</strong>
-            </a>
+            </Link>
             <p>{brandText}</p>
             <div className={styles.socialLinks} aria-label="Redes sociales">
               {socialLinks.map((social) => (
@@ -275,7 +255,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
             <ul>
               {serviceLinks.map((svc) => (
                 <li key={svc.text}>
-                  <a href={svc.link || '#servicios'}>{svc.text}</a>
+                  <a href={svc.link || '/#servicios'}>{svc.text}</a>
                 </li>
               ))}
             </ul>
@@ -306,10 +286,10 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
           {madeWithLine ? (
             <p className={styles.madeWith}>{madeWithLine}</p>
           ) : null}
-          <a className={styles.backToTop} href="#inicio" aria-label="Volver al inicio">
+          <Link className={styles.backToTop} href="/#inicio" aria-label="Volver al inicio">
             {backToTopLabel}
             <ArrowUpRight size={15} />
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

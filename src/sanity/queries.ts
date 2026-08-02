@@ -171,3 +171,23 @@ export const FOOTER_QUERY = `*[_type == "footerSection"][0]{
   madeWithLine,
   backToTopLabel
 }`;
+
+export const LINKS_PAGE_QUERY = `*[_type == "linksPage"][0]{
+  title,
+  subtitle,
+  mainIcon,
+  "links": links[]{
+    _key,
+    name,
+    url,
+    type,
+    icon,
+    description,
+    expandableText,
+    email,
+    phone,
+    active,
+    featured,
+    order
+  }
+}`;

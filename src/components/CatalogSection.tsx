@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -239,13 +240,11 @@ export default function CatalogSection({ sanityData }: Props) {
   const [pan, setPan] = useState<Pan>({ x: 0, y: 0 });
   const [dragState, setDragState] = useState<DragState>(null);
   const [isImmersive, setIsImmersive] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(6);
   const [isMediaLoading, setIsMediaLoading] = useState(false);
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
-  const visibleEntries = galleryEntries.slice(0, visibleCount);
-  const hasMore = galleryEntries.length > visibleCount;
+  const visibleEntries = galleryEntries.slice(0, 6);
 
   const selectedEntry = selectedIdx !== null ? galleryEntries[selectedIdx] ?? null : null;
   const selectedMedia = selectedEntry?.media;
@@ -541,15 +540,14 @@ export default function CatalogSection({ sanityData }: Props) {
               })}
             </motion.div>
 
-            {hasMore && (
-              <button
-                type="button"
+            {galleryEntries.length > 0 && (
+              <Link
                 className={styles.showMoreButton}
-                onClick={() => setVisibleCount((c) => c + 6)}
+                href="/catalogo"
               >
                 Ver más
                 <ArrowUpRight size={16} />
-              </button>
+              </Link>
             )}
           </div>
         </div>
