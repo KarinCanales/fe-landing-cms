@@ -6,6 +6,7 @@ import type { CSSProperties } from 'react';
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import styles from './HeroSection.module.css';
+import SiteNavLink from './SiteNavLink';
 import type { HeroData, SiteSettingsData } from '@/sanity/types';
 import { resolveIcon } from '@/sanity/icons';
 import { resolveImageWithUrl } from '@/sanity/image';
@@ -215,9 +216,9 @@ export default function Hero({ sanityData }: HeroProps) {
               {ctaPrimaryLabel} <ArrowRight size={18} />
             </a>
 
-            <a className={`${styles.button} ${styles.secondary}`} href={ctaSecondaryHref}>
+            <SiteNavLink className={`${styles.button} ${styles.secondary}`} href={ctaSecondaryHref}>
               {ctaSecondaryLabel}
-            </a>
+            </SiteNavLink>
           </div>
         </div>
 

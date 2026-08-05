@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -17,6 +16,7 @@ import {
   X,
 } from 'lucide-react';
 import styles from './CatalogSection.module.css';
+import SiteNavLink from './SiteNavLink';
 import type { CatalogData, CatalogItem } from '@/sanity/types';
 import { resolveImageWithUrl } from '@/sanity/image';
 import { fallbackCatalogItems } from '@/data/fallbacks';
@@ -473,7 +473,8 @@ export default function CatalogSection({ sanityData }: Props) {
                     type="button"
                     className={styles.card}
                     onClick={() => openModal(galleryIndex)}
-                    initial={{ opacity: 0, y: 28 }}
+                    initial={false}
+                    animate={{ opacity: 1, y: 0 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.24 }}
                     transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
@@ -542,13 +543,13 @@ export default function CatalogSection({ sanityData }: Props) {
             </motion.div>
 
             {galleryEntries.length > 0 && (
-              <Link
+              <SiteNavLink
                 className={styles.showMoreButton}
                 href="/catalogo"
               >
                 Ver más
                 <ArrowUpRight size={16} />
-              </Link>
+              </SiteNavLink>
             )}
           </div>
         </div>

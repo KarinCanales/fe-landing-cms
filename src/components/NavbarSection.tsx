@@ -9,11 +9,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
   Menu,
-  MessageCircle,
   Sparkles,
   X,
 } from "lucide-react";
 import styles from "./NavbarSection.module.css";
+import SiteNavLink from "./SiteNavLink";
+import WhatsAppIcon from "./WhatsAppIcon";
 import type { NavbarData, SiteSettingsData } from "@/sanity/types";
 import { fallbackNavLinks, WHATSAPP_URL } from "@/data/fallbacks";
 import { resolveImageWithUrl } from "@/sanity/image";
@@ -93,6 +94,89 @@ function buildSectionThemeMap(sanityNavbar?: NavbarData) {
   }
 
   return map;
+}
+
+
+function NavbarSvgIcon({ href }: { href?: string | null }) {
+  const normalizedHref = href || '';
+
+  const baseProps = {
+    width: 16,
+    height: 16,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.9,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+    'aria-hidden': true,
+    focusable: false,
+  };
+
+  if (normalizedHref.includes('#beneficios')) {
+    return (
+      <svg {...baseProps}>
+        <path d="M12 3.5 14.4 8l5 .7-3.6 3.5.9 5-4.7-2.4-4.7 2.4.9-5L4.6 8.7l5-.7L12 3.5Z" />
+        <path d="M8.8 13.8 12 12l3.2 1.8" />
+      </svg>
+    );
+  }
+
+  if (normalizedHref.includes('#servicios')) {
+    return (
+      <svg {...baseProps}>
+        <path d="M8 4h8l1.5 4.5L12 20 6.5 8.5 8 4Z" />
+        <path d="M6.5 8.5h11" />
+        <path d="M10 4l-1 4.5L12 20l3-11.5L14 4" />
+      </svg>
+    );
+  }
+
+  if (normalizedHref.includes('#testimonios')) {
+    return (
+      <svg {...baseProps}>
+        <path d="M5 5.5h14v9.2H8.8L5 18.5v-13Z" />
+        <path d="M8.5 9h7" />
+        <path d="M8.5 12h4.8" />
+      </svg>
+    );
+  }
+
+  if (normalizedHref.startsWith('/catalogo')) {
+    return (
+      <svg {...baseProps}>
+        <rect x="4" y="5" width="16" height="14" rx="2.4" />
+        <path d="m7.5 15 3.2-3 2.4 2.1 2-1.8L19 16" />
+        <circle cx="8.2" cy="8.7" r="1" />
+      </svg>
+    );
+  }
+
+  if (normalizedHref.includes('#contacto')) {
+    return (
+      <svg {...baseProps}>
+        <path d="M4.5 6.5h15v11h-15z" />
+        <path d="m5 7 7 5.3L19 7" />
+      </svg>
+    );
+  }
+
+  if (normalizedHref.startsWith('/links')) {
+    return (
+      <svg {...baseProps}>
+        <path d="M10 13.5a4 4 0 0 0 5.7 0l2.1-2.1a4 4 0 0 0-5.7-5.7l-1.2 1.2" />
+        <path d="M14 10.5a4 4 0 0 0-5.7 0l-2.1 2.1a4 4 0 0 0 5.7 5.7l1.2-1.2" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...baseProps}>
+      <path d="M4 11.5 12 5l8 6.5" />
+      <path d="M6.5 10.5V19h11v-8.5" />
+      <path d="M10 19v-5h4v5" />
+    </svg>
+  );
 }
 
 function getFocusableElements(container: HTMLElement | null) {
@@ -327,6 +411,7 @@ export default function NavbarSection({
 
     if (window.location.pathname !== "/") {
       event.preventDefault();
+      window.karinShowRouteLoader?.(href);
       savePendingHomeAnchor(targetId);
       router.push("/", { scroll: false });
       afterScroll?.();
@@ -373,11 +458,11 @@ export default function NavbarSection({
 
           <nav className={styles.desktopNav} aria-label="Navegación principal">
             {navLinks.map((link) => (
-              <a
+              <SiteNavLink
                 key={`${link.href}-${link.label}`}
                 href={link.href}
-                onClick={(event) => scrollToSection(event, link.href)}
-                aria-current={
+                onHomeAnchorClick={(event) => scrollToSection(event, link.href)}
+                ariaCurrent={
                   (link.href === currentPath && link.href.startsWith("/") && !link.href.includes("#")) ||
                   (currentPath === "/" &&
                     (link.href === `/#${currentSection}` ||
@@ -386,8 +471,11 @@ export default function NavbarSection({
                     : undefined
                 }
               >
-                {link.label}
-              </a>
+                <span className={styles.navLinkIcon} aria-hidden="true">
+                  <NavbarSvgIcon href={link.href} />
+                </span>
+                <span className={styles.navLinkText}>{link.label}</span>
+              </SiteNavLink>
             ))}
           </nav>
 
@@ -399,7 +487,7 @@ export default function NavbarSection({
               rel="noopener noreferrer"
             >
               <span className={styles.buttonContent}>
-                <MessageCircle size={17} />
+                <WhatsAppIcon size={18} />
                 <span>{whatsappLabel}</span>
                 <ArrowUpRight size={15} />
               </span>
@@ -457,18 +545,8 @@ export default function NavbarSection({
 
               <div className={styles.mobileLinks}>
                 {navLinks.map((link, index) => (
-                  <motion.a
+                  <motion.div
                     key={`${link.href}-${link.label}`}
-                    href={link.href}
-                    onClick={(event) => scrollToSection(event, link.href, closeMenu)}
-                    aria-current={
-                      (link.href === currentPath && link.href.startsWith("/") && !link.href.includes("#")) ||
-                      (currentPath === "/" &&
-                        (link.href === `/#${currentSection}` ||
-                          (link.href === "/#inicio" && currentSection === "inicio")))
-                        ? "location"
-                        : undefined
-                    }
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
@@ -477,9 +555,27 @@ export default function NavbarSection({
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
-                    <span>0{index + 1}</span>
-                    {link.label}
-                  </motion.a>
+                    <SiteNavLink
+                      href={link.href}
+                      onHomeAnchorClick={(event) =>
+                        scrollToSection(event, link.href)
+                      }
+                      onNavigate={closeMenu}
+                      ariaCurrent={
+                        (link.href === currentPath && link.href.startsWith("/") && !link.href.includes("#")) ||
+                        (currentPath === "/" &&
+                          (link.href === `/#${currentSection}` ||
+                            (link.href === "/#inicio" && currentSection === "inicio")))
+                          ? "location"
+                          : undefined
+                      }
+                    >
+                      <span className={styles.mobileNavIcon} aria-hidden="true">
+                        <NavbarSvgIcon href={link.href} />
+                      </span>
+                      <span className={styles.mobileNavLabel}>{link.label}</span>
+                    </SiteNavLink>
+                  </motion.div>
                 ))}
               </div>
 
@@ -491,7 +587,7 @@ export default function NavbarSection({
                 onClick={closeMenu}
               >
                 <span className={styles.buttonContent}>
-                  <MessageCircle size={18} />
+                  <WhatsAppIcon size={19} />
                   <span>{whatsappLabelLong}</span>
                   <ArrowUpRight size={16} />
                 </span>

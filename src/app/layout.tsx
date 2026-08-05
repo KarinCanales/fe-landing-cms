@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import BackForwardRecovery from "@/components/BackForwardRecovery";
 import HashScrollHandler from "@/components/HashScrollHandler";
 import LogoLoader from "@/components/LogoLoader";
+import RouteRecoveryProvider from "@/components/RouteRecoveryProvider";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import {
   DEFAULT_SOCIAL_IMAGE,
@@ -121,6 +123,8 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <LogoLoader logoSrc={logoSrc} companyName={companyName} />
         <SmoothScrollProvider>
+          <BackForwardRecovery />
+          <RouteRecoveryProvider />
           <HashScrollHandler />
           {children}
         </SmoothScrollProvider>

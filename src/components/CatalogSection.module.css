@@ -1745,3 +1745,86 @@
     filter: saturate(0.9) brightness(0.82) contrast(0.96);
   }
 }
+
+/* ========================================================================== 
+   Patch: mobile catalog modal close button always above navbar
+   ========================================================================== */
+.modalBackdrop {
+  z-index: 1200;
+}
+
+.modalPanel {
+  z-index: 1201;
+}
+
+.modalTopbar {
+  position: relative;
+  z-index: 12;
+}
+
+.modalTopbar .iconButton,
+.modalPanelImmersive .modalTopbar .iconButton {
+  position: relative;
+  z-index: 14;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .modalBackdrop {
+    z-index: 1200;
+    place-items: stretch;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+  }
+
+  .modalPanel,
+  .modalPanelImmersive {
+    width: 100%;
+    height: calc(100svh - max(20px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+    max-height: calc(100svh - max(20px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+    border-radius: 24px;
+  }
+
+  .modalTopbar,
+  .modalPanelImmersive .modalTopbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    min-height: 62px;
+    background: rgba(9, 20, 19, 0.78);
+    backdrop-filter: blur(16px) saturate(1.04);
+    -webkit-backdrop-filter: blur(16px) saturate(1.04);
+  }
+
+  .modalTopbar h3 {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(1.2rem, 6vw, 1.7rem);
+  }
+
+  .modalTopbar span {
+    margin-bottom: 2px;
+    font-size: 0.62rem;
+  }
+
+  .modalTopbar .iconButton,
+  .modalPanelImmersive .modalTopbar .iconButton {
+    justify-self: end;
+    width: 42px;
+    height: 42px;
+    color: #122626;
+    background: #e5d2b8;
+    border-color: rgba(229, 210, 184, 0.68);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  }
+
+  .modalStage {
+    min-height: 0;
+  }
+}
