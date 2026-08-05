@@ -1,41 +1,36 @@
-import Image from "next/image";
-import type { Metadata } from "next";
-import styles from "./page.module.css";
-import LinksCard from "./LinksCard";
-import { fallbackLinksPage } from "@/data/fallbacks";
-import { resolveImageWithUrl } from "@/sanity/image";
-import {
-  fetchLinksPageData,
-  fetchSiteSettings,
-  SHOULD_BYPASS_SANITY_CACHE,
-} from "@/sanity/fetch";
-import type { LinksPageData, LinksPageLink } from "@/sanity/types";
-import { connection } from "next/server";
-import SiteNavLink from "@/components/SiteNavLink";
+import Image from 'next/image';
+import Link from 'next/link';
+import type { Metadata } from 'next';
+import styles from './page.module.css';
+import LinksCard from './LinksCard';
+import { fallbackLinksPage } from '@/data/fallbacks';
+import { resolveImageWithUrl } from '@/sanity/image';
+import { fetchLinksPageData, fetchSiteSettings, SHOULD_BYPASS_SANITY_CACHE } from '@/sanity/fetch';
+import type { LinksPageData, LinksPageLink } from '@/sanity/types';
+import { connection } from 'next/server';
+import { Globe2 } from 'lucide-react';
 
 export const revalidate = 60;
 
 function cleanText(value?: string | null) {
   const text = value?.trim();
-  return text || "";
+  return text || '';
 }
 
 function normalizePhoneHref(value?: string | null) {
-  const cleanPhone = value?.replace(/\D/g, "") || "";
-  return cleanPhone.length >= 8 ? `tel:+${cleanPhone}` : "";
+  const cleanPhone = value?.replace(/\D/g, '') || '';
+  return cleanPhone.length >= 8 ? `tel:+${cleanPhone}` : '';
 }
 
 function getLinkHref(link: LinksPageLink) {
   const url = cleanText(link.url);
   if (url) return url;
 
-  if (link.type === "email" && link.email) return `mailto:${link.email}`;
-  if (link.type === "phone" && link.phone)
-    return normalizePhoneHref(link.phone);
-  if (link.type === "whatsapp" && link.phone)
-    return `https://wa.me/${link.phone.replace(/\D/g, "")}`;
+  if (link.type === 'email' && link.email) return `mailto:${link.email}`;
+  if (link.type === 'phone' && link.phone) return normalizePhoneHref(link.phone);
+  if (link.type === 'whatsapp' && link.phone) return `https://wa.me/${link.phone.replace(/\D/g, '')}`;
 
-  return "";
+  return '';
 }
 
 function isExternalHref(href: string) {
@@ -43,45 +38,31 @@ function isExternalHref(href: string) {
 }
 
 function getQrUrl(href: string) {
-  if (!href) return "";
+  if (!href) return '';
   if (/^(https?:|mailto:|tel:)/i.test(href)) return href;
 
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://karincadenaseventos.com"
-  ).replace(/\/$/, "");
-  return href.startsWith("/") ? `${siteUrl}${href}` : `${siteUrl}/${href}`;
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://karincadenaseventos.com').replace(/\/$/, '');
+  return href.startsWith('/') ? `${siteUrl}${href}` : `${siteUrl}/${href}`;
 }
 
 function sortLinks(links: LinksPageLink[]) {
   return links
-    .map((link, index) => ({ link, index }))
+    .map((link, index) => ({link, index}))
     .sort((a, b) => {
-      const orderA = Number.isFinite(a.link.order)
-        ? Number(a.link.order)
-        : a.index + 1000;
-      const orderB = Number.isFinite(b.link.order)
-        ? Number(b.link.order)
-        : b.index + 1000;
+      const orderA = Number.isFinite(a.link.order) ? Number(a.link.order) : a.index + 1000;
+      const orderB = Number.isFinite(b.link.order) ? Number(b.link.order) : b.index + 1000;
       return orderA - orderB;
     })
-    .map(({ link }) => link);
+    .map(({link}) => link);
 }
 
 function getVisibleLinks(data?: LinksPageData) {
-  const sourceLinks = data?.links?.length
-    ? data.links
-    : fallbackLinksPage.links;
-  return sortLinks(sourceLinks).filter(
-    (link) =>
-      link.active !== false && cleanText(link.name) && getLinkHref(link),
-  );
+  const sourceLinks = data?.links?.length ? data.links : fallbackLinksPage.links;
+  return sortLinks(sourceLinks).filter((link) => link.active !== false && cleanText(link.name) && getLinkHref(link));
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [linksPage, settings] = await Promise.all([
-    fetchLinksPageData(),
-    fetchSiteSettings(),
-  ]);
+  const [linksPage, settings] = await Promise.all([fetchLinksPageData(), fetchSiteSettings()]);
   const title = linksPage?.title || fallbackLinksPage.title;
   const description = linksPage?.subtitle || fallbackLinksPage.subtitle;
 
@@ -91,9 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: `${title} | Links`,
       description,
-      images: settings?.seo?.ogImageUrl
-        ? [{ url: settings.seo.ogImageUrl }]
-        : undefined,
+      images: settings?.seo?.ogImageUrl ? [{url: settings.seo.ogImageUrl}] : undefined,
     },
   };
 }
@@ -103,19 +82,16 @@ export default async function LinksPage() {
     await connection();
   }
 
-  const [linksPage, settings] = await Promise.all([
-    fetchLinksPageData(),
-    fetchSiteSettings(),
-  ]);
+  const [linksPage, settings] = await Promise.all([fetchLinksPageData(), fetchSiteSettings()]);
   const title = linksPage?.title || fallbackLinksPage.title;
   const subtitle = linksPage?.subtitle || fallbackLinksPage.subtitle;
   const visibleLinks = getVisibleLinks(linksPage);
-  const companyName = settings?.companyName || "Karin Cadenas Bodas & Eventos";
+  const companyName = settings?.companyName || 'Karin Cadenas Bodas & Eventos';
   const logoSrc = resolveImageWithUrl(
     settings?.logo,
     settings?.logoUrl,
-    "/images/_logo/logo.webp",
-    "logo",
+    '/images/_logo/logo.webp',
+    'logo',
   );
 
   return (
@@ -138,22 +114,27 @@ export default async function LinksPage() {
         <span className={styles.linksOrbitInner} />
         <span className={styles.linksOrbitCore} />
         <span className={styles.linksParticles}>
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Array.from({length: 18}).map((_, index) => (
             <i key={index} />
           ))}
         </span>
       </div>
 
       <section className={styles.shell} aria-labelledby="links-title">
-        <SiteNavLink
-          className={styles.homeLink}
-          href="/#inicio"
-          ariaLabel="Volver al sitio principal de Karin Eventos"
-        >
-          Sitio web
-        </SiteNavLink>
+        <Link className={styles.homeLink} href="/#inicio" aria-label="Volver al sitio principal de Karin Eventos">
+          <Globe2 size={16} strokeWidth={2.1} aria-hidden="true" />
+          <span>Sitio web</span>
+        </Link>
 
         <header className={styles.header}>
+          <span className={styles.headerOrbitField} aria-hidden="true">
+            <span className={styles.headerOrbitGlow} />
+            <span className={styles.headerOrbit}>
+              <span className={styles.headerOrbitDot} />
+            </span>
+            <span className={styles.headerOrbitInner} />
+            <span className={styles.headerOrbitCore} />
+          </span>
           <div className={styles.brandMark}>
             {logoSrc ? (
               <Image

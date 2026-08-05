@@ -38,24 +38,17 @@ function isInternalRouteHref(href: string) {
   return href.startsWith("/") && !isHomeAnchorHref(href);
 }
 
-function shouldStartRouteLoader(
-  event: MouseEvent<HTMLAnchorElement>,
-  href: string,
-) {
+function shouldStartRouteLoader(event: MouseEvent<HTMLAnchorElement>, href: string) {
   if (event.defaultPrevented) return false;
   if (event.button !== 0) return false;
-  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
-    return false;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
 
   try {
     const targetUrl = new URL(href, window.location.href);
     const currentUrl = new URL(window.location.href);
 
     if (targetUrl.origin !== currentUrl.origin) return false;
-    return (
-      targetUrl.pathname !== currentUrl.pathname ||
-      targetUrl.search !== currentUrl.search
-    );
+    return targetUrl.pathname !== currentUrl.pathname || targetUrl.search !== currentUrl.search;
   } catch {
     return false;
   }
@@ -98,10 +91,6 @@ export default function SiteNavLink({
         aria-current={ariaCurrent}
         aria-label={ariaLabel}
         onClick={(event) => {
-          if (shouldStartRouteLoader(event, href)) {
-            window.karinShowRouteLoader?.(href);
-          }
-
           onHomeAnchorClick?.(event, href);
           onNavigate?.();
         }}
@@ -120,9 +109,7 @@ export default function SiteNavLink({
       aria-current={ariaCurrent}
       aria-label={ariaLabel}
       target={isExternal && !isProtocolHref(href) ? "_blank" : undefined}
-      rel={
-        isExternal && !isProtocolHref(href) ? "noopener noreferrer" : undefined
-      }
+      rel={isExternal && !isProtocolHref(href) ? "noopener noreferrer" : undefined}
       onClick={onNavigate}
     >
       {children}

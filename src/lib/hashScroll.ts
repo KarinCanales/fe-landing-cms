@@ -40,7 +40,6 @@ const ANCHOR_OFFSET_ADJUSTMENTS: Record<string, number> = {
   // Keep a stronger positive guard so the eyebrow/title sit cleanly below
   // the navbar when clicking “Servicios”.
   servicios: 96,
-  contacto: 32,
 };
 
 function getWindowWithLenis() {

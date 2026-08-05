@@ -985,253 +985,126 @@
 }
 
 /* ========================================================================== 
-   FINAL ALIGNMENT FIX — desktop nav with SVG icons
-   The icons made each nav item wider, so the whole pill started to feel
-   cramped/misaligned. This keeps the icons, but makes the desktop nav compact,
-   balanced and centered again.
+   v8 fix — desktop navbar spacing without changing mobile menu
+   Prevents brand/nav/WhatsApp overlap on 1280–1500px desktop widths.
    ========================================================================== */
 @media (min-width: 1021px) {
   .shell {
-    width: min(1260px, calc(100% - 40px)) !important;
-    grid-template-columns: minmax(220px, 0.92fr) auto minmax(148px, 0.78fr) !important;
-    column-gap: clamp(10px, 1.15vw, 18px) !important;
-    min-height: 68px !important;
-    padding: 7px 10px 7px 12px !important;
+    width: min(1320px, calc(100% - 28px)) !important;
+    grid-template-columns: minmax(250px, 0.76fr) minmax(0, 1fr) auto !important;
+    column-gap: clamp(8px, 0.9vw, 14px) !important;
+    overflow: visible !important;
   }
 
   .brand {
-    max-width: 260px !important;
+    min-width: 0 !important;
+    max-width: 292px !important;
+  }
+
+  .brandText {
     min-width: 0 !important;
   }
 
   .brandText strong {
-    max-width: 16ch !important;
-    font-size: clamp(1.06rem, 1.15vw, 1.34rem) !important;
+    max-width: 20ch !important;
+    font-size: clamp(1.06rem, 1.14vw, 1.34rem) !important;
+    white-space: nowrap !important;
   }
 
   .brandText small {
-    max-width: 18ch !important;
-    font-size: 0.66rem !important;
-    letter-spacing: 0.1em !important;
+    max-width: 24ch !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.085em !important;
+    white-space: nowrap !important;
   }
 
   .desktopNav {
     justify-self: center !important;
-    width: auto !important;
-    max-width: min(690px, 51vw) !important;
+    width: 100% !important;
+    max-width: 760px !important;
     min-width: 0 !important;
+    justify-content: center !important;
     gap: 2px !important;
     padding: 4px !important;
   }
 
   .desktopNav a {
-    flex: 0 0 auto !important;
     min-height: 38px !important;
-    padding: 0 clamp(8px, 0.62vw, 11px) !important;
-    gap: 5px !important;
-    color: rgba(255, 250, 242, 0.78) !important;
-    font-size: clamp(0.73rem, 0.63vw, 0.8rem) !important;
+    padding-inline: clamp(7px, 0.62vw, 11px) !important;
+    gap: 4px !important;
+    font-size: clamp(0.7rem, 0.63vw, 0.8rem) !important;
     line-height: 1 !important;
-    letter-spacing: -0.01em !important;
     white-space: nowrap !important;
   }
 
   .navLinkIcon {
-    width: 13px !important;
-    height: 13px !important;
+    width: 12px !important;
+    height: 12px !important;
     margin-right: 0 !important;
-    opacity: 0.72 !important;
-    transform: translateY(0) !important;
+    transform: none !important;
   }
 
   .navLinkIcon svg {
-    width: 13px !important;
-    height: 13px !important;
-    stroke-width: 2.05 !important;
-  }
-
-  .navLinkText {
-    display: inline-block !important;
-    min-width: 0 !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-  }
-
-  .desktopNav a::after {
-    left: 12px !important;
-    right: 12px !important;
-    bottom: 6px !important;
+    width: 12px !important;
+    height: 12px !important;
   }
 
   .actions {
     justify-self: end !important;
-    min-width: 148px !important;
-  }
-
-  .whatsappButton {
-    min-height: 46px !important;
+    min-width: 146px !important;
   }
 
   .whatsappButton .buttonContent {
-    padding: 0 14px !important;
+    padding-inline: 13px !important;
     gap: 7px !important;
   }
 }
 
-@media (min-width: 1021px) and (max-width: 1180px) {
+@media (min-width: 1021px) and (max-width: 1320px) {
   .shell {
-    width: min(100% - 28px, 1180px) !important;
-    grid-template-columns: minmax(190px, auto) 1fr auto !important;
-    column-gap: 8px !important;
+    width: min(100% - 22px, 1280px) !important;
+    grid-template-columns: minmax(218px, 0.62fr) minmax(0, 1fr) auto !important;
+    column-gap: 7px !important;
   }
 
-  .desktopNav {
-    max-width: 100% !important;
-  }
-
-  .desktopNav a {
-    padding: 0 7px !important;
-    gap: 4px !important;
-    font-size: 0.72rem !important;
-  }
-
-  .navLinkIcon {
-    width: 12px !important;
-    height: 12px !important;
-  }
-
-  .navLinkIcon svg {
-    width: 12px !important;
-    height: 12px !important;
-  }
-
-  .brandText strong {
-    max-width: 13ch !important;
-  }
-
-  .brandText small {
-    max-width: 14ch !important;
-  }
-
-  .whatsappButton .buttonContent {
-    padding: 0 12px !important;
-  }
-}
-
-/* ========================================================================== 
-   FINAL PATCH — Navbar spacing after SVG icons
-   Fixes: Links pill clipped/misaligned + brand subtitle ellipsis on desktop.
-   Keeps icons, but gives the desktop shell more real width and balances columns.
-   ========================================================================== */
-@media (min-width: 1021px) {
-  .shell {
-    width: min(1328px, calc(100% - 28px)) !important;
-    grid-template-columns: minmax(292px, 0.9fr) minmax(660px, auto) minmax(150px, 0.48fr) !important;
-    column-gap: clamp(8px, 0.9vw, 16px) !important;
-    padding-inline: 12px !important;
+  .logoMark {
+    width: 48px !important;
+    height: 48px !important;
   }
 
   .brand {
-    max-width: 318px !important;
-    gap: 11px !important;
+    max-width: 248px !important;
+    gap: 9px !important;
   }
 
   .brandText strong {
-    max-width: 21ch !important;
-    font-size: clamp(1.08rem, 1.2vw, 1.38rem) !important;
+    max-width: 17ch !important;
+    font-size: clamp(0.98rem, 1.02vw, 1.2rem) !important;
   }
 
   .brandText small {
-    max-width: 26ch !important;
-    font-size: 0.67rem !important;
-    letter-spacing: 0.095em !important;
+    max-width: 20ch !important;
+    font-size: 0.59rem !important;
+    letter-spacing: 0.07em !important;
   }
 
   .desktopNav {
-    justify-self: end !important;
-    max-width: min(780px, 59vw) !important;
-    padding: 4px 5px !important;
-    gap: 2px !important;
+    max-width: 700px !important;
   }
 
   .desktopNav a {
-    min-height: 38px !important;
-    padding-inline: clamp(8px, 0.72vw, 12px) !important;
-    gap: 5px !important;
-    justify-content: center !important;
+    padding-inline: 7px !important;
+    gap: 3px !important;
+    font-size: 0.7rem !important;
   }
 
-  .desktopNav a:last-child {
-    min-width: 72px !important;
-    padding-inline: 13px !important;
-  }
-
-  .desktopNav a[aria-current="location"] {
-    color: #173130 !important;
-    background: rgba(229, 224, 216, 0.46) !important;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.38),
-      0 8px 18px rgba(23, 49, 48, 0.08) !important;
-  }
-
-  .theme-light .desktopNav a[aria-current="location"] {
-    color: #173130 !important;
-    background: rgba(45, 95, 94, 0.1) !important;
-  }
-
-  .navLinkIcon {
-    width: 12px !important;
-    height: 12px !important;
-  }
-
+  .navLinkIcon,
   .navLinkIcon svg {
-    width: 12px !important;
-    height: 12px !important;
-  }
-
-  .actions {
-    min-width: 148px !important;
-  }
-}
-
-@media (min-width: 1021px) and (max-width: 1280px) {
-  .shell {
-    width: min(100% - 24px, 1260px) !important;
-    grid-template-columns: minmax(258px, 0.86fr) minmax(620px, auto) minmax(144px, 0.44fr) !important;
-    column-gap: 8px !important;
-  }
-
-  .brand {
-    max-width: 286px !important;
-  }
-
-  .brandText strong {
-    max-width: 19ch !important;
-    font-size: clamp(1.02rem, 1.05vw, 1.26rem) !important;
-  }
-
-  .brandText small {
-    max-width: 24ch !important;
-    font-size: 0.62rem !important;
-    letter-spacing: 0.075em !important;
-  }
-
-  .desktopNav {
-    max-width: min(720px, 58vw) !important;
-  }
-
-  .desktopNav a {
-    padding-inline: 8px !important;
-    gap: 4px !important;
-    font-size: clamp(0.69rem, 0.62vw, 0.75rem) !important;
-  }
-
-  .desktopNav a:last-child {
-    min-width: 66px !important;
-    padding-inline: 10px !important;
+    width: 11px !important;
+    height: 11px !important;
   }
 
   .whatsappButton .buttonContent {
-    padding-inline: 12px !important;
+    padding-inline: 11px !important;
   }
 }

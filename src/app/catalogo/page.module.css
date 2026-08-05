@@ -931,3 +931,112 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
   }
 }
+
+/* ==========================================================================
+   Final patch: mobile /catalogo modal close button always visible above navbar
+   ========================================================================== */
+.modalFloatingClose {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .modalFloatingClose {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 18px);
+    right: calc(env(safe-area-inset-right, 0px) + 18px);
+    z-index: 2147483000;
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(229, 210, 184, 0.62);
+    border-radius: 999px;
+    color: #122626;
+    background: linear-gradient(135deg, #fffaf2, #e5d2b8 72%, #d2ab80);
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .modalFloatingClose:focus-visible {
+    outline: 2px solid #fffaf2;
+    outline-offset: 3px;
+  }
+
+  .modalTopbar button:not(.modalFloatingClose) {
+    display: none;
+  }
+}
+
+/* ========================================================================== 
+   v8 fix — mobile /catalogo modal close outside panel + hide navbar under modal
+   ========================================================================== */
+.modalViewportClose {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  :global(html[data-catalog-modal-open="true"] [data-site-navbar]) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-12px) !important;
+  }
+
+  .modalBackdrop {
+    z-index: 5000 !important;
+    align-items: stretch !important;
+    padding: calc(env(safe-area-inset-top, 0px) + 14px) 10px calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
+  }
+
+  .modalPanel {
+    position: relative !important;
+    z-index: 5001 !important;
+  }
+
+  .modalViewportClose {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 14px);
+    right: calc(env(safe-area-inset-right, 0px) + 14px);
+    z-index: 5003;
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(229, 210, 184, 0.68);
+    border-radius: 999px;
+    color: #122626;
+    background: linear-gradient(135deg, #fffaf2, #e5d2b8 70%, #d2ab80);
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .modalViewportClose:focus-visible {
+    outline: 2px solid #fffaf2;
+    outline-offset: 3px;
+  }
+
+  .modalFloatingClose,
+  .modalTopbar button:not(.modalViewportClose) {
+    display: none !important;
+  }
+}
+
+/* ========================================================================== 
+   v9 polish — keep mobile modal close button inside the visual modal edge
+   ========================================================================== */
+@media (max-width: 760px) {
+  .modalViewportClose {
+    top: calc(env(safe-area-inset-top, 0px) + 22px) !important;
+    right: calc(env(safe-area-inset-right, 0px) + 22px) !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+}

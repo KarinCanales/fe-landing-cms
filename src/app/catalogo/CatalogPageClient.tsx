@@ -302,6 +302,16 @@ export default function CatalogPageClient({
     };
   }, [closeModal, goTo, selectedEntry]);
 
+  useEffect(() => {
+    if (!selectedEntry) return;
+
+    document.documentElement.dataset.catalogModalOpen = 'true';
+
+    return () => {
+      delete document.documentElement.dataset.catalogModalOpen;
+    };
+  }, [selectedEntry]);
+
   return (
     <section className={styles.catalogShell} aria-label="Catálogo completo">
       <div className={styles.filterBar} aria-label="Filtrar catálogo por categoría">
@@ -414,6 +424,18 @@ export default function CatalogPageClient({
 
       {selectedEntry ? (
         <div className={styles.modalBackdrop} onClick={closeModal}>
+          <button
+            type="button"
+            className={styles.modalViewportClose}
+            onClick={(event) => {
+              event.stopPropagation();
+              closeModal();
+            }}
+            aria-label="Cerrar"
+          >
+            <X size={20} />
+          </button>
+
           <div
             ref={modalRef}
             className={styles.modalPanel}
@@ -423,6 +445,15 @@ export default function CatalogPageClient({
             onClick={(event) => event.stopPropagation()}
             tabIndex={-1}
           >
+            <button
+              type="button"
+              className={styles.modalFloatingClose}
+              onClick={closeModal}
+              aria-label="Cerrar"
+            >
+              <X size={20} />
+            </button>
+
             <div className={styles.modalTopbar}>
               <div>
                 <span>{selectedEntry.category}</span>

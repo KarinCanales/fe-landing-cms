@@ -2,7 +2,7 @@
 
 import Lenis from "lenis";
 import type { ReactNode } from "react";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 type LenisInstance = InstanceType<typeof Lenis>;
@@ -18,70 +18,32 @@ type SmoothScrollProviderProps = {
   children: ReactNode;
 };
 
-const STUDIO_ROUTE = "/studio";
-
-function isStudioPath(pathname: string | null) {
-  return pathname === STUDIO_ROUTE || pathname?.startsWith(`${STUDIO_ROUTE}/`);
-}
-
-function clearLenisDocumentState() {
-  document.documentElement.classList.remove(
-    "lenis",
-    "lenis-smooth",
-    "lenis-scrolling",
-    "lenis-stopped",
-    "reduced-motion-scroll",
-  );
-
-  document.body.classList.remove(
-    "lenis",
-    "lenis-smooth",
-    "lenis-scrolling",
-    "lenis-stopped",
-  );
-
-  document.documentElement.style.overflow = "";
-  document.body.style.overflow = "";
-}
-
 export default function SmoothScrollProvider({
   children,
 }: SmoothScrollProviderProps) {
   const pathname = usePathname();
   const lenisRef = useRef<LenisInstance | null>(null);
   const frameRef = useRef(0);
-  const isStudioRoute = isStudioPath(pathname);
-
-  const stopLenis = useCallback(() => {
-    if (frameRef.current) {
-      window.cancelAnimationFrame(frameRef.current);
-      frameRef.current = 0;
-    }
-
-    if (lenisRef.current) {
-      lenisRef.current.destroy();
-
-      if (window.karinLenis === lenisRef.current) {
-        delete window.karinLenis;
-      }
-
-      lenisRef.current = null;
-    }
-
-    clearLenisDocumentState();
-  }, []);
 
   useEffect(() => {
-    if (isStudioRoute) {
-      if (window.karinResumeLenis) {
-        delete window.karinResumeLenis;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const stopLenis = () => {
+      if (frameRef.current) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = 0;
       }
 
-      stopLenis();
-      return;
-    }
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
 
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+        if (window.karinLenis === lenisRef.current) {
+          delete window.karinLenis;
+        }
+
+        lenisRef.current = null;
+      }
+    };
 
     const startRaf = (restart = false) => {
       if (restart && frameRef.current) {
@@ -109,7 +71,7 @@ export default function SmoothScrollProvider({
       }
 
       lenisRef.current = new Lenis({
-        lerp: 0.06,
+        lerp: 0.18,
         smoothWheel: true,
         syncTouch: false,
         wheelMultiplier: 1.15,
@@ -123,7 +85,7 @@ export default function SmoothScrollProvider({
     };
 
     const resumeLenis = () => {
-      if (motionQuery.matches || isStudioPath(window.location.pathname)) return;
+      if (motionQuery.matches) return;
 
       startLenis(true);
     };
@@ -140,7 +102,7 @@ export default function SmoothScrollProvider({
     };
 
     const handlePageShow = (event: PageTransitionEvent) => {
-      if (motionQuery.matches || isStudioPath(window.location.pathname)) return;
+      if (motionQuery.matches) return;
       const [navigationEntry] = performance.getEntriesByType(
         "navigation",
       ) as PerformanceNavigationTiming[];
@@ -171,21 +133,17 @@ export default function SmoothScrollProvider({
       if (window.karinResumeLenis === resumeLenis) {
         delete window.karinResumeLenis;
       }
+      document.documentElement.classList.remove("reduced-motion-scroll");
       stopLenis();
     };
-  }, [isStudioRoute, stopLenis]);
+  }, []);
 
   useEffect(() => {
-    if (isStudioRoute) {
-      stopLenis();
-      return;
-    }
-
     window.requestAnimationFrame(() => {
       window.karinResumeLenis?.();
       window.karinLenis?.resize();
     });
-  }, [isStudioRoute, pathname, stopLenis]);
+  }, [pathname]);
 
   return children;
 }

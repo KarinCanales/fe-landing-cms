@@ -119,31 +119,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
-/* Sanity Studio debe usar scroll nativo.
-   Lenis/smooth-scroll puede capturar la rueda del mouse dentro de paneles y modales. */
-html:has([data-karin-studio]),
-html:has([data-karin-studio]) body {
-  height: 100%;
-  overflow: auto !important;
-  overscroll-behavior: auto;
-}
-
-html:has([data-karin-studio]) body {
-  background: #11130f;
-}
-
-[data-karin-studio] {
-  min-height: 100dvh;
-  height: 100dvh;
-  width: 100%;
-  overflow: visible;
-  isolation: isolate;
-}
-
-html:has([data-karin-studio]) iframe {
-  pointer-events: auto !important;
-}
-
 
 a {
   color: inherit;

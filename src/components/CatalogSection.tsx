@@ -349,6 +349,16 @@ export default function CatalogSection({ sanityData }: Props) {
     closeModal();
   };
 
+  useEffect(() => {
+    if (!selectedEntry) return;
+
+    document.documentElement.dataset.catalogModalOpen = 'true';
+
+    return () => {
+      delete document.documentElement.dataset.catalogModalOpen;
+    };
+  }, [selectedEntry]);
+
   const handleBackdropClick = () => {
     closeModal();
   };
@@ -564,6 +574,18 @@ export default function CatalogSection({ sanityData }: Props) {
             exit={{ opacity: 0 }}
             onClick={handleBackdropClick}
           >
+            <button
+              type="button"
+              className={styles.modalViewportClose}
+              onClick={(event) => {
+                event.stopPropagation();
+                closeModal();
+              }}
+              aria-label="Cerrar galería"
+            >
+              <X size={20} />
+            </button>
+
             <motion.div
               ref={modalPanelRef}
               className={`${styles.modalPanel} ${isImmersive ? styles.modalPanelImmersive : ''}`}
@@ -578,6 +600,15 @@ export default function CatalogSection({ sanityData }: Props) {
               aria-describedby="catalog-dialog-description"
               tabIndex={-1}
             >
+              <button
+                type="button"
+                className={styles.modalFloatingClose}
+                onClick={closeModal}
+                aria-label="Cerrar galería"
+              >
+                <X size={20} />
+              </button>
+
               <div className={styles.modalTopbar}>
                 {isImmersive ? (
                   <>

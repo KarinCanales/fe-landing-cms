@@ -1,0 +1,858 @@
+/* ============================================================
+   NAVBAR — Neutral taupe base with optional adaptive themes
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  right: 0;
+  z-index: 70;
+  pointer-events: none;
+  transition:
+    top 260ms ease,
+    filter 260ms ease;
+}
+
+.navbarScrolled {
+  top: 12px;
+}
+
+/* ---- SHELL: Neutral taupe/carob translucent ---- */
+
+.shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  width: min(1180px, calc(100% - 36px));
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 8px 10px 8px 12px;
+  border: 1px solid rgba(229, 224, 216, 0.18);
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(229, 210, 184, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 100%,
+      rgba(179, 183, 146, 0.06),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(72, 62, 48, 0.92),
+      rgba(62, 54, 42, 0.9)
+    ),
+    rgba(56, 46, 34, 0.88);
+  box-shadow:
+    0 18px 54px rgba(22, 15, 10, 0.28),
+    inset 0 1px 0 rgba(255, 250, 242, 0.1);
+  backdrop-filter: blur(22px) saturate(1.0);
+  -webkit-backdrop-filter: blur(22px) saturate(1.0);
+  pointer-events: auto;
+  overflow: hidden;
+  transition:
+    background 400ms ease,
+    border-color 400ms ease,
+    box-shadow 400ms ease;
+}
+
+.navbarScrolled .shell {
+  background:
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(229, 210, 184, 0.06),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(72, 62, 48, 0.96),
+      rgba(62, 54, 42, 0.94)
+    ),
+    rgba(56, 46, 34, 0.92);
+  box-shadow:
+    0 20px 60px rgba(22, 15, 10, 0.32),
+    inset 0 1px 0 rgba(255, 250, 242, 0.1);
+}
+
+/* ---- Adaptive theme: Light sections ---- */
+
+.theme-light .shell {
+  border-color: rgba(114, 92, 58, 0.18);
+  background:
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(229, 224, 216, 0.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(229, 224, 216, 0.88),
+      rgba(229, 210, 184, 0.82)
+    ),
+    rgba(229, 224, 216, 0.86);
+  box-shadow:
+    0 18px 54px rgba(114, 92, 58, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+.theme-light .brand { color: #2f281d; }
+.theme-light .brandText strong { color: #2f281d; text-shadow: none; }
+.theme-light .brandText small { color: rgba(47, 40, 29, 0.62); }
+.theme-light .logoMark {
+  border-color: rgba(114, 92, 58, 0.24);
+  background: rgba(114, 92, 58, 0.08);
+  box-shadow: 0 10px 26px rgba(114, 92, 58, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.theme-light .desktopNav {
+  border-color: rgba(114, 92, 58, 0.12);
+  background: rgba(114, 92, 58, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.theme-light .desktopNav a { color: rgba(47, 40, 29, 0.72); }
+.theme-light .desktopNav a:hover { color: #2f281d; background: rgba(114, 92, 58, 0.1); }
+.theme-light .desktopNav a::after {
+  background: linear-gradient(90deg, transparent, rgba(114, 92, 58, 0.5), rgba(128, 150, 113, 0.5), transparent);
+}
+
+.theme-light .menuButton {
+  border-color: rgba(114, 92, 58, 0.18);
+  color: #2f281d;
+  background: rgba(114, 92, 58, 0.06);
+}
+
+/* ---- Adaptive theme: Botanical ---- */
+
+.theme-botanical .shell {
+  border-color: rgba(179, 183, 146, 0.2);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(179, 183, 146, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(38, 46, 32, 0.92), rgba(32, 40, 28, 0.9)),
+    rgba(30, 38, 26, 0.88);
+}
+
+/* ---- Adaptive theme: Warm ---- */
+
+.theme-warm .shell {
+  border-color: rgba(210, 171, 128, 0.2);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(210, 171, 128, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(80, 62, 42, 0.92), rgba(68, 52, 36, 0.9)),
+    rgba(62, 48, 34, 0.88);
+}
+
+/* ---- Glass effects (pseudo elements) ---- */
+
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 250, 242, 0.05),
+      transparent 44%,
+      rgba(210, 171, 128, 0.04)
+    );
+  opacity: 0.42;
+}
+
+.shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -25%;
+  width: 18%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 250, 242, 0.09),
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: navbarShine 9s ease-in-out infinite;
+  opacity: 0.18;
+}
+
+.brand,
+.desktopNav,
+.actions {
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fffaf2;
+  text-decoration: none;
+  transition: color 400ms ease;
+}
+
+.logoMark {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+  border: 1px solid rgba(229, 224, 216, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 250, 242, 0.06);
+  box-shadow:
+    0 10px 26px rgba(22, 15, 10, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: border-color 400ms ease, background 400ms ease, box-shadow 400ms ease;
+}
+
+.logoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transform: scale(1.08);
+}
+
+.brandText {
+  display: grid;
+  gap: 1px;
+}
+
+.brandText strong {
+  color: #fffaf2;
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 1.45rem;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  text-shadow: 0 1px 14px rgba(22, 15, 10, 0.2);
+  transition: color 400ms ease, text-shadow 400ms ease;
+}
+
+.brandText small {
+  color: rgba(255, 250, 242, 0.62);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 400ms ease;
+}
+
+/* ---- Desktop Nav Pills ---- */
+
+.desktopNav {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid rgba(229, 224, 216, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 250, 242, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 250, 242, 0.06);
+  transition: border-color 400ms ease, background 400ms ease, box-shadow 400ms ease;
+}
+
+.desktopNav a {
+  position: relative;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: rgba(255, 250, 242, 0.76);
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-decoration: none;
+  transition:
+    color 300ms ease,
+    background 200ms ease,
+    transform 200ms ease;
+}
+
+.desktopNav a::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 8px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(210, 171, 128, 0.65),
+    rgba(179, 183, 146, 0.55),
+    transparent
+  );
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease;
+}
+
+.desktopNav a:hover {
+  color: #fffaf2;
+  background: rgba(255, 250, 242, 0.08);
+  transform: translateY(-1px);
+}
+
+.desktopNav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---- Actions ---- */
+
+.actions {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================================
+   WHATSAPP CTA — Chai/vanilla harmonized, subtle border beam
+   ============================================================ */
+
+.whatsappButton {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  color: #2f281d;
+  background: #d2ab80 !important;
+  box-shadow:
+    0 14px 30px rgba(47, 40, 29, 0.18),
+    0 6px 20px rgba(210, 171, 128, 0.3);
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    filter 200ms ease;
+}
+
+.whatsappButton::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 248deg,
+      rgba(255, 250, 242, 0.12) 270deg,
+      rgba(255, 250, 242, 0.72) 292deg,
+      rgba(229, 210, 184, 0.7) 308deg,
+      rgba(179, 183, 146, 0.45) 322deg,
+      transparent 340deg,
+      transparent 360deg
+    );
+  animation: whatsappBorderBeam 3.6s linear infinite;
+}
+
+.whatsappButton::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 28% 18%,
+      rgba(255, 255, 255, 0.3),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #e5d2b8 0%,
+      #d2ab80 50%,
+      #c49a6e 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -8px 18px rgba(47, 40, 29, 0.08);
+}
+
+.whatsappButton:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.06) brightness(1.03);
+  box-shadow:
+    0 20px 42px rgba(47, 40, 29, 0.22),
+    0 10px 26px rgba(210, 171, 128, 0.38);
+}
+
+.whatsappButton:hover::after {
+  animation-duration: 2.4s;
+}
+
+/* Light-theme WhatsApp adjustments */
+.theme-light .whatsappButton {
+  color: #fffaf2;
+  background: #725c3a !important;
+  box-shadow:
+    0 14px 30px rgba(114, 92, 58, 0.18),
+    0 6px 20px rgba(114, 92, 58, 0.24);
+}
+
+.theme-light .whatsappButton::before {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.22), transparent 30%),
+    linear-gradient(135deg, #8a7252 0%, #725c3a 50%, #63503a 100%);
+}
+
+.buttonContent {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  min-height: inherit;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 17px;
+  border-radius: inherit;
+}
+
+/* ---- Mobile hamburger ---- */
+
+.menuButton {
+  display: none;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(229, 224, 216, 0.14);
+  border-radius: 999px;
+  color: #fffaf2;
+  background: rgba(255, 250, 242, 0.06);
+  cursor: pointer;
+  transition: border-color 400ms ease, color 400ms ease, background 400ms ease;
+}
+
+/* ---- Mobile overlay & panel ---- */
+
+.mobileOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 69;
+  display: grid;
+  align-items: start;
+  padding: 102px 18px 18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(179, 183, 146, 0.12), transparent 34%),
+    radial-gradient(circle at 12% 20%, rgba(210, 171, 128, 0.1), transparent 30%),
+    rgba(22, 15, 10, 0.52);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.mobilePanel {
+  position: relative;
+  overflow: hidden;
+  width: min(520px, 100%);
+  margin: 0 auto;
+  padding: 18px;
+  border: 1px solid rgba(229, 224, 216, 0.14);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 250, 242, 0.1), transparent 32%),
+    radial-gradient(circle at 100% 100%, rgba(179, 183, 146, 0.08), transparent 38%),
+    linear-gradient(135deg, rgba(56, 46, 34, 0.96), rgba(68, 56, 42, 0.94));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+.mobilePanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 250, 242, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 250, 242, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, #000, transparent 78%);
+  opacity: 0.14;
+}
+
+.mobileHeader,
+.mobileLinks,
+.mobileCta {
+  position: relative;
+  z-index: 1;
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(229, 224, 216, 0.1);
+}
+
+.mobileHeader span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #e5d2b8;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.mobileHeader button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(229, 224, 216, 0.12);
+  border-radius: 999px;
+  color: #fffaf2;
+  background: rgba(255, 250, 242, 0.05);
+  cursor: pointer;
+}
+
+.mobileLinks {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.mobileLinks a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 0 14px;
+  border: 1px solid rgba(229, 224, 216, 0.07);
+  border-radius: 20px;
+  color: #fffaf2;
+  background: rgba(255, 250, 242, 0.035);
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 1.42rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-decoration: none;
+}
+
+.mobileLinks a span {
+  color: #d2ab80;
+  font-family: var(--font-sans, inherit);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+/* ---- Mobile CTA (chai colored) ---- */
+
+.mobileCta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  color: #2f281d;
+  background: #d2ab80 !important;
+  box-shadow:
+    0 14px 30px rgba(47, 40, 29, 0.18),
+    0 6px 20px rgba(210, 171, 128, 0.28);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.mobileCta::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 248deg,
+      rgba(255, 250, 242, 0.12) 270deg,
+      rgba(255, 250, 242, 0.72) 292deg,
+      rgba(229, 210, 184, 0.7) 308deg,
+      rgba(179, 183, 146, 0.45) 322deg,
+      transparent 340deg,
+      transparent 360deg
+    );
+  animation: whatsappBorderBeam 3.6s linear infinite;
+}
+
+.mobileCta::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 28% 18%,
+      rgba(255, 255, 255, 0.28),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #e5d2b8 0%,
+      #d2ab80 50%,
+      #c49a6e 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -8px 18px rgba(47, 40, 29, 0.06);
+}
+
+.mobileCta:hover::after {
+  animation-duration: 2.4s;
+}
+
+/* ---- Keyframes ---- */
+
+@keyframes navbarShine {
+  0%, 45% { transform: translateX(0) skewX(-18deg); opacity: 0; }
+  58% { opacity: 0.2; }
+  100% { transform: translateX(700%) skewX(-18deg); opacity: 0; }
+}
+
+@keyframes whatsappBorderBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 1020px) {
+  .shell {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .menuButton {
+    display: grid;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar { top: 12px; }
+  .navbarScrolled { top: 8px; }
+
+  .shell {
+    width: min(100% - 22px, 1180px);
+    min-height: 64px;
+    padding: 8px;
+  }
+
+  .logoMark { width: 46px; height: 46px; }
+  .brandText small { display: none; }
+  .brandText strong { font-size: 1.32rem; }
+  .whatsappButton { display: none; }
+  .menuButton { width: 44px; height: 44px; }
+  .mobileOverlay { padding-top: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell::after,
+  .whatsappButton::after,
+  .mobileCta::after {
+    animation: none !important;
+  }
+
+  .navbar,
+  .shell,
+  .desktopNav a,
+  .whatsappButton {
+    transition: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   Patch: logo robusto en Navbar
+   Evita que el navegador muestre texto alternativo si el PNG antiguo ya no existe.
+   ========================================================================== */
+.logoMark {
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.logoImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 999px;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* ==========================================================================
+   REBRAND v2 — Navbar: fondos oscuros anclados en teal del logo (#2d5f5e)
+   Mapeo de equivalencias:
+     rgba(72,62,48) → rgba(36,75,75)   [warm dark → teal dark]
+     rgba(62,54,42) → rgba(31,65,65)
+     rgba(56,46,34) → rgba(27,57,56)
+   El theme-light conserva los acentos cálidos (carob/chai) como contraste.
+   ========================================================================== */
+
+/* ── Shell oscuro por defecto (sobre secciones dark-teal) ─────────────── */
+.shell {
+  border-color: rgba(229, 224, 216, 0.16) !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(229, 210, 184, 0.07), transparent 30%),
+    radial-gradient(circle at 88% 100%, rgba(128, 150, 113, 0.06), transparent 34%),
+    linear-gradient(135deg, rgba(36, 75, 75, 0.92), rgba(27, 57, 56, 0.90)),
+    rgba(24, 48, 46, 0.88) !important;
+}
+
+.navbarScrolled .shell {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(229, 210, 184, 0.05), transparent 30%),
+    linear-gradient(135deg, rgba(36, 75, 75, 0.96), rgba(27, 57, 56, 0.94)),
+    rgba(24, 48, 46, 0.92) !important;
+}
+
+/* ── WhatsApp CTA en tema oscuro: ámbar cálido (chai) sobre teal ──────── */
+.whatsappButton {
+  background: #d2ab80 !important;
+  color: #122626 !important;
+}
+
+.whatsappButton::before {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.20), transparent 30%),
+    linear-gradient(135deg, #e0bd95 0%, #d2ab80 50%, #c49a6e 100%) !important;
+}
+
+/* ── Theme DARK (secciones teal oscuras) ──────────────────────────────── */
+/* Texto/íconos en modo dark ya son claros — sin cambio estructural */
+
+/* ── Theme LIGHT (sobre secciones almond/vanilla) ────────────────────── */
+.theme-light .shell {
+  border-color: rgba(23, 49, 48, 0.16) !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(229, 224, 216, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(255, 250, 242, 0.88), rgba(229, 210, 184, 0.82)),
+    rgba(255, 250, 242, 0.80) !important;
+}
+
+/* Textos oscuros sobre tema claro: tinta teal en vez de tinta marrón */
+.theme-light .brand           { color: #173130 !important; }
+.theme-light .brandText strong { color: #173130 !important; }
+.theme-light .brandText small  { color: rgba(23, 49, 48, 0.60) !important; }
+
+.theme-light .logoMark {
+  border-color: rgba(45, 95, 94, 0.22) !important;
+  background: rgba(45, 95, 94, 0.07) !important;
+  box-shadow:
+    0 10px 26px rgba(45, 95, 94, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+.theme-light .desktopNav {
+  border-color: rgba(45, 95, 94, 0.12) !important;
+  background: rgba(45, 95, 94, 0.05) !important;
+}
+
+.theme-light .desktopNav a       { color: rgba(23, 49, 48, 0.72) !important; }
+.theme-light .desktopNav a:hover { color: #173130 !important; background: rgba(45, 95, 94, 0.09) !important; }
+.theme-light .desktopNav a::after {
+  background: linear-gradient(90deg, transparent, rgba(45, 95, 94, 0.5), rgba(128, 150, 113, 0.5), transparent) !important;
+}
+
+.theme-light .menuButton {
+  border-color: rgba(45, 95, 94, 0.18) !important;
+  color: #173130 !important;
+  background: rgba(45, 95, 94, 0.06) !important;
+}
+
+/* WhatsApp CTA en tema claro: teal del logo (en vez de carob marrón) */
+.theme-light .whatsappButton {
+  color: #f0f6f5 !important;
+  background: #2d5f5e !important;
+  box-shadow:
+    0 14px 30px rgba(45, 95, 94, 0.20),
+    0 6px 20px rgba(45, 95, 94, 0.26) !important;
+}
+
+.theme-light .whatsappButton::before {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.18), transparent 30%),
+    linear-gradient(135deg, #397b7a 0%, #2d5f5e 50%, #245250 100%) !important;
+}
+
+/* ========================================================================== 
+   FINAL UX FIX — Navbar: Karin Cadenas en una sola línea + subtítulo correcto
+   ========================================================================== */
+.brandText {
+  min-width: 0 !important;
+}
+
+.brandText strong {
+  max-width: 22ch !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  font-size: clamp(1.05rem, 1.42vw, 1.42rem) !important;
+  letter-spacing: -0.04em !important;
+}
+
+.brandText small {
+  max-width: 22ch !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  letter-spacing: 0.11em !important;
+}
+
+@media (max-width: 720px) {
+  .brand {
+    gap: 9px !important;
+  }
+
+  .logoMark {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brandText strong {
+    max-width: 16ch !important;
+    font-size: clamp(0.98rem, 4.6vw, 1.18rem) !important;
+  }
+
+  .brandText small {
+    max-width: 16ch !important;
+    font-size: 0.62rem !important;
+  }
+}
