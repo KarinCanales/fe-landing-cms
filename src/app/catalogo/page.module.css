@@ -863,3 +863,71 @@
     transition: none !important;
   }
 }
+
+/* ========================================================================== 
+   Patch: mobile /catalogo modal close button always above navbar
+   ========================================================================== */
+.modalBackdrop {
+  z-index: 1200;
+}
+
+.modalPanel {
+  position: relative;
+  z-index: 1201;
+}
+
+.modalTopbar {
+  position: relative;
+  z-index: 12;
+}
+
+.modalTopbar button {
+  position: relative;
+  z-index: 14;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .modalBackdrop {
+    z-index: 1200;
+    place-items: stretch;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+  }
+
+  .modalPanel {
+    width: 100%;
+    height: calc(100svh - max(20px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+    max-height: calc(100svh - max(20px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+  }
+
+  .modalTopbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 10px;
+    background: rgba(9, 20, 20, 0.78);
+    backdrop-filter: blur(16px) saturate(1.04);
+    -webkit-backdrop-filter: blur(16px) saturate(1.04);
+  }
+
+  .modalTopbar h2 {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(1.2rem, 6vw, 1.7rem);
+  }
+
+  .modalTopbar button {
+    justify-self: end;
+    width: 42px;
+    height: 42px;
+    color: #122626;
+    background: #e5d2b8;
+    border-color: rgba(229, 210, 184, 0.68);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  }
+}

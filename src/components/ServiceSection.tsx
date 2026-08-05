@@ -82,22 +82,24 @@ export default function ServicesSection({ sanityData }: Props) {
     >
       <div className={styles.ambientGlowOne} aria-hidden="true" />
       <div className={styles.ambientGlowTwo} aria-hidden="true" />
+      <div className={styles.silkVeil} aria-hidden="true" />
+      <div className={styles.pinField} aria-hidden="true" />
+      <div className={styles.dustField} aria-hidden="true" />
+      <div className={styles.textureVeil} aria-hidden="true" />
 
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
           <div>
-            <div
-              id="servicios"
-              data-scroll-anchor
-              className="scrollAnchor"
-              aria-hidden="true"
-            />
             <span className={styles.eyebrow}>
               <Sparkles size={15} />
               {eyebrow}
             </span>
 
-            <h2 className={styles.title}>
+            <h2
+              id="servicios"
+              data-scroll-anchor
+              className={styles.title}
+            >
               {titleText} <em>{highlightWord}</em>
             </h2>
           </div>

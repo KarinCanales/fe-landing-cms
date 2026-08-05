@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import styles from './FooterSection.module.css';
+import SiteNavLink from './SiteNavLink';
 import { resolveImageWithUrl } from '@/sanity/image';
 import { renderIcon } from '@/sanity/icons';
 import type { FooterData, ServicesData, SiteSettingsData, SocialLink } from '@/sanity/types';
@@ -185,11 +186,11 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
               <em>{ctaHighlight}</em>
             </h2>
           </div>
-          <a className={styles.primaryCta} href={ctaButtonLink} aria-label={ctaButtonLabel}>
+          <SiteNavLink className={styles.primaryCta} href={ctaButtonLink} ariaLabel={ctaButtonLabel}>
             <SocialIcon name="whatsapp" size={19} />
             {ctaButtonLabel}
             <ArrowUpRight size={17} />
-          </a>
+          </SiteNavLink>
         </section>
 
         {/* Main footer grid */}
@@ -242,7 +243,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
                   )
                   .map((link) => (
                   <li key={link.href || link.label}>
-                    <a href={link.href}>{link.label}</a>
+                    <SiteNavLink href={link.href}>{link.label}</SiteNavLink>
                   </li>
                 ))}
               </ul>
@@ -255,7 +256,7 @@ export default function FooterSection({ sanityData, sanitySettings, sanityServic
             <ul>
               {serviceLinks.map((svc) => (
                 <li key={svc.text}>
-                  <a href={svc.link || '/#servicios'}>{svc.text}</a>
+                  <SiteNavLink href={svc.link || '/#servicios'}>{svc.text}</SiteNavLink>
                 </li>
               ))}
             </ul>

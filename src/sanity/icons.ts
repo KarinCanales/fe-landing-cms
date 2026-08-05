@@ -20,7 +20,6 @@ import {
   Mail,
   MapPin,
   Menu,
-  MessageCircle,
   Phone,
   Play,
   Quote,
@@ -31,6 +30,7 @@ import {
   Utensils,
 } from 'lucide-react';
 import React, { type ComponentType, type SVGProps } from 'react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 type IconProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -111,8 +111,8 @@ const iconMap: Record<string, ResolvedIcon> = {
   'facebook': FacebookIcon,
   'tiktok': TikTokIcon,
   'youtube': Play,
-  'whatsapp': MessageCircle,
-  'message-circle': MessageCircle,
+  'whatsapp': WhatsAppIcon,
+  'message-circle': WhatsAppIcon,
   'x': XTwitterIcon,
   'x-twitter': XTwitterIcon,
   'twitter': XTwitterIcon,

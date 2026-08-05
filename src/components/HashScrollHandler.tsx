@@ -25,14 +25,21 @@ export default function HashScrollHandler() {
       }
 
       scheduleHomeAnchorScroll(id, { delayMs: 620 });
-      window.setTimeout(() => {
-        scheduleHomeAnchorScroll(id);
-      }, 1500);
     }
   }, [pathname]);
 
   useEffect(() => {
     const handleHashChange = () => {
+      if (window.location.pathname !== "/") return;
+
+      const id = getHomeAnchorIdFromHref(window.location.href);
+
+      if (id) {
+        scheduleHomeAnchorScroll(id);
+      }
+    };
+
+    const handleBackForwardRecovery = () => {
       if (window.location.pathname !== "/") return;
 
       const id = getHomeAnchorIdFromHref(window.location.href);
@@ -74,15 +81,18 @@ export default function HashScrollHandler() {
         return;
       }
 
+      window.karinShowRouteLoader?.(link.href);
       savePendingHomeAnchor(id);
       router.push("/", { scroll: false });
     };
 
     window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("karin:back-forward-recovery", handleBackForwardRecovery);
     document.addEventListener("click", handleClick);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("karin:back-forward-recovery", handleBackForwardRecovery);
       document.removeEventListener("click", handleClick);
     };
   }, [router]);

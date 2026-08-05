@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
 import LinksCard from './LinksCard';
@@ -120,9 +119,9 @@ export default async function LinksPage() {
       </div>
 
       <section className={styles.shell} aria-labelledby="links-title">
-        <Link className={styles.homeLink} href="/" aria-label="Volver al sitio principal de Karin Eventos">
+        <a className={styles.homeLink} href="/#inicio" aria-label="Volver al sitio principal de Karin Eventos">
           Sitio web
-        </Link>
+        </a>
 
         <header className={styles.header}>
           <div className={styles.brandMark}>

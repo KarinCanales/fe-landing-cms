@@ -30,7 +30,17 @@ const PENDING_HOME_ANCHOR_KEY = "karinPendingHomeAnchor";
 let scheduledScrollTimer = 0;
 
 const ANCHOR_OFFSET_ADJUSTMENTS: Record<string, number> = {
-  beneficios: 28,
+  // Benefits already places its scroll anchor immediately before the visible
+  // eyebrow. Avoid adding extra offset here; otherwise the section lands too low
+  // and leaves unnecessary empty space below the fixed navbar.
+  beneficios: 0,
+  // Services anchors on the large serif title. The large serif ascenders and
+  // the fixed navbar made the previous small offset land too deep in the
+  // section, cropping the title and exposing the next section at the bottom.
+  // Keep a stronger positive guard so the eyebrow/title sit cleanly below
+  // the navbar when clicking “Servicios”.
+  servicios: 96,
+  contacto: 32,
 };
 
 function getWindowWithLenis() {

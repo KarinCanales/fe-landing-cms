@@ -1,12 +1,5 @@
-import BenefitsSection from '@/components/BenefitsSection';
-import CatalogSection from '@/components/CatalogSection';
-import ContactFormSection from '@/components/ContactSection';
-import FooterSection from '@/components/FooterSection';
-import HeroSection from '@/components/HeroSection';
+import HomeClientSections from '@/components/HomeClientSections';
 import NavbarSection from '@/components/NavbarSection';
-import SectionFade from '@/components/SectionFade';
-import ServicesSection from '@/components/ServiceSection';
-import TestimonialsSection from '@/components/TestimonialsSection';
 import { buildHomeJsonLd, buildHomeMetadata, stringifyJsonLd } from '@/lib/seo';
 import { fetchHomePageData, fetchSiteSettings, SHOULD_BYPASS_SANITY_CACHE } from '@/sanity/fetch';
 import { connection } from 'next/server';
@@ -46,27 +39,7 @@ export default async function Home() {
           sanityNavbar={data.navbar}
           sanitySettings={data.settings}
         />
-        <HeroSection sanityData={data.hero} sanitySettings={data.settings} />
-        <SectionFade variant="darkToLight" />
-        <BenefitsSection sanityData={data.benefits} />
-        <SectionFade variant="lightToDark" />
-        <ServicesSection sanityData={data.services} />
-        <SectionFade variant="darkToLight" />
-        <TestimonialsSection sanityData={data.testimonials} />
-        <SectionFade variant="lightToDark" />
-        <CatalogSection sanityData={data.catalog} />
-        <SectionFade variant="darkToWarm" />
-        <ContactFormSection
-          sanityData={data.contact}
-          sanitySettings={data.settings}
-          sanityServices={data.services}
-        />
-        <SectionFade variant="warmToDark" />
-        <FooterSection
-          sanityData={data.footer}
-          sanitySettings={data.settings}
-          sanityServices={data.services}
-        />
+        <HomeClientSections data={data} />
       </main>
     </>
   );
