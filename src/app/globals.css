@@ -902,3 +902,31 @@ section[id] {
     background-image: none !important;
   }
 }
+
+/* ========================================================================== 
+   Sanity Studio isolation
+   --------------------------------------------------------------------------
+   Keep native wheel scrolling inside Sanity, without repainting the whole
+   Studio with custom green theme colors.
+   ========================================================================== */
+html[data-karin-studio="true"],
+html[data-karin-studio="true"] body {
+  height: auto !important;
+  overflow: auto !important;
+  overscroll-behavior: auto !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-karin-studio="true"] iframe {
+  pointer-events: auto !important;
+}
+
+html[data-karin-studio="true"] .lenis,
+html[data-karin-studio="true"] .lenis-smooth,
+html[data-karin-studio="true"] .lenis-stopped {
+  scroll-behavior: auto !important;
+}
+
+[data-karin-studio-root="true"] {
+  min-height: 100vh;
+}

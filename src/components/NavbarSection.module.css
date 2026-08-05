@@ -1118,40 +1118,36 @@
   }
 }
 
-/* ==========================================================================
-   Hotfix v11 — Navbar fluid desktop fit
-   Objetivo: que el navbar se auto-comprima entre breakpoints sin que Links,
-   WhatsApp o el bloque de marca se monten antes de llegar al layout mobile.
+/* ========================================================================== 
+   Hotfix v12 — desktop navbar fluid fit without shrinking everything
+   - Keeps flex layout to avoid overlap.
+   - Stops the center nav pill from stretching too wide.
+   - Restores readable button/icon sizes between breakpoints.
    ========================================================================== */
 @media (min-width: 1021px) {
   .shell {
-    --navbar-brand-size: clamp(205px, 20vw, 310px);
-    --navbar-actions-size: clamp(132px, 11vw, 168px);
-    --navbar-link-max: clamp(38px, calc((100vw - var(--navbar-brand-size) - var(--navbar-actions-size) - 190px) / 7), 96px);
-
     display: flex !important;
     grid-template-columns: none !important;
-    flex-wrap: nowrap !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    gap: clamp(6px, 0.85vw, 14px) !important;
-    width: min(1320px, calc(100% - clamp(24px, 4vw, 56px))) !important;
-    min-height: 66px !important;
-    padding: 8px 9px 8px 11px !important;
+    justify-content: space-between !important;
+    width: min(1280px, calc(100% - clamp(34px, 4vw, 72px))) !important;
+    min-height: 70px !important;
+    gap: clamp(12px, 1.25vw, 22px) !important;
+    padding: 8px 12px !important;
     overflow: hidden !important;
   }
 
   .brand {
-    flex: 0 1 var(--navbar-brand-size) !important;
-    width: var(--navbar-brand-size) !important;
-    max-width: var(--navbar-brand-size) !important;
-    min-width: 0 !important;
-    gap: clamp(8px, 0.72vw, 11px) !important;
+    flex: 1 1 245px !important;
+    width: auto !important;
+    min-width: 220px !important;
+    max-width: min(330px, 26vw) !important;
+    gap: 11px !important;
   }
 
   .logoMark {
-    width: clamp(44px, 3.7vw, 52px) !important;
-    height: clamp(44px, 3.7vw, 52px) !important;
+    width: 52px !important;
+    height: 52px !important;
   }
 
   .brandText {
@@ -1160,8 +1156,392 @@
   }
 
   .brandText strong {
+    max-width: none !important;
+    font-size: clamp(1.16rem, 1.24vw, 1.42rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .brandText small {
+    max-width: none !important;
+    font-size: clamp(0.58rem, 0.64vw, 0.72rem) !important;
+    letter-spacing: 0.09em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .desktopNav {
+    flex: 0 1 auto !important;
+    justify-self: auto !important;
+    width: auto !important;
+    max-width: min(760px, calc(100% - 430px)) !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    padding: 5px !important;
+  }
+
+  .desktopNav a {
+    min-height: 40px !important;
+    padding: 0 clamp(8px, 0.72vw, 13px) !important;
+    gap: 6px !important;
+    font-size: clamp(0.74rem, 0.72vw, 0.84rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .navLinkIcon {
+    width: 13px !important;
+    height: 13px !important;
+    margin-right: 0 !important;
+    transform: none !important;
+  }
+
+  .navLinkIcon svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .actions {
+    flex: 0 0 auto !important;
+    justify-self: auto !important;
+    min-width: 0 !important;
+  }
+
+  .whatsappButton {
+    min-height: 48px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    padding: 0 clamp(14px, 1vw, 18px) !important;
+    gap: 8px !important;
+  }
+}
+
+@media (min-width: 1181px) and (max-width: 1320px) {
+  .shell {
+    width: min(1230px, calc(100% - 36px)) !important;
+    gap: 12px !important;
+  }
+
+  .brand {
+    flex-basis: 230px !important;
+    min-width: 210px !important;
+    max-width: 270px !important;
+  }
+
+  .desktopNav {
+    max-width: min(705px, calc(100% - 390px)) !important;
+  }
+
+  .desktopNav a {
+    padding-inline: clamp(7px, 0.58vw, 10px) !important;
+    font-size: clamp(0.7rem, 0.64vw, 0.78rem) !important;
+    gap: 5px !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}
+
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .shell {
+    width: min(100% - 24px, 1120px) !important;
+    min-height: 66px !important;
+    gap: 8px !important;
+    padding: 7px 9px !important;
+  }
+
+  .brand {
+    flex: 0 1 212px !important;
+    min-width: 190px !important;
+    max-width: 220px !important;
+    gap: 8px !important;
+  }
+
+  .logoMark {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .brandText strong {
+    font-size: 1rem !important;
+  }
+
+  .brandText small {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.075em !important;
+  }
+
+  .desktopNav {
+    flex: 1 1 auto !important;
+    max-width: none !important;
+    gap: 1px !important;
+    padding: 4px !important;
+  }
+
+  .desktopNav a {
+    min-height: 36px !important;
+    padding-inline: clamp(5px, 0.46vw, 8px) !important;
+    font-size: clamp(0.65rem, 0.58vw, 0.72rem) !important;
+    gap: 4px !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .whatsappButton {
+    min-height: 44px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    padding-inline: 12px !important;
+    gap: 6px !important;
+  }
+}
+
+/* ========================================================================== 
+   Hotfix v14 — fluid navbar with readable buttons
+   --------------------------------------------------------------------------
+   Final override only. Keeps desktop fluid, removes the stretched center pill,
+   and restores readable link/button sizes while preventing overlap.
+   ========================================================================== */
+@media (min-width: 1021px) {
+  .shell {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: min(1240px, calc(100% - clamp(28px, 3.4vw, 56px))) !important;
+    min-height: 70px !important;
+    padding: 8px 12px !important;
+    gap: clamp(12px, 1.1vw, 18px) !important;
+    overflow: hidden !important;
+  }
+
+  .brand {
+    flex: 0 1 clamp(245px, 22vw, 315px) !important;
+    width: auto !important;
+    min-width: 220px !important;
+    max-width: 315px !important;
+    gap: 11px !important;
+  }
+
+  .logoMark {
+    width: clamp(48px, 3.8vw, 54px) !important;
+    height: clamp(48px, 3.8vw, 54px) !important;
+  }
+
+  .brandText {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .brandText strong {
+    max-width: none !important;
+    font-size: clamp(1.18rem, 1.25vw, 1.44rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -0.045em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .brandText small {
+    max-width: none !important;
+    font-size: clamp(0.6rem, 0.64vw, 0.72rem) !important;
+    letter-spacing: 0.09em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .desktopNav {
+    flex: 0 1 auto !important;
+    width: max-content !important;
+    inline-size: max-content !important;
+    max-width: calc(100% - clamp(410px, 34vw, 520px)) !important;
+    min-width: 0 !important;
+    justify-self: auto !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 5px !important;
+  }
+
+  .desktopNav a {
+    min-height: 40px !important;
+    padding: 0 clamp(9px, 0.72vw, 13px) !important;
+    gap: 6px !important;
+    font-size: clamp(0.78rem, 0.72vw, 0.86rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .navLinkIcon {
+    margin-right: 0 !important;
+    transform: none !important;
+  }
+
+  .actions {
+    flex: 0 0 auto !important;
+    justify-self: auto !important;
+    min-width: 0 !important;
+  }
+
+  .whatsappButton {
+    min-height: 48px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    min-height: 48px !important;
+    padding: 0 clamp(14px, 1vw, 18px) !important;
+    gap: 8px !important;
+    font-size: clamp(0.84rem, 0.76vw, 0.92rem) !important;
+  }
+}
+
+@media (min-width: 1181px) and (max-width: 1340px) {
+  .shell {
+    width: min(1210px, calc(100% - 30px)) !important;
+    gap: 10px !important;
+  }
+
+  .brand {
+    flex-basis: 240px !important;
+    min-width: 210px !important;
+    max-width: 270px !important;
+  }
+
+  .desktopNav {
+    max-width: calc(100% - 390px) !important;
+    gap: 3px !important;
+  }
+
+  .desktopNav a {
+    padding-inline: clamp(8px, 0.56vw, 10px) !important;
+    font-size: clamp(0.73rem, 0.62vw, 0.8rem) !important;
+    gap: 5px !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}
+
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .shell {
+    width: min(100% - 20px, 1130px) !important;
+    min-height: 66px !important;
+    padding: 7px 9px !important;
+    gap: 7px !important;
+  }
+
+  .brand {
+    flex: 0 1 205px !important;
+    min-width: 178px !important;
+    max-width: 215px !important;
+    gap: 8px !important;
+  }
+
+  .logoMark {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .brandText strong {
+    font-size: 0.98rem !important;
+  }
+
+  .brandText small {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.07em !important;
+  }
+
+  .desktopNav {
+    max-width: calc(100% - 335px) !important;
+    gap: 1px !important;
+    padding: 4px !important;
+  }
+
+  .desktopNav a {
+    min-height: 36px !important;
+    padding-inline: clamp(5px, 0.42vw, 7px) !important;
+    font-size: clamp(0.64rem, 0.56vw, 0.7rem) !important;
+    gap: 4px !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .whatsappButton {
+    min-height: 44px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    min-height: 44px !important;
+    padding-inline: 12px !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ========================================================================== 
+   HOTFIX v15 — Navbar desktop legible + fluid, without excessive empty space
+   Overrides previous emergency sizing blocks.
+   ========================================================================== */
+@media (min-width: 1021px) {
+  .shell {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: clamp(10px, 1vw, 16px) !important;
+    width: min(1340px, calc(100% - 48px)) !important;
+    min-height: 70px !important;
+    padding: 8px 12px !important;
+    overflow: hidden !important;
+  }
+
+  .brand {
+    flex: 0 1 clamp(238px, 21vw, 310px) !important;
+    width: auto !important;
+    max-width: clamp(238px, 21vw, 310px) !important;
+    min-width: 0 !important;
+    gap: 10px !important;
+  }
+
+  .logoMark {
+    width: clamp(48px, 3.45vw, 54px) !important;
+    height: clamp(48px, 3.45vw, 54px) !important;
+  }
+
+  .brandText {
+    min-width: 0 !important;
+  }
+
+  .brandText strong {
     max-width: 100% !important;
-    font-size: clamp(0.98rem, 1.08vw, 1.34rem) !important;
+    font-size: clamp(1.12rem, 1vw, 1.38rem) !important;
     line-height: 1 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -1170,42 +1550,48 @@
 
   .brandText small {
     max-width: 100% !important;
-    font-size: clamp(0.52rem, 0.58vw, 0.68rem) !important;
-    letter-spacing: clamp(0.045em, 0.42vw, 0.095em) !important;
+    font-size: clamp(0.6rem, 0.58vw, 0.7rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0.085em !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
 
   .desktopNav {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-    width: auto !important;
-    max-width: 100% !important;
+    flex: 0 1 auto !important;
     justify-self: auto !important;
-    display: inline-flex !important;
-    align-items: center !important;
+    width: auto !important;
+    max-width: calc(100% - clamp(420px, 37vw, 520px)) !important;
+    min-width: 0 !important;
     justify-content: center !important;
-    gap: clamp(0px, 0.18vw, 3px) !important;
-    padding: 4px !important;
+    gap: clamp(2px, 0.22vw, 5px) !important;
+    padding: 5px !important;
     overflow: hidden !important;
   }
 
   .desktopNav a {
     flex: 0 1 auto !important;
     min-width: 0 !important;
-    max-width: max-content !important;
-    min-height: 34px !important;
-    padding: 0 clamp(5px, 0.48vw, 10px) !important;
-    gap: clamp(3px, 0.32vw, 6px) !important;
-    font-size: clamp(0.62rem, 0.62vw, 0.76rem) !important;
+    min-height: 38px !important;
+    padding: 0 clamp(8px, 0.68vw, 13px) !important;
+    gap: 5px !important;
+    font-size: clamp(0.76rem, 0.68vw, 0.84rem) !important;
     line-height: 1 !important;
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .navLinkText {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .navLinkIcon {
-    width: clamp(10px, 0.82vw, 13px) !important;
-    height: clamp(10px, 0.82vw, 13px) !important;
+    width: clamp(12px, 0.75vw, 14px) !important;
+    height: clamp(12px, 0.75vw, 14px) !important;
     margin-right: 0 !important;
     transform: none !important;
   }
@@ -1215,83 +1601,100 @@
     height: 100% !important;
   }
 
-  .navLinkText {
-    display: block !important;
-    min-width: 0 !important;
-    max-width: var(--navbar-link-max) !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-  }
-
   .actions {
     flex: 0 0 auto !important;
-    min-width: 0 !important;
-    margin-left: 0 !important;
     justify-self: auto !important;
+    min-width: 0 !important;
   }
 
   .whatsappButton {
-    min-height: 44px !important;
-    max-width: var(--navbar-actions-size) !important;
+    min-height: clamp(46px, 3vw, 50px) !important;
   }
 
   .whatsappButton .buttonContent {
-    padding: 0 clamp(10px, 0.9vw, 16px) !important;
-    gap: clamp(5px, 0.45vw, 8px) !important;
+    padding: 0 clamp(14px, 0.95vw, 18px) !important;
+    gap: 8px !important;
+    font-size: clamp(0.82rem, 0.74vw, 0.9rem) !important;
   }
 }
 
-@media (min-width: 1021px) and (max-width: 1240px) {
+@media (min-width: 1321px) {
   .shell {
-    --navbar-brand-size: clamp(178px, 17vw, 224px);
-    --navbar-actions-size: 132px;
-    --navbar-link-max: clamp(30px, calc((100vw - var(--navbar-brand-size) - var(--navbar-actions-size) - 158px) / 7), 68px);
-    width: calc(100% - 22px) !important;
-    gap: 6px !important;
-  }
-
-  .brandText strong {
-    font-size: clamp(0.9rem, 1vw, 1.05rem) !important;
-  }
-
-  .brandText small {
-    font-size: 0.5rem !important;
-    letter-spacing: 0.055em !important;
+    width: min(1320px, calc(100% - 64px)) !important;
   }
 
   .desktopNav a {
-    min-height: 32px !important;
-    padding-inline: 4px !important;
-    font-size: 0.6rem !important;
+    min-height: 40px !important;
+    padding-inline: 12px !important;
+    font-size: 0.82rem !important;
   }
 
-  .whatsappButton .buttonContent span {
-    max-width: 76px !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 14px !important;
+    height: 14px !important;
   }
 }
 
-@media (min-width: 1021px) and (max-width: 1120px) {
+@media (min-width: 1181px) and (max-width: 1320px) {
   .shell {
-    --navbar-brand-size: 170px;
-    --navbar-actions-size: 116px;
-    --navbar-link-max: 42px;
+    width: min(1240px, calc(100% - 36px)) !important;
+    gap: 10px !important;
   }
 
-  .brandText small {
-    display: none !important;
+  .brand {
+    flex-basis: clamp(222px, 19vw, 260px) !important;
+    max-width: clamp(222px, 19vw, 260px) !important;
   }
 
   .desktopNav {
-    padding: 3px !important;
+    max-width: calc(100% - 390px) !important;
   }
 
   .desktopNav a {
-    padding-inline: 4px !important;
-    gap: 3px !important;
+    padding-inline: clamp(7px, 0.5vw, 10px) !important;
+    font-size: clamp(0.72rem, 0.62vw, 0.78rem) !important;
+  }
+}
+
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .shell {
+    width: min(1120px, calc(100% - 24px)) !important;
+    min-height: 64px !important;
+    gap: 8px !important;
+    padding: 7px 9px !important;
+  }
+
+  .brand {
+    flex-basis: 210px !important;
+    max-width: 210px !important;
+    gap: 8px !important;
+  }
+
+  .logoMark {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .brandText strong {
+    font-size: 1rem !important;
+  }
+
+  .brandText small {
+    font-size: 0.56rem !important;
+  }
+
+  .desktopNav {
+    max-width: calc(100% - 350px) !important;
+    gap: 1px !important;
+    padding: 4px !important;
+  }
+
+  .desktopNav a {
+    min-height: 34px !important;
+    padding-inline: 5px !important;
+    gap: 4px !important;
+    font-size: 0.66rem !important;
   }
 
   .navLinkIcon,
@@ -1300,7 +1703,249 @@
     height: 10px !important;
   }
 
+  .whatsappButton {
+    min-height: 42px !important;
+  }
+
   .whatsappButton .buttonContent {
+    padding-inline: 11px !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ========================================================================== 
+   HOTFIX v16 — Navbar real fit, no ellipsis on readable desktop sizes
+   --------------------------------------------------------------------------
+   The previous emergency blocks let each link shrink independently, so labels
+   became "Ini..." even when the shell had enough room. This final override
+   disables per-link ellipsis on desktop and only switches to the hamburger
+   layout when there is truly not enough horizontal space.
+   ========================================================================== */
+@media (min-width: 1181px) {
+  .shell {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: min(1320px, calc(100% - clamp(36px, 4.2vw, 72px))) !important;
+    min-height: 70px !important;
+    gap: clamp(10px, 1vw, 16px) !important;
+    padding: 8px 12px !important;
+    overflow: visible !important;
+  }
+
+  .brand {
+    flex: 0 0 clamp(232px, 19vw, 300px) !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: clamp(232px, 19vw, 300px) !important;
+    gap: 10px !important;
+  }
+
+  .logoMark {
+    width: clamp(48px, 3.4vw, 54px) !important;
+    height: clamp(48px, 3.4vw, 54px) !important;
+  }
+
+  .brandText {
+    min-width: 0 !important;
+  }
+
+  .brandText strong {
+    max-width: 100% !important;
+    font-size: clamp(1.12rem, 1.04vw, 1.38rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .brandText small {
+    max-width: 100% !important;
+    font-size: clamp(0.6rem, 0.6vw, 0.7rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .desktopNav {
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    width: auto !important;
+    inline-size: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    justify-self: auto !important;
+    justify-content: center !important;
+    gap: clamp(2px, 0.24vw, 5px) !important;
+    padding: 5px !important;
+    overflow: visible !important;
+  }
+
+  .desktopNav a {
+    flex: 0 0 auto !important;
+    min-width: max-content !important;
+    min-height: 40px !important;
+    padding: 0 clamp(8px, 0.62vw, 12px) !important;
+    gap: 6px !important;
+    font-size: clamp(0.76rem, 0.68vw, 0.84rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  .navLinkText {
+    flex: 0 0 auto !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    flex: 0 0 auto !important;
+    width: clamp(12px, 0.74vw, 14px) !important;
+    height: clamp(12px, 0.74vw, 14px) !important;
+  }
+
+  .navLinkIcon {
+    margin-right: 0 !important;
+    transform: none !important;
+  }
+
+  .actions {
+    flex: 0 0 auto !important;
+    justify-self: auto !important;
+    min-width: max-content !important;
+  }
+
+  .whatsappButton {
+    min-height: 48px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    min-height: 48px !important;
+    padding: 0 clamp(14px, 0.95vw, 18px) !important;
+    gap: 8px !important;
+    font-size: clamp(0.84rem, 0.76vw, 0.92rem) !important;
+  }
+}
+
+@media (min-width: 1181px) and (max-width: 1340px) {
+  .shell {
+    width: min(100% - 28px, 1240px) !important;
+    gap: 9px !important;
     padding-inline: 10px !important;
+  }
+
+  .brand {
+    flex-basis: 220px !important;
+    max-width: 220px !important;
+    gap: 8px !important;
+  }
+
+  .logoMark {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .brandText strong {
+    font-size: 1.02rem !important;
+  }
+
+  .brandText small {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.07em !important;
+  }
+
+  .desktopNav {
+    gap: 1px !important;
+    padding: 4px !important;
+  }
+
+  .desktopNav a {
+    min-height: 36px !important;
+    padding-inline: 6px !important;
+    gap: 4px !important;
+    font-size: 0.68rem !important;
+  }
+
+  .navLinkIcon,
+  .navLinkIcon svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .whatsappButton {
+    min-height: 44px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    min-height: 44px !important;
+    padding-inline: 11px !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .shell {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: min(100% - 24px, 1120px) !important;
+    min-height: 64px !important;
+    padding: 7px 9px !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .brand {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: min(330px, calc(100% - 110px)) !important;
+    gap: 8px !important;
+  }
+
+  .logoMark {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .brandText strong {
+    font-size: 1rem !important;
+  }
+
+  .brandText small {
+    font-size: 0.56rem !important;
+  }
+
+  .desktopNav {
+    display: none !important;
+  }
+
+  .actions {
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+  }
+
+  .whatsappButton {
+    min-height: 44px !important;
+  }
+
+  .whatsappButton .buttonContent {
+    min-height: 44px !important;
+    padding-inline: 12px !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .menuButton {
+    display: grid !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 }

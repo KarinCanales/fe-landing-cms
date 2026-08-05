@@ -18,12 +18,29 @@ type SmoothScrollProviderProps = {
   children: ReactNode;
 };
 
+function resetLenisDomState() {
+  document.documentElement.classList.remove(
+    "lenis",
+    "lenis-smooth",
+    "lenis-stopped",
+    "reduced-motion-scroll",
+  );
+  document.body.classList.remove("lenis", "lenis-smooth", "lenis-stopped");
+  document.documentElement.style.removeProperty("overflow");
+  document.documentElement.style.removeProperty("height");
+  document.documentElement.style.removeProperty("scroll-behavior");
+  document.body.style.removeProperty("overflow");
+  document.body.style.removeProperty("height");
+  document.body.style.removeProperty("pointer-events");
+}
+
 export default function SmoothScrollProvider({
   children,
 }: SmoothScrollProviderProps) {
   const pathname = usePathname();
   const lenisRef = useRef<LenisInstance | null>(null);
   const frameRef = useRef(0);
+  const isStudioRoute = pathname?.startsWith("/studio") ?? false;
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -44,6 +61,19 @@ export default function SmoothScrollProvider({
         lenisRef.current = null;
       }
     };
+
+    if (isStudioRoute) {
+      stopLenis();
+      delete window.karinResumeLenis;
+      document.documentElement.dataset.karinStudio = "true";
+      resetLenisDomState();
+
+      return () => {
+        delete document.documentElement.dataset.karinStudio;
+      };
+    }
+
+    delete document.documentElement.dataset.karinStudio;
 
     const startRaf = (restart = false) => {
       if (restart && frameRef.current) {
@@ -85,7 +115,7 @@ export default function SmoothScrollProvider({
     };
 
     const resumeLenis = () => {
-      if (motionQuery.matches) return;
+      if (motionQuery.matches || isStudioRoute) return;
 
       startLenis(true);
     };
@@ -102,7 +132,7 @@ export default function SmoothScrollProvider({
     };
 
     const handlePageShow = (event: PageTransitionEvent) => {
-      if (motionQuery.matches) return;
+      if (motionQuery.matches || isStudioRoute) return;
       const [navigationEntry] = performance.getEntriesByType(
         "navigation",
       ) as PerformanceNavigationTiming[];
@@ -136,14 +166,19 @@ export default function SmoothScrollProvider({
       document.documentElement.classList.remove("reduced-motion-scroll");
       stopLenis();
     };
-  }, []);
+  }, [isStudioRoute]);
 
   useEffect(() => {
+    if (isStudioRoute) {
+      resetLenisDomState();
+      return;
+    }
+
     window.requestAnimationFrame(() => {
       window.karinResumeLenis?.();
       window.karinLenis?.resize();
     });
-  }, [pathname]);
+  }, [isStudioRoute, pathname]);
 
   return children;
 }

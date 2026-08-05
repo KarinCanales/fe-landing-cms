@@ -101,7 +101,6 @@ const catalogSection = {
           initialValue: {
             mediaType: 'photo',
             visible: true,
-            featured: false,
           },
           fields: [
             {
@@ -243,10 +242,11 @@ const catalogSection = {
             },
             {
               name: 'featured',
-              title: 'Marcar como destacado',
+              title: 'Marcar como destacado (obsoleto)',
               type: 'boolean',
+              hidden: true,
               initialValue: false,
-              description: 'Sirve para identificar contenido importante. El diseño puede usarlo para darle más presencia.',
+              description: 'Campo descontinuado. El orden visual se controla reordenando los elementos con drag & drop.',
             },
           ],
           preview: {
@@ -255,7 +255,6 @@ const catalogSection = {
               category: 'category',
               mediaType: 'mediaType',
               visible: 'visible',
-              featured: 'featured',
               thumbnail: 'thumbnail',
               coverImage: 'coverImage',
             },
@@ -263,7 +262,6 @@ const catalogSection = {
               const mediaType = selection.mediaType || 'photo';
               const typeLabel = mediaType === 'youtube' ? 'YouTube' : 'Foto';
               const status = selection.visible === false ? 'Oculto' : 'Visible';
-              const featured = selection.featured ? ' · Destacado' : '';
               const categoryLabel = selection.category || 'Sin categoría';
 
               // Media: prefer cover/thumbnail, then YouTube icon, then nothing
@@ -274,7 +272,7 @@ const catalogSection = {
 
               return {
                 title: selection.title || 'Contenido sin título',
-                subtitle: `${typeLabel} · ${categoryLabel} · ${status}${featured}`,
+                subtitle: `${typeLabel} · ${categoryLabel} · ${status}`,
                 media,
               };
             },
