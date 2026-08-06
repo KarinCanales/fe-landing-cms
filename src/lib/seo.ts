@@ -45,12 +45,17 @@ function localOrAbsoluteUrl(path?: string | null) {
 }
 
 function getSocialImage(settings?: SiteSettingsData) {
-  const image = resolveOgImage(
-    settings?.seo?.ogImage,
-    settings?.seo?.ogImageUrl || DEFAULT_SOCIAL_IMAGE,
-  );
+  // WhatsApp/Facebook scrapers are more reliable with a direct, absolute image URL.
+  // Prefer the explicit URL stored in Sanity because /links and /catalogo already
+  // use that field successfully. Fall back to the uploaded Sanity image, and then
+  // to the local static PNG in /public/images/social.
+  const manualImageUrl = localOrAbsoluteUrl(settings?.seo?.ogImageUrl);
 
-  return localOrAbsoluteUrl(image) || absoluteUrl(DEFAULT_SOCIAL_IMAGE);
+  if (manualImageUrl) return manualImageUrl;
+
+  const sanityImage = resolveOgImage(settings?.seo?.ogImage, "");
+
+  return localOrAbsoluteUrl(sanityImage) || absoluteUrl(DEFAULT_SOCIAL_IMAGE);
 }
 
 export function buildHomeMetadata(settings?: SiteSettingsData): Metadata {
